@@ -7,11 +7,15 @@ import TitleForm from "./_components/TitleForm"
 import DescriptionForm from "./_components/DescriptionForm.tsx"
 import ImageForm from "./_components/ImageForm.tsx"
 
+interface CoursePageProps {
+  params: {
+    courseId: string;
+  };
+}
+
 export default async function CoursePage({
     params
-}: {
-    params: { courseId: string }
-}) {
+}: CoursePageProps) {
   
   const {userId} = await auth()
 
