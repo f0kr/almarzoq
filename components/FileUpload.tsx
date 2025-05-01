@@ -14,7 +14,7 @@ export default function FileUpload({onChange, endpoint}: FileUploadProps) {
         <UploadDropzone
             endpoint={endpoint}
             onClientUploadComplete={(res) => {
-                onChange(res?.[0]?.ufsUrl)
+                onChange(res?.[0].url)
             }}
             onUploadError={(error: Error) => {
                 toast.error(`${error?.message}`)

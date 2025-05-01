@@ -7,17 +7,15 @@ import TitleForm from "./_components/TitleForm"
 import DescriptionForm from "./_components/DescriptionForm.tsx"
 import ImageForm from "./_components/ImageForm.tsx"
 
-interface CoursePageProps {
-  params: {
-    courseId: string;
-  };
-}
-
 export default async function CoursePage({
     params
-}: CoursePageProps) {
+}: Readonly<{
+  params: Promise<{ courseId: string }>
+
+}>) {
   
   const {userId} = await auth()
+  const { courseId } = await params
 
   if (!userId) {
     redirect("/")
@@ -25,7 +23,7 @@ export default async function CoursePage({
 
   const course = await db.course.findUnique({
     where: {
-        id: params.courseId
+        id: courseId
     }
   })
 
