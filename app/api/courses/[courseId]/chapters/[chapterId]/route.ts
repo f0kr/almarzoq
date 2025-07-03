@@ -61,12 +61,6 @@ export async function PATCH(
                 })
         }
 
-/*         const asset = await video.assets.create({
-            inputs: [values.videoUrl],
-            playback_policies: ["public"],
-            test: false
-        }) */
-
             const asset = await video.assets.create({
                 inputs: [
                     {url: values.videoUrl},
