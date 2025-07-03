@@ -4,7 +4,7 @@ import { NextResponse } from "next/server"
 
 export async function PUT(
     request: Request,
-    { params }: { params: { courseId: string } }
+    { params }: { params: Promise<{ courseId: string }> }
     ) {
         try {
 
@@ -20,7 +20,7 @@ export async function PUT(
 
             const ownCourse = await db.course.findUnique({
                 where: {
-                    id: params.courseId,
+                    id: (await params).courseId,
                     userId: userId
                 }
             })

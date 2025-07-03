@@ -3,18 +3,18 @@ import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import Mux from "@mux/mux-node"
 
-const mux = new Mux(
-  process.env.MUX_TOKEN_ID!,
-  process.env.MUX_TOKEN_SECRET!
-)
-
-const { Video } = mux
+const mux = new Mux({
+    tokenId: process.env.MUX_TOKEN_ID,
+    tokenSecret: process.env.MUX_TOKEN_SECRET
+})
+const Video = mux.video
 
 export async function PATCH(
     req: Request,
-    { params }: { params: { courseId: string; chapterId: string } }
+    { params }: { params: Promise<{ courseId: string; chapterId: string }> }
 ){
-  
+    const { courseId, chapterId } = await params;
+
     try{
         const {userId} = await auth()
         const {isPublished, ...values} = await req.json()
@@ -25,7 +25,7 @@ export async function PATCH(
 
         const ownCourse = await db.course.findUnique({
             where: {
-                id: params.courseId,
+                id: courseId,
                 userId: userId
             }
         })
@@ -36,8 +36,8 @@ export async function PATCH(
 
         const chapter = await db.chapter.update({
             where: {
-                id: params.chapterId,
-                courseId: params.courseId
+                id: chapterId,
+                courseId: courseId
             },
             data: {
                 ...values
@@ -48,12 +48,12 @@ export async function PATCH(
         if(values.videoUrl){
             const existingMuxData = await db.muxData.findFirst({
                 where: {
-                    chapterId: params.chapterId
+                    chapterId: chapterId
                 }
             })      
 
             if(existingMuxData) {
-                await Video.Assets.del(existingMuxData.assetId)
+                await Video.assets.delete(existingMuxData.assetId)
                 await db.muxData.delete({
                     where: {
                         id: existingMuxData.id
@@ -61,15 +61,15 @@ export async function PATCH(
                 })
         }
 
-        const asset = await Video.Assets.create({
-            input: values.videoUrl,
-            playback_policy: "public",
+        const asset = await Video.assets.create({
+            inputs: values.videoUrl,
+            playback_policies: ["public"],
             test: false
         })
 
         await db.muxData.create({
             data: {
-                chapterId: params.chapterId,
+                chapterId: chapterId,
                 assetId: asset.id,
                 playbackId: asset.playback_ids?.[0]?.id,
             }

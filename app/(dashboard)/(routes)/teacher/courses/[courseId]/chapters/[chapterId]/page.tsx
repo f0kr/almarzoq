@@ -12,7 +12,7 @@ import ChapterVideoForm from "./_components/ChapterVideoForm";
 export default async function ChapterIdPage({
     params,
  }:  { 
-    params: { chapterId: string; courseId: string } 
+    params: Promise<{ chapterId: string; courseId: string }> 
 }){
     const {userId} = await auth()
 
@@ -22,8 +22,8 @@ export default async function ChapterIdPage({
 
     const chapter = await db.chapter.findUnique({
         where: {
-            id: params.chapterId,
-            courseId: params.courseId
+            id: (await params).chapterId,
+            courseId: (await params).courseId
     },
 include: {
     muxData: true
@@ -50,7 +50,7 @@ return (
       <div className="flex items-center justify-between ">
         <div className="w-full">
             <Link
-            href={`/teacher/courses/${params.courseId}`}
+            href={`/teacher/courses/${(await params).courseId}`}
             className="flex items-center text-sm hover:opacity-75 transition mb-6"
             >
             <ArrowLeft className="h-4 w-4 mr-2"/>
@@ -79,13 +79,13 @@ return (
                 </div>
                   <ChapterTitleForm
                   initialData={chapter}
-                  courseId={params.courseId}
-                  chapterId={params.chapterId}
+                  courseId={(await params).courseId}
+                  chapterId={(await params).chapterId}
                   />
                   <ChapterDescriptionForm
                   initialData={chapter}
-                  courseId={params.courseId}
-                  chapterId={params.chapterId}
+                  courseId={(await params).courseId}
+                  chapterId={(await params).chapterId}
                   />
             </div>
          <div>
@@ -97,8 +97,8 @@ return (
              </div>
                <ChapterAccessForm
                initialData={chapter}
-               courseId={params.courseId}
-               chapterId={params.chapterId}
+               courseId={(await params).courseId}
+               chapterId={(await params).chapterId}
                />
           </div>
         </div>
@@ -111,8 +111,8 @@ return (
         </div>
         <ChapterVideoForm
         initialData={chapter}
-        courseId={params.courseId}
-        chapterId={params.chapterId}
+        courseId={(await params).courseId}
+        chapterId={(await params).chapterId}
         />
         </div>
       </div>
