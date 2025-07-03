@@ -7,7 +7,7 @@ const mux = new Mux({
     tokenId: process.env.MUX_TOKEN_ID,
     tokenSecret: process.env.MUX_TOKEN_SECRET
 })
-const Video = mux.video
+const video = mux.video
 
 export async function PATCH(
     req: Request,
@@ -53,7 +53,7 @@ export async function PATCH(
             })      
 
             if(existingMuxData) {
-                await Video.assets.delete(existingMuxData.assetId)
+                await video.assets.delete(existingMuxData.assetId)
                 await db.muxData.delete({
                     where: {
                         id: existingMuxData.id
@@ -61,11 +61,19 @@ export async function PATCH(
                 })
         }
 
-        const asset = await Video.assets.create({
-            inputs: values.videoUrl,
+/*         const asset = await video.assets.create({
+            inputs: [values.videoUrl],
             playback_policies: ["public"],
             test: false
-        })
+        }) */
+
+            const asset = await video.assets.create({
+                inputs: [
+                    {url: values.videoUrl},
+                ],
+                playback_policies: ["public"],
+                test: false
+            })
 
         await db.muxData.create({
             data: {
