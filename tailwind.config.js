@@ -8,6 +8,7 @@ module.exports = withUt({
     content: [
         "./app/**/*.{html,js,ts,jsx,tsx}",
         "./components/**/*.{html,js,ts,jsx,tsx}",
+        "./(dashboard)/_components/*.{html,js,ts,jsx,tsx}",
 
     ],
     theme: {

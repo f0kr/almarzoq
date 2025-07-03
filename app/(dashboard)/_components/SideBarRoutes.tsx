@@ -1,6 +1,5 @@
 'use client';
 
-import React, { use } from 'react';
 import SideItem from './SideItem';
 import {Layout, Compass, List, BarChart} from 'lucide-react'
 import { usePathname } from 'next/navigation';
