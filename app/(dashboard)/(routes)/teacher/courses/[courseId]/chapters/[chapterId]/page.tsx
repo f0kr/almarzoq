@@ -9,7 +9,11 @@ import ChapterDescriptionForm from "./_components/ChapterDescriptionForm";
 import ChapterAccessForm from "./_components/ChapterAccessForm";
 import ChapterVideoForm from "./_components/ChapterVideoForm";
 
-const ChapterIdPage = async ({ params }: { params: { chapterId: string; courseId: string } }) => {
+export default async function ChapterIdPage({
+    params,
+ }:  { 
+    params: { chapterId: string; courseId: string } 
+}){
     const {userId} = await auth()
 
     if(!userId) {
@@ -115,5 +119,3 @@ return (
     </div>
 )
 }
-
-export default ChapterIdPage
