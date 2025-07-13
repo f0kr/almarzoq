@@ -8,11 +8,10 @@ async function main() {
         data: [
             { name: 'Oil' },
             { name: 'Pencil' },
-            { name: 'Pastil' },
             { name: 'Water color' },
             { name: 'Digital' },
             { name: 'Design' },
-            { name: 'Realism' },
+            { name: 'Charcoal' },
         ]
      })
 

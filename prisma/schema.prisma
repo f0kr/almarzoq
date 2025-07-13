@@ -1,6 +1,8 @@
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["fullTextSearchPostgres"]
+  /* output   = "./node_modules/@prisma/client" */
 }
 
 datasource db {
@@ -111,7 +113,9 @@ model Purchase {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+
   @@index([courseId])
+  @@unique([userId, courseId])
 }
 
 model StripeCustomer {
