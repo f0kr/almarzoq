@@ -1,6 +1,8 @@
 "use client"
-import ReactQuill from "react-quill-new"
+import dynamic from "next/dynamic"
 import "react-quill-new/dist/quill.bubble.css"
+
+const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false })
 
 interface PreviewProps {
     value: string
