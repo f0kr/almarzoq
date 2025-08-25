@@ -4,10 +4,10 @@ import { Search } from "lucide-react"
 import { Input } from "./ui/input"
 import { useDebounce } from "@/hooks/use-debounce"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import { useEffect, useState } from "react"
+import { Suspense, useEffect, useState } from "react"
 import qs from "query-string"
 
-export const SearchInput = ()=> {
+const SearchInputInner = ()=> {
 
     const [value, setValue] = useState("")
     const debounceValue = useDebounce(value)
@@ -42,4 +42,12 @@ export const SearchInput = ()=> {
             />
         </div>
     )
+}
+
+export function SearchInput() {
+  return (
+    <Suspense fallback={<div>Loading search...</div>}>
+      <SearchInputInner />
+    </Suspense>
+  );
 }

@@ -4,17 +4,19 @@ import { getCourses } from "@/actions/getCourses";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { CoursesList } from "@/components/CoursesList";
+import { SearchInput } from "@/components/SearchInput";
+import { Suspense } from "react";
 
-/* interface SearchPageProps {
+interface SearchPageProps {
   searchParams: Promise<{
     title: string
     categoryId: string
   }>
-} */
+}
 
 export default async function SearchPage({
   searchParams
-}: {searchParams: Promise<{title: string; categoryId: string}>}) {
+}: SearchPageProps) {
 
   const {userId} = await auth()
   const sp = await searchParams
@@ -28,11 +30,14 @@ export default async function SearchPage({
 
     const courses = await getCourses({
       userId,
-      ... sp
+      ...searchParams
     })
     return (
       <>
       <div className="px-6 pt-6 md:hidden md:mb-0 block">
+        <Suspense fallback={<div>Loading...</div>}>
+          <SearchInput />
+        </Suspense>
       </div>
        <div className="p-6 space-y-4">
         <Categories
