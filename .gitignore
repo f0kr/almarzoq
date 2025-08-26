@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+/safeFile
 /.pnp
 .pnp.*
 .yarn/*
@@ -44,3 +45,5 @@ next-env.d.ts
 /.clerk/
 
 todo.txt
+
+
