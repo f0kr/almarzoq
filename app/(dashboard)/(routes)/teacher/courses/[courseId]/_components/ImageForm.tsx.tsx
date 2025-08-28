@@ -93,13 +93,15 @@ export default function ImageForm({
             {isEditing && (
                 <div>
                     <FileUpload
-                    endpoint='courseImage'
-                    onChange={(url) => {
-                        if (url) {
-                            onSubmit({imageUrl: url})
-                        }
-                    }}
-                    />
+  endpoint="courseImage"
+  onChange={(file) => {
+    if (typeof file === "string") {
+      onSubmit({ imageUrl: file });
+    } else if (file) {
+      onSubmit({ imageUrl: file.url });
+    }
+  }}
+/>
                     <div className='text-xs text-muted-foreground mt-4'>
                         16:9 aspect ratio recommended
                     </div>
