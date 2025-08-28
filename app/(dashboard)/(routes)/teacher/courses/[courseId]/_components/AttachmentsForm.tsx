@@ -8,7 +8,7 @@ import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
 import { Attachment, Course } from '@prisma/client'
-import FileUpload from '@/components/FileUpload'
+import AttachmentUpload from '@/components/AttachmentUpload'
 
 
 interface AttachmentsFormProps {
@@ -116,7 +116,7 @@ export default function AttachmentsForm({
             }
             {isEditing && (
                 <div>
-                  <FileUpload
+                  <AttachmentUpload
                      endpoint='courseAttachment'
                      onChange={(file) => {
                        if (file) {
