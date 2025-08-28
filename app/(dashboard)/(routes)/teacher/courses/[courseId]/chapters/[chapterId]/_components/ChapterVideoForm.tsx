@@ -90,15 +90,13 @@ export default function ChapterVideoForm({
             {isEditing && (
                 <div>
                     <FileUpload
-  endpoint="chapterVideo"
-  onChange={(file) => {
-    if (typeof file === "string") {
-      onSubmit({ videoUrl: file });
-    } else if (file) {
-      onSubmit({ videoUrl: file.url });
-    }
-  }}
-/>
+                    endpoint='chapterVideo'
+                    onChange={(url) => {
+                        if (url) {
+                            onSubmit({videoUrl: url})
+                        }
+                    }}
+                    />
                     <div className='text-xs text-muted-foreground mt-4'>
                         Upload this chapter&apos;s video
                     </div>
