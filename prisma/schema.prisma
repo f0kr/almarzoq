@@ -27,6 +27,9 @@ model Course {
   attachments Attachment[]
   purchases Purchase[]
 
+  teacherName String?
+  whatsappUrl String? @db.Text
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

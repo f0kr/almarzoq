@@ -13,6 +13,7 @@ chaptersLength: number
 price: number
 progress: number | null
 category: string
+teacherName: string
 }
 
 
@@ -23,7 +24,8 @@ export const CourseCard = ({
     chaptersLength,
     price,
     progress,
-    category
+    category,
+    teacherName
 }: CourseCardProps)=>{
     return(
         <Link href={`/courses/${id}`}>

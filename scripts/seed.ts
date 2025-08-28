@@ -12,6 +12,7 @@ async function main() {
             { name: 'Digital' },
             { name: 'Design' },
             { name: 'Charcoal' },
+            { name: 'Architecture' }
         ]
      })
 
