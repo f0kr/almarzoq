@@ -8,19 +8,17 @@ import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
 import { Attachment, Course } from '@prisma/client'
-import AttachmentUpload from '@/components/AttachmentUpload'
+import FileUpload from '@/components/FileUpload'
 
 
 interface AttachmentsFormProps {
     initialData: Course & {attachments: Attachment[]},
-    courseId: string,
+    courseId: string
 }
 
 const formSchema = z.object({
-    url: z.string().min(1),
-    name: z.string().min(1),
+   url: z.string().min(1)
 })
-
 
 
 export default function AttachmentsForm({
@@ -116,15 +114,14 @@ export default function AttachmentsForm({
             }
             {isEditing && (
                 <div>
-                  <AttachmentUpload
-                     endpoint='courseAttachment'
-                     onChange={(file) => {
-                       if (file) {
-                         onSubmit({ url: file.url, name: file.name })
-                }
-            }}
-/>
-
+                    <FileUpload
+                    endpoint='courseAttachment'
+                    onChange={(url) => {
+                        if (url) {
+                            onSubmit({url: url})
+                        }
+                    }}
+                    />
                     <div className='text-xs text-muted-foreground mt-4'>
                         Add anything your student might need to complete the course.
                     </div>
