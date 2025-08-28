@@ -13,7 +13,7 @@ chaptersLength: number
 price: number
 progress: number | null
 category: string
-teacherName: string
+teacherName: string | null
 }
 
 
@@ -39,6 +39,9 @@ export const CourseCard = ({
                    />
                 </div>
                 <div className="flex flex-col pt-2">
+                  <div className="text-xs text-muted-foreground">
+                    {teacherName}
+                  </div>
                   <div className="text-lg md:text-base font-medium group-hover:text-sky-700 transition line-clamp-2">
                     {title}
                   </div>

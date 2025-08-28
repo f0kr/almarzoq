@@ -28,6 +28,7 @@ items
                 price={item.price!}
                 progress={item.progress}
                 category={item?.category?.name!}
+                teacherName={item.teacherName}
                 />
             ))}
         </div>
