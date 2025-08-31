@@ -38,7 +38,7 @@ export default function AttachmentsForm({
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try{
-            await axios.post(`/api/courses/${courseId}/`, values)
+            await axios.post(`/api/courses/${courseId}/attachments`, values)
             toast.success('Course updated.')
             toggleEditing()
             router.refresh()
