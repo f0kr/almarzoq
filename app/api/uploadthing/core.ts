@@ -25,7 +25,10 @@ export const ourFileRouter = {
         pdf: { maxFileSize: "32MB" },
     })
         .middleware(() => handleAuth())
-        .onUploadComplete(() => {}),
+        .onUploadComplete(async ({ file, metadata }) => {
+         console.log("Uploaded file info:", file);
+         return { url: file.ufsUrl, name: file.name };
+}),
     chapterVideo: f({video: { maxFileSize: "512GB" }})
         .middleware(() => handleAuth())
         .onUploadComplete(() => {}),
