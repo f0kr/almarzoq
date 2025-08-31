@@ -1,8 +1,9 @@
 'use client';
 
 import SideItem from './SideItem';
-import {Layout, Compass, List, BarChart} from 'lucide-react'
+import {Layout, Compass, List, BarChart, Group} from 'lucide-react'
 import { usePathname } from 'next/navigation';
+import { MdCategory } from 'react-icons/md';
 
 const guestRoutes = [
     {
@@ -29,6 +30,11 @@ const teacherRoutes = [
         icon: BarChart,
         label: 'Analytics',
         href: '/teacher/analytics', 
+    },
+        {
+        icon: Group,
+        label: 'Categories',
+        href: '/teacher/categories',
     },
 ]
 

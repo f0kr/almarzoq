@@ -10,7 +10,7 @@ import CategoryForm from "./_components/CategoryForm"
 import PriceForm from "./_components/PriceForm"
 import AttachmentsForm from "./_components/AttachmentsForm"
 import ChaptersForm from "./_components/ChaptersForm"
-import WhatsAppGroupForm from "./_components/WhatsAppGroupForm"
+import GroupUrlForm from "./_components/GroupUrl"
 import { Banner } from "@/components/Banner"
 import { Actions } from "./_components/Actions"
 import TeacherNameForm from "./_components/TeacherNameForm"
@@ -119,7 +119,7 @@ export default async function CoursePage({
                   label: category.name,
                   value: category.id
                 }))}/>
-                <WhatsAppGroupForm
+                <GroupUrlForm
                 initialData={course}
                 courseId={course.id}/>
             </div>

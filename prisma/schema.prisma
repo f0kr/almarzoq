@@ -28,7 +28,7 @@ model Course {
   purchases Purchase[]
 
   teacherName String?
-  whatsappUrl String? @db.Text
+  groupUrl String? @db.Text
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

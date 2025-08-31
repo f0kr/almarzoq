@@ -6,7 +6,7 @@ import {IoMdColorPalette, IoIosBrush} from "react-icons/io"
 import {GiThrownCharcoal} from "react-icons/gi"
 import {FaPencil} from "react-icons/fa6"
 import {LuFileDigit} from "react-icons/lu"
-import {MdDesignServices} from "react-icons/md"
+import {MdCategory, MdDesignServices} from "react-icons/md"
 import CategoryItem from "./CategoryItem"
 
 
@@ -34,7 +34,7 @@ export default function Categories({
         <CategoryItem
         key={item.id}
         label={item.name}
-        icon={iconMap[item.name]}
+        icon={item.name in iconMap ? iconMap[item.name] : MdCategory}
         value={item.id}
         >
 

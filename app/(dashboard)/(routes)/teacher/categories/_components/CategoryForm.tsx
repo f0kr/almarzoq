@@ -20,24 +20,20 @@ import toast from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
 import { cn } from '@/lib/utils'
 
-interface WhatsAppGroupFormProps {
+interface CategoryFormProps {
   initialData: {
-    whatsappUrl: string | null
-  },
-  courseId: string
+    categoryName: string | null
+  }
 }
 
 const formSchema = z.object({
-  whatsappUrl: z.string()
-    .url("Please enter a valid URL")
-    .regex(/(https?:\/\/)?(chat\.whatsapp\.com)\/[A-Za-z0-9]+/, "Must be a valid WhatsApp group link")
-    .optional()
+  categoryName: z.string().min(2, "Name must be at least 2 characters"),
 })
 
-export default function WhatsAppGroupForm({
+
+export default function CategoryForm({
   initialData,
-  courseId
-}: WhatsAppGroupFormProps) {
+}: CategoryFormProps) {
 
   const [isEditing, setIsEditing] = useState(false)
   const toggleEditing = () => setIsEditing((prev) => !prev)
@@ -45,18 +41,19 @@ export default function WhatsAppGroupForm({
   const router = useRouter()
 
   const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      whatsappUrl: initialData.whatsappUrl || ""
-    }
-  })
+  resolver: zodResolver(formSchema),
+  defaultValues: {
+    categoryName: initialData.categoryName ?? "",
+  }
+})
+
 
   const { isSubmitting, isValid } = form.formState
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await axios.patch(`/api/courses/${courseId}`, values)
-      toast.success('WhatsApp group link updated.')
+      await axios.post(`/api/categories/`, values)
+      toast.success('Category added')
       toggleEditing()
       router.refresh()
 
@@ -67,9 +64,9 @@ export default function WhatsAppGroupForm({
   }
 
   return (
-    <div className='mt-6 border bg-slate-100 rounded-md p-4'>
+    <div className='mt-6 border bg-slate-100 rounded-md p-4 md:w-[50%] w-[70%]'>
       <div className='font-medium flex items-center justify-between'>
-        WhatsApp Group
+        Category Name
         <Button
           onClick={toggleEditing}
           variant="ghost"
@@ -77,7 +74,7 @@ export default function WhatsAppGroupForm({
           {isEditing ? "Cancel" : (
             <>
               <Pencil className='h-4 w-4 mr-2' />
-              Edit link
+              Edit category
             </>
           )}
         </Button>
@@ -86,8 +83,8 @@ export default function WhatsAppGroupForm({
       {!isEditing && (
                 <p className={cn(
                     "text-sm mt-2",
-                    !initialData.whatsappUrl && "text-slate-500 italic"
-                )}>{initialData.whatsappUrl ? initialData.whatsappUrl : "No WhatsApp group link"}</p>
+                    !initialData.categoryName && "text-slate-500 italic"
+                )}>{initialData.categoryName ? initialData.categoryName : "No category name"}</p>
       )}
 
       {isEditing && (
@@ -95,14 +92,14 @@ export default function WhatsAppGroupForm({
           <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4 mt-4'>
             <FormField
               control={form.control}
-              name="whatsappUrl"
+              name="categoryName"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>WhatsApp Group URL</FormLabel>
+                  <FormLabel>Category Name</FormLabel>
                   <FormControl>
                     <Input
                       disabled={isSubmitting}
-                      placeholder='https://chat.whatsapp.com/...'
+                      placeholder='Enter category name...'
                       {...field}
                     />
                   </FormControl>
