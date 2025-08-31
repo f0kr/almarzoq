@@ -15,7 +15,7 @@ export default function NavBarRoutes() {
 
     const isTeacherPage = pathname?.startsWith("/teacher")
     const isCoursePage = pathname?.includes("/courses")
-    const isSearchPage = pathname === "/search"
+    const isSearchPage = pathname === "/"
 
     return(
       <>

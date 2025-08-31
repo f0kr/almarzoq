@@ -1,42 +1,50 @@
-import { getDashboardCourses } from "@/actions/getDashboardCourses"
-import { CoursesList } from "@/components/CoursesList"
-import { auth } from "@clerk/nextjs/server"
-import { Check, CheckCircle, Clock } from "lucide-react"
-import { redirect } from "next/navigation"
-import { InfoCard } from "./_components/InfoCard"
+import { db } from "@/lib/db";
+import Categories from "./_components/Categories";
+import { getCourses } from "@/actions/getCourses";
+import { auth } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
+import { CoursesList } from "@/components/CoursesList";
+import { SearchInput } from "@/components/SearchInput";
+import { Suspense } from "react";
 
-
-export default async function Dashboard() {
-
-const {userId }= await auth()
-
-if(!userId) {
-  return redirect("/")
+interface SearchPageProps {
+  searchParams: Promise<{
+    title: string
+    categoryId: string
+  }>
 }
 
-const {
-  completedCourses,
-  coursesInProgress
-} = await getDashboardCourses(userId)
+export default async function SearchPage({
+  searchParams
+}: SearchPageProps) {
 
-return(
-  <div className="p-6 space-y-4">
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-      <InfoCard
-      icon={Clock}
-      label='In Progress'
-      numberOfItems={coursesInProgress.length}
-      />
-      <InfoCard
-      icon={CheckCircle}
-      label='Completed'
-      numberOfItems={completedCourses.length}
-      variant="success"
-      />
-    </div>
-    <CoursesList
-    items={[...coursesInProgress, ...completedCourses]}
-    />
-  </div>
-)
+  const {userId} = await auth()
+  const sp = await searchParams
+  if(!userId) return redirect("/")
+
+    const categories = await db.category.findMany({
+        orderBy: {
+            name: "asc"
+        }
+    })
+
+    const courses = await getCourses({
+      userId,
+      ...sp
+    })
+    return (
+      <>
+      <div className="px-6 pt-6 md:hidden md:mb-0 block">
+        <Suspense fallback={<div>Loading...</div>}>
+          <SearchInput />
+        </Suspense>
+      </div>
+       <div className="p-6 space-y-4">
+        <Categories
+        items={categories}
+        />
+        <CoursesList items={courses}/>
+       </div>
+      </>
+    );
 }
