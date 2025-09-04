@@ -11,8 +11,9 @@ import { isTeacher } from "@/lib/teacher"
 export default function NavBarRoutes() {
    
     const {userId} = useAuth()
-    const {isSignedIn, user} = useUser()
+    const {isSignedIn, isLoaded} = useUser()
     const pathname = usePathname()
+    
 
     const isTeacherPage = pathname?.startsWith("/teacher")
     const isCoursePage = pathname?.includes("/courses")
