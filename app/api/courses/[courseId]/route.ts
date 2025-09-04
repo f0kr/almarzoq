@@ -49,6 +49,11 @@ export async function DELETE(
         if(chapter.muxData?.assetId){
             await video.assets.delete(chapter.muxData.assetId)
         }
+
+        if (chapter.videoUrl) {
+            const key = extractKeyFromUploadThingUrl(chapter.videoUrl);
+            if (key) await utapi.deleteFiles(key);
+        }
     }
 
     const attachments = await db.attachment.findMany({
@@ -63,9 +68,15 @@ export async function DELETE(
         }
     }
 
-    if (course.imageUrl?.includes("utfs.io")) {
+    if (course.imageUrl) {
         const key = course.imageUrl.split("/").pop(); 
           if (key) await utapi.deleteFiles(key);
+    }
+
+    function extractKeyFromUploadThingUrl(url: string): string | null {
+     if (!url) return null;
+     const parts = url.split('/');
+     return parts[parts.length - 1] || null;
     }
 
     const deletedCourse = await db.course.delete({
