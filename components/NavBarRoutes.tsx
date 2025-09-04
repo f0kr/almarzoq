@@ -13,6 +13,8 @@ export default function NavBarRoutes() {
     const {userId} = useAuth()
     const {isSignedIn, isLoaded} = useUser()
     const pathname = usePathname()
+
+    if(!isLoaded) return null
     
 
     const isTeacherPage = pathname?.startsWith("/teacher")

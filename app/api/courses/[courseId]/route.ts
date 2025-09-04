@@ -3,7 +3,7 @@ import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import Mux from "@mux/mux-node"
 import { isTeacher } from "@/lib/teacher";
-import { utapi } from "@/lib/uploadthing";
+import { UTApi } from "uploadthing/server";
 
 const mux = new Mux({
     tokenId: process.env.MUX_TOKEN_ID,
@@ -16,8 +16,10 @@ export async function DELETE(
     {params}: {params: Promise<{courseId: string}>}
 
 ){
-   try{
 
+   try{
+    
+    const utapi = new UTApi();
     const {userId} = await auth()
     const {courseId} = await params
 
