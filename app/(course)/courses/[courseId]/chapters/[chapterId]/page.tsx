@@ -16,7 +16,6 @@ export default async function ChapterId({
 }){
 
     const {userId} = await auth()
-    if(!userId) return redirect("/")
 
     const {chapterId, courseId}= await params
 
@@ -29,7 +28,7 @@ export default async function ChapterId({
         userProgress,
         purchase,
     } = await getChapter({
-        userId,
+        userId: userId || "",
         chapterId,
         courseId,
     })

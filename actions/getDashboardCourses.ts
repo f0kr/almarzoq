@@ -18,7 +18,7 @@ Promise<DashboardCourses> => {
     try{
       const purchasedCourses = await db.purchase.findMany({
         where: {
-            userId
+            userId: userId || ""
         },
         select: {
             course: {

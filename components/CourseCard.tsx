@@ -68,10 +68,16 @@ export const CourseCard = ({
 
                         />
                     </div>
-                  ): (
-                    <p className="text-md md:text-sm font-medium text-slate-700">
-                        {formatPrice(price)}
-                    </p>
+                  ) : (
+                    price === 0 ? (
+                        <span className="inline-block px-2 py-0.5 text-xs font-semibold bg-green-100 text-green-700 rounded-full">
+                            Free
+                        </span>
+                    ) : (
+                        <p className="text-md md:text-sm font-medium text-slate-700">
+                            {formatPrice(price)}
+                        </p>
+                    )
                   )}
                 </div>
             </div>

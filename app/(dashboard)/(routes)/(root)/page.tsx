@@ -2,7 +2,6 @@ import { db } from "@/lib/db";
 import Categories from "./_components/Categories";
 import { getCourses } from "@/actions/getCourses";
 import { auth } from "@clerk/nextjs/server";
-import { redirect } from "next/navigation";
 import { CoursesList } from "@/components/CoursesList";
 import { SearchInput } from "@/components/SearchInput";
 import { Suspense } from "react";
@@ -20,7 +19,6 @@ export default async function SearchPage({
 
   const {userId} = await auth()
   const sp = await searchParams
-  if(!userId) return redirect("/")
 
     const categories = await db.category.findMany({
         orderBy: {

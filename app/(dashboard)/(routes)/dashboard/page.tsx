@@ -1,8 +1,7 @@
 import { getDashboardCourses } from "@/actions/getDashboardCourses"
 import { CoursesList } from "@/components/CoursesList"
 import { auth } from "@clerk/nextjs/server"
-import { Check, CheckCircle, Clock } from "lucide-react"
-import { redirect } from "next/navigation"
+import { CheckCircle, Clock } from "lucide-react"
 import { InfoCard } from "./_components/InfoCard"
 
 
@@ -10,14 +9,10 @@ export default async function Dashboard() {
 
 const {userId }= await auth()
 
-if(!userId) {
-  return redirect("/")
-}
-
 const {
   completedCourses,
   coursesInProgress
-} = await getDashboardCourses(userId)
+} = await getDashboardCourses(userId || "")
 
 return(
   <div className="p-6 space-y-4">

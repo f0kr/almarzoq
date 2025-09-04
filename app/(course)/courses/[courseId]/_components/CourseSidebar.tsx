@@ -2,7 +2,6 @@ import { db } from "@/lib/db"
 import { auth } from "@clerk/nextjs/server"
 import { Chapter, Course, UserProgress } from "@prisma/client"
 import CourseSidebarItem from "./CourseSidebarItem"
-import { redirect } from "next/navigation"
 import { CourseProgress } from "@/components/CourseProgress"
 
 interface CourseSidebarProps {
@@ -21,12 +20,11 @@ export default async function CourseSidebar({
 
     const {userId} = await auth()
 
-    if(!userId) return redirect("/")
 
       const purchase = await db.purchase.findUnique({
         where: {
             userId_courseId: {
-                userId,
+                userId: userId || "",
                 courseId: course.id
             }
         }

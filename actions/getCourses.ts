@@ -9,7 +9,7 @@ type CourseWithProgressWithCategory = Course & {
 }
 
 type GetCourses = {
-    userId: string
+    userId?: string | null
     title?: string
     categoryId?: string
 }
@@ -40,7 +40,7 @@ const courses  = await db.course.findMany({
         },
         purchases: {
             where: {
-                userId
+                userId: userId || ""
             }
         }
     },
@@ -58,7 +58,8 @@ const courses  = await db.course.findMany({
             }
         }
 
-        const progressPercentage = await getProgress(userId, course.id)
+        const progressPercentage = await getProgress(course.id , userId || "" )
+
 
         return{
             ...course,

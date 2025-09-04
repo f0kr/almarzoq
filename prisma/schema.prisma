@@ -49,6 +49,7 @@ model Category {
 model Attachment {
   id String @id @default(uuid())
   name String
+  key String @db.Text
   url String @db.Text
 
   courseId String

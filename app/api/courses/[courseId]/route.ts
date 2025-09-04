@@ -3,6 +3,7 @@ import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import Mux from "@mux/mux-node"
 import { isTeacher } from "@/lib/teacher";
+import { utapi } from "@/lib/uploadthing";
 
 const mux = new Mux({
     tokenId: process.env.MUX_TOKEN_ID,
@@ -20,14 +21,14 @@ export async function DELETE(
     const {userId} = await auth()
     const {courseId} = await params
 
-    if(!userId || !isTeacher(userId)){
+    if(!isTeacher(userId)){
         return new NextResponse("Unauthorized", {status: 401})
     }
 
     const course = await db.course.findUnique({
         where: {
            id: courseId,
-           userId
+           userId: userId || ""
         },
         include: {
             chapters: {
@@ -46,6 +47,23 @@ export async function DELETE(
         if(chapter.muxData?.assetId){
             await video.assets.delete(chapter.muxData.assetId)
         }
+    }
+
+    const attachments = await db.attachment.findMany({
+        where: {
+            courseId
+        }
+    })
+
+    for (const attachment of attachments) {
+        if(attachment.key) {
+            await utapi.deleteFiles(attachment.key)
+        }
+    }
+
+    if (course.imageUrl?.includes("utfs.io")) {
+        const key = course.imageUrl.split("/").pop(); 
+          if (key) await utapi.deleteFiles(key);
     }
 
     const deletedCourse = await db.course.delete({

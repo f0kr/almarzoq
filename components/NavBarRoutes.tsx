@@ -1,6 +1,6 @@
 "use client"
 
-import { useAuth, UserButton } from "@clerk/nextjs"
+import { SignInButton, useAuth, UserButton, useUser } from "@clerk/nextjs"
 import { LogOut } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
@@ -11,6 +11,7 @@ import { isTeacher } from "@/lib/teacher"
 export default function NavBarRoutes() {
    
     const {userId} = useAuth()
+    const {isSignedIn, user} = useUser()
     const pathname = usePathname()
 
     const isTeacherPage = pathname?.startsWith("/teacher")
@@ -39,7 +40,15 @@ export default function NavBarRoutes() {
                 </Button>
                 </Link>
             ) : null}
-            <UserButton />
+            {!isSignedIn? (
+            <SignInButton>
+             <button className="px-4 py-2 bg-blue-600 text-white rounded">
+                Sign In
+             </button>
+            </SignInButton>
+            ): (
+                <UserButton/>
+            )}
         </div>
       </>
     )
