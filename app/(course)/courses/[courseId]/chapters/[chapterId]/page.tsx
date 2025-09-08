@@ -31,6 +31,7 @@ export default async function ChapterId({
         nextChapter,
         userProgress,
         purchase,
+        isCourseFree
     } = await getChapter({
         userId: userId || "",
         chapterId,
@@ -73,7 +74,7 @@ export default async function ChapterId({
                       <h2 className="text-2xl font-semibod mb-2">
                         {chapter.title}
                       </h2>
-                      {purchase ? (
+                      {purchase && userId ? (
                         <CourseProgressButton
                         chapterId={chapterId}
                         courseId={courseId}
@@ -81,11 +82,18 @@ export default async function ChapterId({
                         isCompleted={!!userProgress?.isCompleted}
                         />
                       ) : (
-                        !userId ? (
+                        !userId && !isCourseFree ? (
                          <p className=  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive">
-                          Please Sign in to enroll for {formatPrice(course.price!)}
+                                Please{" "}
+                          <SignInButton mode="modal">
+                           <button className="font-bold underline hover:text-primary transition">
+                            sign in
+                           </button>  
+                          </SignInButton>{" "}
+                            to enroll for {formatPrice(course.price!)}
                           </p>
-                        ) : (
+                        ) : ( !isCourseFree && userId ?
+                          (
                         <a target="_blank" href="https://t.me/AlmrzoqAcademy">
                         <Button
                         size="sm"
@@ -94,7 +102,25 @@ export default async function ChapterId({
                         Contact Us and Enroll for {formatPrice(course.price!)}
                         </Button>
                         </a>
+                        ) : isCourseFree && !userId ? (
+                          <p className=  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive">
+                            Please{" "}
+                           <SignInButton mode="modal">
+                           <button className="font-bold underline hover:text-primary transition">
+                            sign in
+                           </button>  
+                          </SignInButton>{" "}
+                          to track progress
+                          </p>
+                        ): (
+                        <CourseProgressButton
+                        chapterId={chapterId}
+                        courseId={courseId}
+                        nextChapterId={nextChapter?.id}
+                        isCompleted={!!userProgress?.isCompleted}
+                        />
                         )
+                      )
 /*                         <CourseEnrollButton
                         courseId={courseId}
                         price={course.price!}
@@ -125,7 +151,7 @@ export default async function ChapterId({
                         </>
                     )}
                     <Separator/>
-                    {course.groupUrl && (
+                    {course.groupUrl && purchase && (
                       <div className="p-4 flex items-center">
                       <a
                       href={course.groupUrl}

@@ -3,6 +3,7 @@ import { auth } from "@clerk/nextjs/server"
 import { Chapter, Course, UserProgress } from "@prisma/client"
 import CourseSidebarItem from "./CourseSidebarItem"
 import { CourseProgress } from "@/components/CourseProgress"
+import { getChapter } from "@/actions/getChapter"
 
 interface CourseSidebarProps {
     course: Course & {
@@ -19,6 +20,7 @@ export default async function CourseSidebar({
 }: CourseSidebarProps) {
 
     const {userId} = await auth()
+    
 
 
       const purchase = await db.purchase.findUnique({
@@ -36,7 +38,15 @@ export default async function CourseSidebar({
             <h1 className="font-semibold">
                 {course.title}
             </h1>
-            {purchase && (
+            {purchase && course.price === 0 && (
+              <div className="mt-10">
+                <CourseProgress
+                variant='success'
+                value={progressCount}
+                />
+              </div>
+            )}
+            {!purchase && course.price === 0 && (
               <div className="mt-10">
                 <CourseProgress
                 variant='success'

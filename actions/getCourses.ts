@@ -12,12 +12,14 @@ type GetCourses = {
     userId?: string | null
     title?: string
     categoryId?: string
+    free?: Boolean
 }
 
 export async function getCourses({
  userId,
  title,
- categoryId
+ categoryId,
+ free
 }: GetCourses): Promise<CourseWithProgressWithCategory[]>{
 try{
 const courses  = await db.course.findMany({
@@ -27,6 +29,10 @@ const courses  = await db.course.findMany({
             contains: title,
         },
         categoryId,
+        ...(free ? 
+               {
+             price: 0 
+        } : {}),
     },
     include: {
         category: true,

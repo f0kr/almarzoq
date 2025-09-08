@@ -30,6 +30,8 @@ export const getChapter = async ({
         }
     })
 
+    const isCourseFree = course?.price === 0? true : false
+
     const chapter = await db.chapter.findUnique({
         where: {
             id: chapterId,
@@ -91,6 +93,7 @@ export const getChapter = async ({
         nextChapter,
         userProgress,
         purchase,
+        isCourseFree
     }
   }catch (error){
     console.log("GET_CHAPTER", error)

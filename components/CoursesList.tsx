@@ -1,5 +1,7 @@
 import { Category, Course } from "@prisma/client"
 import { CourseCard } from "./CourseCard"
+import { auth } from "@clerk/nextjs/server"
+import { SignInButton } from "@clerk/nextjs"
 
 type CourseWithProgressWithCategory = Course & {
     category: Category | null
@@ -11,9 +13,11 @@ interface CoursesListProps {
     items: CourseWithProgressWithCategory[]
 }
 
-export function CoursesList({
+export async function CoursesList({
 items
 }: CoursesListProps){
+
+    const {userId} = await auth()
 
     return(
       <div>
@@ -32,10 +36,21 @@ items
                 />
             ))}
         </div>
-        {items.length === 0 && (
+        {items.length === 0 && userId && (
             <div className="text-center text-sm text-muted-foreground mt-10">
                 No courses found
             </div>
+        )}
+        {items.length === 0 && !userId && (
+            <div className="text-center text-sm text-muted-foreground mt-10">
+                      Please{" "}
+      <SignInButton mode="modal">
+        <button className="font-bold underline hover:text-primary transition">
+          sign in
+        </button>
+      </SignInButton>{" "}
+      to track progress
+            </div>      
         )}
        </div>
     )

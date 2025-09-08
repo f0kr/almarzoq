@@ -7,7 +7,7 @@ export async function PUT(
     {params}: {params: Promise<{courseId: string; chapterId: string}>}
 ){
     try{
-        const {courseId, chapterId} = await params
+        const {chapterId} = await params
         const {userId} = await auth()
         const {isCompleted} = await req.json()
 
