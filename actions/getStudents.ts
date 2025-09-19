@@ -1,25 +1,31 @@
 import { isTeacher } from "@/lib/teacher"
 import { auth, clerkClient } from "@clerk/nextjs/server"
-import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 
 export async function getStudents() {
+  const { userId } = await auth()
 
-    const {userId} = await auth()
-    
-        
-     if(!isTeacher(userId)) return redirect("/")
+  if (!isTeacher(userId)) return redirect("/")
 
-        const users = (await clerkClient()).users.getUserList({limit: 1000})
+  let allUsers: any[] = []
+  let hasMore = true
 
-        const students = (await users).data.map((user) => ({
-           id: user.id,
-           fullName: user.fullName,
-           email: user.emailAddresses[0]?.emailAddress ?? "",
-           createdAt: user.createdAt,
+  while (hasMore) {
+    const res = (await clerkClient()).users.getUserList({
+      limit: 1000,
+    })
+
+    allUsers = [...allUsers, ...(await res).data]
+
+    hasMore = (await res).data.length > 0
+  }
+
+  const students = allUsers.map((user) => ({
+    id: user.id,
+    fullName: user.fullName,
+    email: user.emailAddresses[0]?.emailAddress ?? "",
+    createdAt: user.createdAt,
   }))
 
-
-        return students
-
+  return students
 }
