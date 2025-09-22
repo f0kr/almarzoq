@@ -43,7 +43,7 @@ const teacherRoutes = [
     }
 ]
 
-const SideBarRoutes = () => {
+const SideBarRoutes = ({ onRouteClick }: { onRouteClick?: () => void }) => {
     const pathname = usePathname()
     const isTeacherPage = pathname?.startsWith('/teacher')
     const routes = isTeacherPage ? teacherRoutes : guestRoutes
@@ -56,6 +56,7 @@ const SideBarRoutes = () => {
                     icon={route.icon}
                     label={route.label}
                     href={route.href}
+                    onClick={onRouteClick}
                 />
             ))}
         </div>

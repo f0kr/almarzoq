@@ -1,7 +1,10 @@
+"use client"
+
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { Chapter, Course, UserProgress } from "@prisma/client"
+import { Chapter, Course, Purchase, UserProgress } from "@prisma/client"
 import { Menu } from "lucide-react"
 import CourseSidebar from "./CourseSidebar"
+import { useState } from "react"
 
 interface CourseMobileSidebarProps {
     course: Course & {
@@ -9,15 +12,20 @@ interface CourseMobileSidebarProps {
             userProgress: UserProgress[] | null
         })[]
     }
+    purchase: Purchase | null
     progressCount: number
 }
 
 export default function CourseMobileSidebar({
     course,
-    progressCount
+    progressCount,
+    purchase
 }: CourseMobileSidebarProps){
+
+    const [open, setOpen] = useState(false)
+
     return(
-   <Sheet>
+   <Sheet open={open} onOpenChange={setOpen}>
     <SheetTrigger className="md:hidden pr-4 hover:opacity-75 transition">
         <Menu/>
     </SheetTrigger>
@@ -25,6 +33,8 @@ export default function CourseMobileSidebar({
         <CourseSidebar
         course={course}
         progressCount={progressCount}
+        purchase={purchase}
+        onChapterClick={() => setOpen(false)}
         />
     </SheetContent>
    </Sheet>

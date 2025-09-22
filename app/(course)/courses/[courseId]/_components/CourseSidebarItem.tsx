@@ -10,6 +10,7 @@ interface CourseSidebarItemProps {
     isCompleted: boolean
     courseId: string
     isLocked: boolean
+    onClick?: () => void
 }
 
 export default function CourseSidebarItem({
@@ -17,7 +18,8 @@ export default function CourseSidebarItem({
     id,
     isCompleted,
     courseId,
-    isLocked
+    isLocked,
+    onClick
 }: CourseSidebarItemProps){
 
     const pathname = usePathname()
@@ -25,12 +27,13 @@ export default function CourseSidebarItem({
     const Icon = isLocked ? Lock : (isCompleted? CheckCircle : PlayCircle)
     const isActive = pathname?.includes(id)
 
-    const onClick = ()=> {
+    const handleClick = ()=> {
         router.push(`/courses/${courseId}/chapters/${id}`)
+        if(onClick) onClick()
     }
     return(
         <button
-        onClick={onClick}
+        onClick={handleClick}
         type="button"
         className={cn(
             "flex items-center gap-x-2 text-slate-500 text-sm font-[500] pl-6 transition-all hover:text-slate-600 hover:bg-slate-300/20",

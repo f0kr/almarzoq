@@ -1,14 +1,13 @@
 import { IconBadge } from "@/components/IconBadge"
 import { db } from "@/lib/db"
 import { auth } from "@clerk/nextjs/server"
-import { CircleDollarSign, File, LayoutDashboard, ListCheck } from "lucide-react"
+import { CircleDollarSign, LayoutDashboard, ListCheck } from "lucide-react"
 import { redirect } from "next/navigation"
 import TitleForm from "./_components/TitleForm"
 import DescriptionForm from "./_components/DescriptionForm.tsx"
 import ImageForm from "./_components/ImageForm.tsx"
 import CategoryForm from "./_components/CategoryForm"
 import PriceForm from "./_components/PriceForm"
-import AttachmentsForm from "./_components/AttachmentsForm"
 import ChaptersForm from "./_components/ChaptersForm"
 import GroupUrlForm from "./_components/GroupUrl"
 import { Banner } from "@/components/Banner"
@@ -40,11 +39,6 @@ export default async function CoursePage({
           position: 'asc'
         }
       },
-      attachments: {
-        orderBy: {
-          createdAt: 'desc'
-        }
-      }
     }
   })
 
@@ -150,17 +144,6 @@ export default async function CoursePage({
               courseId={course.id}
               />
             </div>
-          </div>
-          <div>
-                 <div className="flex items-center gap-x-2">
-                <IconBadge icon={File}/>
-                <h2 className="text-xl">
-                  Resources and Attachments
-                </h2>
-              </div>
-                <AttachmentsForm
-                initialData={course}
-                courseId={course.id}/>
           </div>
         </div>
     </div>

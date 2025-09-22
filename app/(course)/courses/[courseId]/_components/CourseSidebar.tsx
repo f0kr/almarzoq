@@ -1,9 +1,8 @@
 import { db } from "@/lib/db"
 import { auth } from "@clerk/nextjs/server"
-import { Chapter, Course, UserProgress } from "@prisma/client"
+import { Chapter, Course, Purchase, UserProgress } from "@prisma/client"
 import CourseSidebarItem from "./CourseSidebarItem"
 import { CourseProgress } from "@/components/CourseProgress"
-import { getChapter } from "@/actions/getChapter"
 
 interface CourseSidebarProps {
     course: Course & {
@@ -12,25 +11,16 @@ interface CourseSidebarProps {
       })[]
   }
   progressCount: number
+  purchase: Purchase | null
+  onChapterClick?: () => void
 }
 
-export default async function CourseSidebar({
+export default function CourseSidebar({
     course,
     progressCount,
+    purchase,
+    onChapterClick
 }: CourseSidebarProps) {
-
-    const {userId} = await auth()
-    
-
-
-      const purchase = await db.purchase.findUnique({
-        where: {
-            userId_courseId: {
-                userId: userId || "",
-                courseId: course.id
-            }
-        }
-      })
 
     return(
         <div className="h-full border-r flex flex-col overflow-y-auto shadow-sm">
@@ -64,6 +54,7 @@ export default async function CourseSidebar({
                 isCompleted={!!chapter.userProgress?.[0]?.isCompleted}
                 courseId={course.id}
                 isLocked={!chapter.isFree && !purchase}
+                onClick={onChapterClick}
                 />
             ))}
           </div>

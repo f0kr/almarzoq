@@ -1,7 +1,7 @@
 import { IconBadge } from "@/components/IconBadge";
 import { db } from "@/lib/db"
 import { auth } from "@clerk/nextjs/server"
-import { ArrowLeft, Eye, LayoutDashboard, Video } from "lucide-react";
+import { ArrowLeft, Eye, File, LayoutDashboard, Video } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation"
 import ChapterTitleForm from "./_components/ChapterTitleForm";
@@ -10,6 +10,7 @@ import ChapterAccessForm from "./_components/ChapterAccessForm";
 import ChapterVideoForm from "./_components/ChapterVideoForm";
 import { Banner } from "@/components/Banner";
 import { ChapterActions } from "./_components/ChapterActions";
+import AttachmentsForm from "./_components/AttachmentsForm";
 
 export default async function ChapterIdPage({
     params,
@@ -17,6 +18,7 @@ export default async function ChapterIdPage({
     params: Promise<{ chapterId: string; courseId: string }> 
 }){
     const {userId} = await auth()
+    const { courseId, chapterId } = await params
 
     if(!userId) {
         return redirect("/")
@@ -24,11 +26,12 @@ export default async function ChapterIdPage({
 
     const chapter = await db.chapter.findUnique({
         where: {
-            id: (await params).chapterId,
-            courseId: (await params).courseId
+            id: chapterId,
+            courseId
     },
 include: {
-    muxData: true
+    muxData: true,
+    attachments: true,
 },
 })
 
@@ -128,9 +131,22 @@ return (
         </div>
         <ChapterVideoForm
         initialData={chapter}
-        courseId={(await params).courseId}
-        chapterId={(await params).chapterId}
+        courseId={courseId}
+        chapterId={chapterId}
         />
+        <div>
+        <div className="flex items-center gap-x-2">
+          <IconBadge icon={File}/>
+          <h2 className="text-xl">
+            Resources and Attachments
+          </h2>
+        </div>
+          <AttachmentsForm
+           initialData={chapter}
+           courseId={courseId}
+           chapterId={chapterId}
+           />
+          </div>
         </div>
       </div>
     </div>

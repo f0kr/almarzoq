@@ -7,13 +7,14 @@ import { File,Loader2, PlusCircle, X } from 'lucide-react'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
-import { Attachment, Course } from '@prisma/client'
+import { Attachment, Chapter, MuxData } from '@prisma/client'
 import FileUpload from '@/components/FileUpload'
 
 
 interface AttachmentsFormProps {
-    initialData: Course & {attachments: Attachment[]},
-    courseId: string
+    initialData: Chapter & {attachments: Attachment[]} & {muxData?: MuxData | null},
+    courseId: string,
+    chapterId: string
 }
 
 const formSchema = z.object({
@@ -25,7 +26,8 @@ const formSchema = z.object({
 
 export default function AttachmentsForm({
     initialData,
-    courseId
+    courseId,
+    chapterId
 }: AttachmentsFormProps) {
 
     const [isEditing, setIsEditing] = useState(false)
@@ -40,7 +42,7 @@ export default function AttachmentsForm({
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try{
-            await axios.post(`/api/courses/${courseId}/attachments`, values)
+            await axios.post(`/api/courses/${courseId}/chapters/${chapterId}/attachments`, values)
             toast.success('Course updated.')
             toggleEditing()
             router.refresh()
@@ -54,7 +56,7 @@ export default function AttachmentsForm({
     const onDelete = async (id: string) => {
         try {
             setDeletingId(id)
-            await axios.delete(`/api/courses/${courseId}/attachments/${id}`)
+            await axios.delete(`/api/courses/${courseId}/chapters/${chapterId}/attachments/${id}`)
             toast.success('Attachment deleted.')
             router.refresh()
         }catch {
@@ -67,7 +69,7 @@ export default function AttachmentsForm({
     return(
         <div className='mt-6 border bg-slate-100 rounded-md p-4'>
             <div className='font-medium flex items-center justify-between'>
-              Course Attachments
+              Chapter Attachments
               <Button
               onClick={toggleEditing}
               variant="ghost">

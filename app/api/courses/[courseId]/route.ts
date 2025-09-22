@@ -35,7 +35,8 @@ export async function DELETE(
         include: {
             chapters: {
                 include: {
-                    muxData: true
+                    muxData: true,
+                    attachments: true
                 }
             }
         }
@@ -45,28 +46,22 @@ export async function DELETE(
         return new NextResponse("Not Found", {status: 404})
     }
 
-    for (const chapter of course.chapters){
-        if(chapter.muxData?.assetId){
-            await video.assets.delete(chapter.muxData.assetId)
-        }
-
-        if (chapter.videoUrl) {
-            const key = extractKeyFromUploadThingUrl(chapter.videoUrl);
-            if (key) await utapi.deleteFiles(key);
-        }
+for (const chapter of course.chapters){
+    if(chapter.muxData?.assetId){
+        await video.assets.delete(chapter.muxData.assetId)
     }
 
-    const attachments = await db.attachment.findMany({
-        where: {
-            courseId
-        }
-    })
+    if (chapter.videoUrl) {
+        const key = extractKeyFromUploadThingUrl(chapter.videoUrl);
+        if (key) await utapi.deleteFiles(key);
+    }
 
-    for (const attachment of attachments) {
+    for (const attachment of chapter.attachments) {
         if(attachment.key) {
             await utapi.deleteFiles(attachment.key)
         }
     }
+}
 
     if (course.imageUrl) {
         const key = course.imageUrl.split("/").pop(); 

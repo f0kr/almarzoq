@@ -5,25 +5,14 @@ import { NextResponse } from "next/server";
 
 export async function POST(
     req: Request,
-    { params }: { params: Promise<{ courseId: string }> }
+    { params }: { params: Promise<{ chapterId: string }> }
 ) {
     try {
         const {userId} = await auth()
         const {url, name, key} = await req.json()
-        const { courseId } = await params;
+        const { chapterId } = await params;
 
         if (!userId || !isTeacher(userId)) {
-            return new NextResponse("Unauthorized", { status: 401 });
-        }
-
-        const courseOwner = await db.course.findUnique({
-            where: {
-                id: courseId,
-                userId: userId
-            }
-        })
-
-        if (!courseOwner) {
             return new NextResponse("Unauthorized", { status: 401 });
         }
 
@@ -32,7 +21,7 @@ export async function POST(
                 url,
                 name,
                 key,
-                courseId: courseId,
+                chapterId: chapterId,
             }
         })
 
