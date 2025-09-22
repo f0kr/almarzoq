@@ -52,6 +52,17 @@ export default async function CoursePage({
     redirect("/")
   }
 
+  
+  const chapters = await db.chapter.findMany({
+      where: {
+          courseId
+      }
+  })
+
+  const isChaptersEmpty = chapters.length === 0
+  
+  const isFreeCourse = !isChaptersEmpty && chapters.every((chapter) => chapter.isFree)
+
   const requiredFields = [
     course.title,
     course.description,
@@ -138,7 +149,10 @@ export default async function CoursePage({
               </div>
               <PriceForm
               initialData={course}
-              courseId={course.id}/>
+              courseId={course.id}
+              isFreeCourse={isFreeCourse}
+              isChaptersEmpty={isChaptersEmpty}
+              />
               <TeacherNameForm
               initialData={course}
               courseId={course.id}

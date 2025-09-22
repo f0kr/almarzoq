@@ -101,6 +101,19 @@ export async function PATCH(req:Request, {
 
       if(!userId || !isTeacher(userId)) return new NextResponse("Unauthorized", { status: 401 })
 
+      const chapters = await db.chapter.findMany({
+        where: { courseId }
+    });
+      
+      const allFree = chapters.every(chapter => chapter.isFree);
+
+      if (allFree) {
+        const course = await db.course.update({
+          where: { id: courseId },
+          data: { price: 0 }
+        });
+        return NextResponse.json(course, { status: 201 });
+      }else {
         const course = await db.course.update({
             where: {
                 id: courseId,
@@ -110,8 +123,9 @@ export async function PATCH(req:Request, {
                  ...values
              }
         })
-                return NextResponse.json(course, { status: 201 })
-        
+        return NextResponse.json(course, { status: 201 })
+      }
+
     }catch (error) {
      console.log("[COURSES]", error)
         return new NextResponse("Internal Server Error", { status: 500 })

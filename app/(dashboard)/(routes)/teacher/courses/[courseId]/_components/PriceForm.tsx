@@ -12,13 +12,14 @@ import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
 import { cn } from '@/lib/utils'
-import { Textarea } from '@/components/ui/textarea'
 import { Course } from '@prisma/client'
 import { formatPrice } from '@/lib/format'
 
 interface PriceFormProps {
 initialData: Course,
-    courseId: string
+courseId: string
+isFreeCourse: boolean
+isChaptersEmpty: boolean
 }
 
 const formSchema = z.object({
@@ -28,7 +29,9 @@ const formSchema = z.object({
 
 export default function PriceForm({
     initialData,
-    courseId
+    courseId,
+    isFreeCourse,
+    isChaptersEmpty
 }: PriceFormProps) {
 
     const [isEditing, setIsEditing] = useState(false)
@@ -50,7 +53,8 @@ export default function PriceForm({
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try{
-            await axios.patch(`/api/courses/${courseId}`, values)
+            const payload = isFreeCourse ? { price: 0 } : values
+            await axios.patch(`/api/courses/${courseId}`, payload)
             toast.success('Course price updated successfully.')
             toggleEditing()
             router.refresh()
@@ -67,7 +71,9 @@ export default function PriceForm({
               Course Price
               <Button
               onClick={toggleEditing}
-              variant="ghost">
+              variant="ghost"
+              disabled={isFreeCourse || isChaptersEmpty}
+              >
                 {isEditing && (
                     <>Cancel</>
                 )}
@@ -82,8 +88,9 @@ export default function PriceForm({
             {!isEditing && (
                 <p className={cn(
                     "text-sm mt-2",
-                    !initialData.price && "text-slate-500 italic"
-                )}>{initialData.price ? formatPrice(initialData.price) : "No price set"}</p>
+                    !initialData.price && !isFreeCourse && "text-slate-500 italic"
+                )}>{isChaptersEmpty ? "Please create chapters first" : isFreeCourse ? "Free" : initialData.price != null ? formatPrice(initialData.price) : "No price set"}
+                </p>
             )}
             {isEditing && (
                 <Form {...form}>
