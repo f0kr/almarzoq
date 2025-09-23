@@ -17,6 +17,12 @@ export async function DELETE(
         const { courseId, chapterId } = await params
         const utapi = new UTApi()
 
+        const attachments = await db.attachment.findMany({
+            where: {
+                chapterId: chapterId
+            }
+        })
+
         function extractKeyFromUploadThingUrl(url: string): string | null {
          if (!url) return null;
          const parts = url.split('/');
@@ -73,6 +79,13 @@ export async function DELETE(
              const key = extractKeyFromUploadThingUrl(chapter.videoUrl);
              if (key) await utapi.deleteFiles(key);
             }
+
+        for(const attachment of attachments) {
+            if(attachment.url){
+                const key = extractKeyFromUploadThingUrl(attachment.url);
+                if (key) await utapi.deleteFiles(key);
+            }
+        }
 
         const deletedChapter = await db.chapter.delete({
             where: {
