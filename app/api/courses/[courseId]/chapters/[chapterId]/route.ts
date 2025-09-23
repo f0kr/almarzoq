@@ -2,6 +2,7 @@ import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import Mux from "@mux/mux-node"
+import { UTApi } from "uploadthing/server";
 
 const mux = new Mux({
     tokenId: process.env.MUX_TOKEN_ID,
@@ -13,7 +14,14 @@ export async function DELETE(
     req: Request,
     { params }: { params: Promise<{ courseId: string; chapterId: string }> }
 ){
-        const { courseId, chapterId } = await params;
+        const { courseId, chapterId } = await params
+        const utapi = new UTApi()
+
+        function extractKeyFromUploadThingUrl(url: string): string | null {
+         if (!url) return null;
+         const parts = url.split('/');
+         return parts[parts.length - 1] || null;
+    }
         
     try{
         const {userId} = await auth()
@@ -62,7 +70,9 @@ export async function DELETE(
                     }
                 })
             }
-        }
+             const key = extractKeyFromUploadThingUrl(chapter.videoUrl);
+             if (key) await utapi.deleteFiles(key);
+            }
 
         const deletedChapter = await db.chapter.delete({
             where: {
