@@ -13,6 +13,7 @@ import GroupUrlForm from "./_components/GroupUrl"
 import { Banner } from "@/components/Banner"
 import { Actions } from "./_components/Actions"
 import TeacherNameForm from "./_components/TeacherNameForm"
+import LecturesForm from "./_components/LecturesForm"
 
 export default async function CoursePage({
     params
@@ -39,6 +40,18 @@ export default async function CoursePage({
           position: 'asc'
         }
       },
+      lectures: {
+        orderBy: {  
+          position: 'asc'
+        },
+        include: {
+          chapters: {
+            orderBy : {
+              position: 'asc'
+            }
+          }
+        }
+      }
     }
   })
 
@@ -139,6 +152,11 @@ export default async function CoursePage({
                 <ChaptersForm
                 initialData={course}
                 courseId={course.id}/>
+                <LecturesForm
+                initialData={course}
+                chaptersInitialData={course}
+                courseId={course.id}
+                />
               </div>
               <div>
               <div className="flex items-center gap-x-2">

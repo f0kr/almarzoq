@@ -26,14 +26,13 @@ model Course {
 
   chapters    Chapter[]
   purchases   Purchase[]
+  lectures    Lecture[]
 
   teacherName String?
   groupUrl    String? @db.Text
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  Lecture Lecture[]
 
   @@index([categoryId])
 }
@@ -91,7 +90,7 @@ model Chapter {
 
 model Lecture {
   id       String @id @default(uuid())
-  name     String
+  title     String
   position Int
 
   chapters Chapter[]
