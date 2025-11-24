@@ -20,6 +20,7 @@ import { Preview } from '@/components/Preview'
 interface ChapterDescriptionFormProps {
     initialData: Chapter,
     courseId: string
+    lectureId: string
     chapterId: string
 }
 
@@ -31,6 +32,7 @@ const formSchema = z.object({
 export default function ChapterDescriptionForm({
     initialData,
     courseId,
+    lectureId,
     chapterId
 }: ChapterDescriptionFormProps) {
 
@@ -53,7 +55,7 @@ export default function ChapterDescriptionForm({
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try{
-            await axios.patch(`/api/courses/${courseId}/chapters/${chapterId}`, values)
+            await axios.patch(`/api/courses/${courseId}/lectures/${lectureId}/chapters/${chapterId}`, values)
             toast.success('Chapter updated.')
             toggleEditing()
             router.refresh()

@@ -14,6 +14,10 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "24c595zabd.ufs.sh",
+      },
+      {
+        protocol: "https",
+        hostname: "via.placeholder.com"
       }
     ]
   },

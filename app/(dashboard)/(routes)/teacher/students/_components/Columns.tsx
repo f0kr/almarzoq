@@ -1,9 +1,8 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { User } from "@clerk/nextjs/server"
 import { ColumnDef } from "@tanstack/react-table"
-import { ArrowUpDown, Edit } from "lucide-react"
+import { ArrowUpDown, Edit, GroupIcon } from "lucide-react"
 import Link from "next/link"
 
 export type Student = {
@@ -80,6 +79,19 @@ export const columns: ColumnDef<Student>[] = [
                     <Link href={`/teacher/students/${id}`}>
                         <Edit className="h-4 w-4 mr-2"/>
                         Edit
+                    </Link>
+        )
+    }
+  },
+  {
+    id: "group",
+    cell: ({row})=> {
+        const {id} = row.original
+
+        return(
+                    <Link href={`/teacher/students/${id}/group`}>
+                        <GroupIcon className="h-4 w-4 mr-2"/>
+                        Group
                     </Link>
         )
     }

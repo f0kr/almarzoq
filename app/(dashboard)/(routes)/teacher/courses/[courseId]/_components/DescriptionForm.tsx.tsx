@@ -52,7 +52,7 @@ export default function DescriptionForm({
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try{
             await axios.patch(`/api/courses/${courseId}`, values)
-            toast.success('Course title updated.')
+            toast.success('Course description updated.')
             toggleEditing()
             router.refresh()
             

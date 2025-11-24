@@ -81,8 +81,9 @@ return (
                 </div>
                 <ChapterActions
                 disabled={!isComplete}
-                courseId={(await params).courseId}
-                chapterId={(await params).chapterId}
+                courseId={courseId}
+                lectureId={chapter.lectureId!}
+                chapterId={chapterId}
                 isPublished={chapter.isPublished}
                 />
             </div>
@@ -99,13 +100,15 @@ return (
                 </div>
                   <ChapterTitleForm
                   initialData={chapter}
-                  courseId={(await params).courseId}
-                  chapterId={(await params).chapterId}
+                  courseId={courseId}
+                  lectureId={chapter.lectureId!}
+                  chapterId={chapterId}
                   />
                   <ChapterDescriptionForm
                   initialData={chapter}
-                  courseId={(await params).courseId}
-                  chapterId={(await params).chapterId}
+                  courseId={courseId}
+                  lectureId={chapter.lectureId!}
+                  chapterId={chapterId}
                   />
             </div>
          <div>
@@ -117,8 +120,9 @@ return (
              </div>
                <ChapterAccessForm
                initialData={chapter}
-               courseId={(await params).courseId}
-               chapterId={(await params).chapterId}
+               courseId={courseId}
+               lectureId={chapter.lectureId!}
+               chapterId={chapterId}
                />
           </div>
         </div>
@@ -132,6 +136,7 @@ return (
         <ChapterVideoForm
         initialData={chapter}
         courseId={courseId}
+        lectureId={chapter.lectureId!}
         chapterId={chapterId}
         />
         <div>
@@ -144,6 +149,7 @@ return (
           <AttachmentsForm
            initialData={chapter}
            courseId={courseId}
+           lectureId={chapter.lectureId!}
            chapterId={chapterId}
            />
           </div>

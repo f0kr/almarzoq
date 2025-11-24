@@ -13,7 +13,7 @@ import toast from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import { Chapter, Course, Lecture } from '@prisma/client'
-import { ChaptersList } from './ChaptersList'
+import { ChaptersListForLectures } from './ChaptersListForLectures'
 
 interface ChaptersFormProps {
     initialData: Course & { chapters: Chapter[]},
@@ -80,7 +80,7 @@ export default function ChaptersFormForLectures({
     }
 
     const onEdit = (id:string)=> {
-        router.push(`/teacher/courses/${courseId}/lectures/${lectureId}/chapters/${id}`)
+        router.push(`/teacher/courses/${courseId}/chapters/${id}`)
     }
 
     return(
@@ -129,7 +129,7 @@ export default function ChaptersFormForLectures({
             {!isCreating && (
                 <div className={cn("text-sm mt-2", !initialData.chapters.length && "text-slate-500 italic")}>
                     {!initialData.chapters.length && "No chapters"}
-                    <ChaptersList
+                    <ChaptersListForLectures
                     onEdit= {onEdit}
                     onReorder={onReorder}
                     items={initialData.chapters || []}

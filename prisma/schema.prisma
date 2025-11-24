@@ -27,15 +27,32 @@ model Course {
   chapters    Chapter[]
   purchases   Purchase[]
   lectures    Lecture[]
+  groupUrls   GroupUrl[]
 
   teacherName String?
-  groupUrl    String? @db.Text
-
+   
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@index([categoryId])
 }
+
+model GroupUrl {
+  id        String   @id @default(uuid())
+  name      String   @default("")
+  url       String   @db.Text
+
+  studentIds  String[] @default([])
+  
+  courseId  String
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([courseId])
+}
+
 
 model Category {
   id      String   @id @default(uuid())

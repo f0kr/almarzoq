@@ -1,16 +1,18 @@
 import NavBarRoutes from "@/components/NavBarRoutes";
-import { Chapter, Course, UserProgress } from "@prisma/client";
+import { Chapter, Course, Lecture, UserProgress } from "@prisma/client";
 import CourseMobileSidebar from "./CourseMobileSidebar";
 import { auth } from "@clerk/nextjs/server";
 import { db } from "@/lib/db";
 
 
 interface CourseNavbarProps {
-    course: Course & {
-        chapters: (Chapter & {
-            userProgress: UserProgress[] | null
-        })[]
-    }
+  course: Course & {
+    lectures: (Lecture & {
+      chapters: (Chapter & {
+        userProgress: UserProgress[];
+      })[];
+    })[];
+  };
     progressCount: number
 }
 

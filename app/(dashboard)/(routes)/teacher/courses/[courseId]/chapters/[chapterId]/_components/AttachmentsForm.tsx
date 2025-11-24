@@ -14,6 +14,7 @@ import FileUpload from '@/components/FileUpload'
 interface AttachmentsFormProps {
     initialData: Chapter & {attachments: Attachment[]} & {muxData?: MuxData | null},
     courseId: string,
+    lectureId: string,
     chapterId: string
 }
 
@@ -27,6 +28,7 @@ const formSchema = z.object({
 export default function AttachmentsForm({
     initialData,
     courseId,
+    lectureId,
     chapterId
 }: AttachmentsFormProps) {
 
@@ -42,7 +44,7 @@ export default function AttachmentsForm({
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try{
-            await axios.post(`/api/courses/${courseId}/chapters/${chapterId}/attachments`, values)
+            await axios.post(`/api/courses/${courseId}/lectures/${lectureId}/chapters/${chapterId}/attachments`, values)
             toast.success('Course updated.')
             toggleEditing()
             router.refresh()
@@ -56,7 +58,7 @@ export default function AttachmentsForm({
     const onDelete = async (id: string) => {
         try {
             setDeletingId(id)
-            await axios.delete(`/api/courses/${courseId}/chapters/${chapterId}/attachments/${id}`)
+            await axios.delete(`/api/courses/${courseId}/lectures/${lectureId}/chapters/${chapterId}/attachments/${id}`)
             toast.success('Attachment deleted.')
             router.refresh()
         }catch {

@@ -27,6 +27,13 @@ export const getChapter = async ({
         where: {
             isPublished: true,
             id: courseId
+        },
+        include: {
+            groupUrls: {
+                orderBy: {
+                    createdAt: 'desc'
+                }
+            }
         }
     })
 
@@ -47,7 +54,7 @@ export const getChapter = async ({
     let attachments: Attachment[] = []
     let nextChapter: Chapter | null = null
 
-    if(purchase){
+    if(purchase || chapter.isFree === true){
         attachments = await db.attachment.findMany({
             where: {
                 chapterId 

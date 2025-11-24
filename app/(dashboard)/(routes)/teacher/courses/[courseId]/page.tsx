@@ -8,12 +8,11 @@ import DescriptionForm from "./_components/DescriptionForm.tsx"
 import ImageForm from "./_components/ImageForm.tsx"
 import CategoryForm from "./_components/CategoryForm"
 import PriceForm from "./_components/PriceForm"
-import ChaptersForm from "./_components/ChaptersForm"
-import GroupUrlForm from "./_components/GroupUrl"
 import { Banner } from "@/components/Banner"
 import { Actions } from "./_components/Actions"
 import TeacherNameForm from "./_components/TeacherNameForm"
 import LecturesForm from "./_components/LecturesForm"
+import GroupUrlsForm from "./_components/GroupUrl"
 
 export default async function CoursePage({
     params
@@ -50,6 +49,11 @@ export default async function CoursePage({
               position: 'asc'
             }
           }
+        }
+      },
+      groupUrls: {
+        orderBy: {
+          createdAt: 'desc'
         }
       }
     }
@@ -137,8 +141,8 @@ export default async function CoursePage({
                   label: category.name,
                   value: category.id
                 }))}/>
-                <GroupUrlForm
-                initialData={course}
+                <GroupUrlsForm
+                initialData={course.groupUrls}
                 courseId={course.id}/>
             </div>
             <div className="space-y-6">
@@ -149,9 +153,6 @@ export default async function CoursePage({
                     Course chapters
                   </h2>
                 </div>
-                <ChaptersForm
-                initialData={course}
-                courseId={course.id}/>
                 <LecturesForm
                 initialData={course}
                 chaptersInitialData={course}

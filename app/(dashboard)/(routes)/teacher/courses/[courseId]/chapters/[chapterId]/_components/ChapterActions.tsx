@@ -11,6 +11,7 @@ import toast from "react-hot-toast"
 interface ChapterActionsProps {
     disabled: boolean
     courseId: string
+    lectureId: string
     chapterId: string
     isPublished: boolean
 }
@@ -18,6 +19,7 @@ interface ChapterActionsProps {
 export const ChapterActions = ({
     disabled,
     courseId,
+    lectureId,
     chapterId,
     isPublished
 }: ChapterActionsProps) => {
@@ -31,10 +33,10 @@ export const ChapterActions = ({
             setIsLoading(true)
 
             if(isPublished){
-                await axios.patch(`/api/courses/${courseId}/chapters/${chapterId}/unpublish`)
+                await axios.patch(`/api/courses/${courseId}/lectures/${lectureId}/chapters/${chapterId}/unpublish`)
                 toast.success("Chapter unpublished")
             }else{
-                await axios.patch(`/api/courses/${courseId}/chapters/${chapterId}/publish`)
+                await axios.patch(`/api/courses/${courseId}/lectures/${lectureId}/chapters/${chapterId}/publish`)
                 toast.success("Chapter published")
             }
 
@@ -51,7 +53,7 @@ export const ChapterActions = ({
         try{
             setIsLoading(true)
 
-            await axios.delete(`/api/courses/${courseId}/chapters/${chapterId}`)
+            await axios.delete(`/api/courses/${courseId}/lectures/${lectureId}/chapters/${chapterId}`)
             toast.success("Chapter deleted")
 
             router.refresh()

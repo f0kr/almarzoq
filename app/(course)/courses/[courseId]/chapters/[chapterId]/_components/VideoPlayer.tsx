@@ -12,6 +12,7 @@ import toast from "react-hot-toast"
 interface VideoPlayerProps{
     playbackId: string
     courseId: string
+    lectureId: string
     chapterId: string
     nextChapterId?: string
     isLocked: boolean
@@ -22,6 +23,7 @@ interface VideoPlayerProps{
 export const VideoPlayer = ({
     playbackId,
     courseId,
+    lectureId,
     chapterId,
     nextChapterId,
     isLocked,
@@ -36,7 +38,7 @@ export const VideoPlayer = ({
     const onEnd = async () => {
         try{
             if (completeOnEnd) {
-                await axios.put(`/api/courses/${courseId}/chapters/${chapterId}/progress`, {
+                await axios.put(`/api/courses/${courseId}/lectures/${lectureId}/chapters/${chapterId}/progress`, {
                     isCompleted: true
                 })
 
@@ -48,7 +50,7 @@ export const VideoPlayer = ({
                 router.refresh()
 
                 if(nextChapterId) {
-                    router.push(`/courses/${courseId}/chapters/${nextChapterId}`)
+                    router.push(`/courses/${courseId}/lectures/${lectureId}/chapters/${nextChapterId}`)
                 }
             }
         }catch {

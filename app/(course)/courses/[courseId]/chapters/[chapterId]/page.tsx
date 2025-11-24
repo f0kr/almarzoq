@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { formatPrice } from "@/lib/format";
 import toast from "react-hot-toast";
 import { SignIn, SignInButton } from "@clerk/nextjs";
+import { getGroups } from "@/actions/getGroups";
 
 export default async function ChapterId({
     params
@@ -38,6 +39,8 @@ export default async function ChapterId({
         courseId,
     })
 
+    const groups = await getGroups()
+
     if(!chapter || !course) return redirect("/")
 
     const isLocked = !chapter.isFree && !purchase
@@ -62,6 +65,7 @@ export default async function ChapterId({
                     <VideoPlayer
                     chapterId={chapterId}
                     courseId={courseId}
+                    lectureId={chapter.lectureId!}
                     title={chapter.title}
                     nextChapterId={nextChapter?.id}
                     playbackId={muxData?.playbackId!}
@@ -77,6 +81,7 @@ export default async function ChapterId({
                       {purchase && userId ? (
                         <CourseProgressButton
                         chapterId={chapterId}
+                        lectureId={chapter.lectureId!}
                         courseId={courseId}
                         nextChapterId={nextChapter?.id}
                         isCompleted={!!userProgress?.isCompleted}
@@ -85,7 +90,7 @@ export default async function ChapterId({
                         !userId && !isCourseFree ? (
                          <p className=  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive">
                                 Please{" "}
-                          <SignInButton mode="modal">
+                          <SignInButton forceRedirectUrl={`/courses/${courseId}/chapters/${chapterId}`} mode="modal">
                            <button className="font-bold underline hover:text-primary transition">
                             sign in
                            </button>  
@@ -115,6 +120,7 @@ export default async function ChapterId({
                         ): (
                         <CourseProgressButton
                         chapterId={chapterId}
+                        lectureId={chapter.lectureId!}
                         courseId={courseId}
                         nextChapterId={nextChapter?.id}
                         isCompleted={!!userProgress?.isCompleted}
@@ -151,13 +157,14 @@ export default async function ChapterId({
                         </>
                     )}
                     <Separator/>
-                    {course.groupUrl && purchase && (
+                    {course.groupUrls && purchase && (
                       <div className="p-4 flex items-center">
                       <a
-                      href={course.groupUrl}
+                      href={groups.find((g)=> g.userIds.includes(userId!))?.url || course.groupUrls[course.groupUrls.length - 1].url}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center gap-2 px-4 py-2 bg-blue-100 text-blue-800 rounded-md hover:bg-blue-200 transition-colors font-medium underline"
+                      
                       >
                       <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -168,7 +175,7 @@ export default async function ChapterId({
                       >
                         <path d="M9.036 15.956l-.396 4.01c.568 0 .814-.244 1.112-.537l2.664-2.523 5.522 4.027c1.012.557 1.73.264 1.98-.937l3.594-16.84c.328-1.523-.553-2.12-1.53-1.78L2.22 9.36c-1.48.553-1.464 1.34-.254 1.697l4.09 1.28 9.5-5.99c.447-.273.855-.122.52.174"/>
                       </svg>
-                      Telegram group for the course
+                        {groups.find((g)=> g.userIds.includes(userId!))?.name || course.groupUrls[course.groupUrls.length - 1].name}
                       </a>
                       </div>
                     )}

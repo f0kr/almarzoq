@@ -15,8 +15,9 @@ import { Chapter } from '@prisma/client'
 import { Checkbox } from '@/components/ui/checkbox'
 
 interface ChapterAccessFormProps {
-    initialData: Chapter,
+    initialData: Chapter
     courseId: string
+    lectureId: string
     chapterId: string
 }
 
@@ -28,6 +29,7 @@ const formSchema = z.object({
 export default function ChapterAccessForm({
     initialData,
     courseId,
+    lectureId,
     chapterId
 }: ChapterAccessFormProps) {
 
@@ -50,7 +52,7 @@ export default function ChapterAccessForm({
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try{
-            await axios.patch(`/api/courses/${courseId}/chapters/${chapterId}`, values)
+            await axios.patch(`/api/courses/${courseId}/lectures/${lectureId}/chapters/${chapterId}`, values)
             toast.success('Chapter updated.')
             toggleEditing()
             router.refresh()

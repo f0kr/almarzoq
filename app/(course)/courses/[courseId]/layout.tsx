@@ -19,7 +19,9 @@ const CourseLayout = async ({
                 id: courseId
             },
             include: {
-                chapters: {
+                lectures: {
+                    include: {
+                        chapters: {
                     where: {
                         isPublished: true
                     },
@@ -32,6 +34,8 @@ const CourseLayout = async ({
                     },
                     orderBy: {
                         position: "asc"
+                    }
+                }
                     }
                 }
             }
@@ -48,7 +52,7 @@ const CourseLayout = async ({
          }
       })
 
-            const progressCount = await getProgress(userId || "", course.id)
+        const progressCount = await getProgress(userId || "", course.id)
     
     return(
         <div className="h-full">

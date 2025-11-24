@@ -57,7 +57,7 @@ export const StudentCourseCard = ({
                    fill
                    className="object-cover"
                    alt={title}
-                   src={imageUrl}
+                   src={imageUrl || "https://via.placeholder.com/640x360.png?text=No+Image"}
                    />
                 </div>
                 <div className="flex flex-col pt-2">

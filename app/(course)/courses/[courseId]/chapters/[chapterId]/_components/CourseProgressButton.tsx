@@ -10,6 +10,7 @@ import toast from "react-hot-toast"
 
 interface CourseProgressButtonProps {
     chapterId: string
+    lectureId: string
     courseId: string
     nextChapterId?: string
     isCompleted?: boolean
@@ -19,6 +20,7 @@ export const CourseProgressButton = (
 {
     chapterId,
     courseId,
+    lectureId,
     nextChapterId,
     isCompleted
 }: CourseProgressButtonProps
@@ -31,7 +33,7 @@ export const CourseProgressButton = (
     const onClick = async ()=> {
         try{
             setIsLoading(true)
-            await axios.put(`/api/courses/${courseId}/chapters/${chapterId}/progress`, {
+            await axios.put(`/api/courses/${courseId}/lectures/${lectureId}/chapters/${chapterId}/progress`, {
                 isCompleted: !isCompleted
             })
 
