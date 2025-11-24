@@ -13,7 +13,7 @@ interface CoursesListProps {
     items: CourseWithProgressWithCategory[]
 }
 
-export async function CoursesList({
+export async function CoursesList({ 
 items
 }: CoursesListProps){
 
