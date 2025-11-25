@@ -83,6 +83,7 @@ export const VideoPlayer = ({
                 onEnded={onEnd}
                 autoPlay
                 playbackId={playbackId}
+                preferPlayback="mse"
                 />
             )}      
         </div>

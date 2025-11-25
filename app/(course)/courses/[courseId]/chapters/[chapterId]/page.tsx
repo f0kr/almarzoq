@@ -39,8 +39,6 @@ export default async function ChapterId({
         courseId,
     })
 
-    const groups = await getGroups()
-
     if(!chapter || !course) return redirect("/")
 
     const isLocked = !chapter.isFree && !purchase
@@ -157,10 +155,10 @@ export default async function ChapterId({
                         </>
                     )}
                     <Separator/>
-                    {course.groupUrls && purchase && (
+                    {course.groupUrls && purchase && course.groupUrls.find((g)=> g.studentIds.includes(userId!)) && (
                       <div className="p-4 flex items-center">
                       <a
-                      href={groups.find((g)=> g.studentIds.includes(userId!))?.url || course.groupUrls[course.groupUrls.length - 1].url}
+                      href={course.groupUrls?.find((g)=> g.studentIds.includes(userId!))?.url}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center gap-2 px-4 py-2 bg-blue-100 text-blue-800 rounded-md hover:bg-blue-200 transition-colors font-medium underline"
@@ -175,7 +173,7 @@ export default async function ChapterId({
                       >
                         <path d="M9.036 15.956l-.396 4.01c.568 0 .814-.244 1.112-.537l2.664-2.523 5.522 4.027c1.012.557 1.73.264 1.98-.937l3.594-16.84c.328-1.523-.553-2.12-1.53-1.78L2.22 9.36c-1.48.553-1.464 1.34-.254 1.697l4.09 1.28 9.5-5.99c.447-.273.855-.122.52.174"/>
                       </svg>
-                        {groups.find((g)=> g.studentIds.includes(userId!))?.name || course.groupUrls[course.groupUrls.length - 1].name}
+                        {course.groupUrls?.find((g)=> g.studentIds.includes(userId!))?.name}
                       </a>
                       </div>
                     )}
