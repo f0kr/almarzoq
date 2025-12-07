@@ -20,10 +20,12 @@ import toast from "react-hot-toast"
 import { useRouter } from "next/navigation"
 import { cn } from "@/lib/utils"
 import FileUpload from "@/components/FileUpload"
-import { Category } from "@prisma/client"
 
 interface CategoryFormProps {
-  initialData: Category
+  initialData: {
+    name: string
+    iconUrl: string
+  }
 }
 
 const formSchema = z.object({
