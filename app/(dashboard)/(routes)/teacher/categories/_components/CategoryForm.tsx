@@ -67,19 +67,6 @@ export default function CategoryForm({
     }
   }
 
-  // helper for FileUpload: set the form value then submit using the full shape
-  const handleIconUpload = async (url: string | null) => {
-    if (!url) return
-    // update the form state
-    form.setValue("iconUrl", url)
-    // submit using current form values (categoryName + new iconUrl)
-    const current = form.getValues()
-    await onSubmit({
-      categoryName: current.categoryName ?? "",
-      iconUrl: url
-    })
-  }
-
   return (
     <div className="mt-6 border bg-slate-100 rounded-md p-4 md:w-[50%] w-[70%]">
       <div className="font-medium flex items-center justify-between">
@@ -134,10 +121,14 @@ export default function CategoryForm({
             <FileUpload
               endpoint="categoryIcon"
               onChange={(url) => {
-                // call helper which will set form value and submit full payload
-                if (url) {
-                  handleIconUpload(url)
-                }
+                if (!url) return
+                // set the uploaded URL in the form but DO NOT auto-submit
+                form.setValue("iconUrl", url)
+                // open editor so user can enter name and click Save
+                setIsEditing(true)
+                // re-run validation for categoryName (in case it already has a valid value)
+                form.trigger("categoryName")
+                toast.success("Icon uploaded — please enter a name and click Save")
               }}
             />
             <div className="text-xs text-muted-foreground mt-4">16:9 aspect ratio recommended</div>
