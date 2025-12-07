@@ -1,9 +1,8 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-
+/* your custom CSS below */
 
 
 @import "uploadthing/tw/v4";
