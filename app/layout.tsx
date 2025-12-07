@@ -18,6 +18,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Almrzoq Academy",
   description: "A platform to master drawing with various courses and tutorials from experts.",
+  manifest: "/manifest.json",
+   icons: {
+     icon: "/icons/icon-192.png",
+     apple: "/icons/apple-icon-180.png"
+   }
 };
 
 export default function RootLayout({

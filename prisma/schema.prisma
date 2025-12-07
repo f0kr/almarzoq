@@ -59,6 +59,8 @@ model Category {
   name    String   @unique
   courses Course[]
 
+  iconUrl String? @db.Text
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

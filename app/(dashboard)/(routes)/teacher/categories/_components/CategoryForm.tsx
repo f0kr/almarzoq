@@ -1,9 +1,9 @@
 "use client"
 
-import * as z from 'zod'
-import { zodResolver } from '@hookform/resolvers/zod'
-import axios from 'axios'
-import { useForm } from 'react-hook-form'
+import * as z from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+import axios from "axios"
+import { useForm } from "react-hook-form"
 import {
   Form,
   FormControl,
@@ -11,69 +11,83 @@ import {
   FormItem,
   FormLabel,
   FormMessage
-} from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
-import { Pencil } from 'lucide-react'
-import { useState } from 'react'
-import toast from 'react-hot-toast'
-import { useRouter } from 'next/navigation'
-import { cn } from '@/lib/utils'
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import { Pencil } from "lucide-react"
+import { useState } from "react"
+import toast from "react-hot-toast"
+import { useRouter } from "next/navigation"
+import { cn } from "@/lib/utils"
+import FileUpload from "@/components/FileUpload"
+import { Category } from "@prisma/client"
 
 interface CategoryFormProps {
-  initialData: {
-    categoryName: string | null
-  }
+  initialData: Category
 }
 
 const formSchema = z.object({
   categoryName: z.string().min(2, "Name must be at least 2 characters"),
+  iconUrl: z.string().url().nullable()
 })
 
-
 export default function CategoryForm({
-  initialData,
+  initialData
 }: CategoryFormProps) {
-
   const [isEditing, setIsEditing] = useState(false)
   const toggleEditing = () => setIsEditing((prev) => !prev)
 
   const router = useRouter()
 
   const form = useForm<z.infer<typeof formSchema>>({
-  resolver: zodResolver(formSchema),
-  defaultValues: {
-    categoryName: initialData.categoryName ?? "",
-  }
-})
-
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      categoryName: initialData.name ?? "",
+      iconUrl: initialData.iconUrl ?? null
+    }
+  })
 
   const { isSubmitting, isValid } = form.formState
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await axios.post(`/api/categories/`, values)
-      toast.success('Category added')
+      // send the full payload expected by your API
+      await axios.post(`/api/categories/`, {
+        categoryName: values.categoryName,
+        iconUrl: values.iconUrl
+      })
+      toast.success("Category added")
       toggleEditing()
       router.refresh()
-
     } catch (error) {
-      toast.error('Something went wrong.')
+      toast.error("Something went wrong.")
       console.log(error)
     }
   }
 
+  // helper for FileUpload: set the form value then submit using the full shape
+  const handleIconUpload = async (url: string | null) => {
+    if (!url) return
+    // update the form state
+    form.setValue("iconUrl", url)
+    // submit using current form values (categoryName + new iconUrl)
+    const current = form.getValues()
+    await onSubmit({
+      categoryName: current.categoryName ?? "",
+      iconUrl: url
+    })
+  }
+
   return (
-    <div className='mt-6 border bg-slate-100 rounded-md p-4 md:w-[50%] w-[70%]'>
-      <div className='font-medium flex items-center justify-between'>
+    <div className="mt-6 border bg-slate-100 rounded-md p-4 md:w-[50%] w-[70%]">
+      <div className="font-medium flex items-center justify-between">
         Category Name
-        <Button
-          onClick={toggleEditing}
-          variant="ghost"
-        >
-          {isEditing ? "Cancel" : (
+        <Button onClick={toggleEditing} variant="ghost">
+          {isEditing ? (
+            "Cancel"
+          ) : (
             <>
-              <Pencil className='h-4 w-4 mr-2' />
+              <Pencil className="h-4 w-4 mr-2" />
               Edit category
             </>
           )}
@@ -81,15 +95,19 @@ export default function CategoryForm({
       </div>
 
       {!isEditing && (
-                <p className={cn(
-                    "text-sm mt-2",
-                    !initialData.categoryName && "text-slate-500 italic"
-                )}>{initialData.categoryName ? initialData.categoryName : "No category name"}</p>
+        <p
+          className={cn(
+            "text-sm mt-2",
+            !initialData.name && "text-slate-500 italic"
+          )}
+        >
+          {initialData.name ? initialData.name : "No category name"}
+        </p>
       )}
 
       {isEditing && (
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4 mt-4'>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 mt-4">
             <FormField
               control={form.control}
               name="categoryName"
@@ -97,22 +115,31 @@ export default function CategoryForm({
                 <FormItem>
                   <FormLabel>Category Name</FormLabel>
                   <FormControl>
-                    <Input
-                      disabled={isSubmitting}
-                      placeholder='Enter category name...'
-                      {...field}
-                    />
+                    <Input disabled={isSubmitting} placeholder="Enter category name..." {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <div className='flex items-center gap-x-2'>
-              <Button disabled={!isValid || isSubmitting} type='submit'>
+            <div className="flex items-center gap-x-2">
+              <Button disabled={!isValid || isSubmitting} type="submit">
                 Save
               </Button>
             </div>
           </form>
+
+          <div>
+            <FileUpload
+              endpoint="categoryIcon"
+              onChange={(url) => {
+                // call helper which will set form value and submit full payload
+                if (url) {
+                  handleIconUpload(url)
+                }
+              }}
+            />
+            <div className="text-xs text-muted-foreground mt-4">16:9 aspect ratio recommended</div>
+          </div>
         </Form>
       )}
     </div>
