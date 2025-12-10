@@ -22,6 +22,7 @@ export const getChapter = async ({
             }
         }
     })
+    
 
     const course = await db.course.findUnique({
         where: {
@@ -91,6 +92,7 @@ export const getChapter = async ({
             }
         }
     })
+
 
     return{
         chapter,

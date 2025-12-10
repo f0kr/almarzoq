@@ -37,7 +37,7 @@ Promise<DashboardCourses> => {
       const courses = purchasedCourses.map((purchase) => purchase.course) as CourseWithProgressWithCategory[]
 
       for(let course of courses) {
-        const progress = await getProgress(userId, course.id)
+        const progress = await getProgress(course.id, userId)
         course["progress"] = progress
       }
 

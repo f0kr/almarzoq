@@ -128,7 +128,7 @@ export default function CategoryForm({
                 setIsEditing(true)
                 // re-run validation for categoryName (in case it already has a valid value)
                 form.trigger("categoryName")
-                toast.success("Icon uploaded — please enter a name and click Save")
+                toast.success("Icon uploaded")
               }}
             />
             <div className="text-xs text-muted-foreground mt-4">16:9 aspect ratio recommended</div>

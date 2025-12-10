@@ -52,7 +52,7 @@ const CourseLayout = async ({
          }
       })
 
-        const progressCount = await getProgress(userId || "", course.id)
+        const progressCount = await getProgress(course.id, userId || "")
     
     return(
         <div className="h-full">

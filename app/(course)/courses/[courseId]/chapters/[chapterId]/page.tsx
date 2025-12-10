@@ -42,7 +42,7 @@ export default async function ChapterId({
     if(!chapter || !course) return redirect("/")
 
     const isLocked = !chapter.isFree && !purchase
-    const completeOnEnd = !!purchase && !userProgress?.isCompleted
+    const completeOnEnd = !userProgress?.isCompleted
 
     return(
         <div>
