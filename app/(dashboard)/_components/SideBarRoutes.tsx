@@ -1,7 +1,7 @@
 'use client';
 
 import SideItem from './SideItem';
-import {Layout, Compass, List, BarChart, Group, PersonStanding, } from 'lucide-react'
+import {Layout, Compass, List, BarChart, Group, PersonStanding, InfoIcon, } from 'lucide-react'
 import { usePathname } from 'next/navigation';
 
 
@@ -17,6 +17,12 @@ const guestRoutes = [
         label: 'Browse',
         href: '/', 
     },
+
+    {
+        icon: InfoIcon,
+        label: 'About Us',
+        href: '/about-us',
+    }
 
 ]
 

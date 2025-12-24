@@ -18,6 +18,20 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Almrzoq Academy",
   description: "A platform to master drawing with various courses and tutorials from experts.",
+  openGraph: {
+    title: "Almrzoq Academy",
+    description: "A platform to master drawing with various courses and tutorials from experts.",
+    url: "https://almrzoq.academy",
+    siteName: "Almrzoq Academy",
+    images: [
+      {
+        url: "https://almrzoq.academy/og-image.jpg",
+        width: 1200,
+        height: 630,
+      },
+    ],
+    type: "website",
+  },
 };
 
 export default function RootLayout({

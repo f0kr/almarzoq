@@ -1,8 +1,6 @@
 import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
-import Mux from "@mux/mux-node"
-import { UTApi } from "uploadthing/server";
 
 export async function DELETE(
     req: Request,
@@ -52,7 +50,7 @@ export async function PATCH(
 
     try{
         const {userId} = await auth()
-        const { ...values} = await req.json()
+        const { title } = await req.json()
 
         if(!userId) {
             return new NextResponse("unauthorized", { status: 401 });
@@ -75,7 +73,7 @@ export async function PATCH(
                 courseId: courseId
             },
             data: {
-                ...values
+                title
             }
 
         })

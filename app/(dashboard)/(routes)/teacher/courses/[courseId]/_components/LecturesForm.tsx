@@ -50,16 +50,7 @@ export default function LecturesForm({
 
     const {isSubmitting, isValid} = form.formState
 
-/*     const onRename = async (id: string, title: string) => {
-        try {
-            await axios.patch(`/api/courses/${courseId}/lectures/${id}`, {title})
-            toast.success('Lecture title updated.')
-            router.refresh()
-        } catch (error) {
-            toast.error('Something went wrong while updating the lecture title.')
-            console.log(error)
-        }
-    } */
+
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try{
@@ -84,20 +75,6 @@ export default function LecturesForm({
             router.refresh()
         }catch (error) {
             toast.error('Something went wrong while reordering Lectures.')
-            console.log(error)
-        }finally {
-            setIsUpdating(false)
-        }
-    }
-
-    const onDelete = async (id:string) => {
-        try {
-            setIsUpdating(true)
-            await axios.delete(`/api/courses/${courseId}/lectures/${id}`)
-            toast.success('Lecture deleted successfully.')
-            router.refresh()
-        }catch (error) {
-            toast.error('Something went wrong while deleting the lecture.')
             console.log(error)
         }finally {
             setIsUpdating(false)
@@ -155,7 +132,6 @@ export default function LecturesForm({
                     {!initialData.lectures.length && "No Lectures"}
                     <LecturesList
                     initialData={chaptersInitialData}
-                    onDelete={onDelete}
                     onReorder={onReorder}
                     courseId={courseId}
                     items={initialData.lectures || []}

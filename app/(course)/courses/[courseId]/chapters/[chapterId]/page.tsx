@@ -10,9 +10,8 @@ import { File } from "lucide-react";
 import { CourseProgressButton } from "./_components/CourseProgressButton";
 import { Button } from "@/components/ui/button";
 import { formatPrice } from "@/lib/format";
-import toast from "react-hot-toast";
-import { SignIn, SignInButton } from "@clerk/nextjs";
-import { getGroups } from "@/actions/getGroups";
+import { SignInButton } from "@clerk/nextjs";
+
 
 export default async function ChapterId({
     params
