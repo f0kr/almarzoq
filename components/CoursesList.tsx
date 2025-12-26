@@ -7,6 +7,7 @@ type CourseWithProgressWithCategory = Course & {
     category: Category | null
     chapters: {id: string}[]
     progress: number | null
+    teachers?: {id: string, name: string}[]
 }
 
 interface CoursesListProps {
@@ -32,7 +33,7 @@ items
                 price={item.price!}
                 progress={item.progress}
                 category={item?.category?.name! ? item.category.name : "Uncategorized"}
-                teacherName={item.teacherName}
+                masters={(item.teachers ?? []).map((t)=> t.name).filter(Boolean)}
                 />
             ))}
         </div>

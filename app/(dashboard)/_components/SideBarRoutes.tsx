@@ -3,6 +3,7 @@
 import SideItem from './SideItem';
 import {Layout, Compass, List, BarChart, Group, PersonStanding, InfoIcon, } from 'lucide-react'
 import { usePathname } from 'next/navigation';
+import { FaChalkboardTeacher } from 'react-icons/fa';
 
 
 const guestRoutes = [
@@ -17,13 +18,18 @@ const guestRoutes = [
         label: 'Browse',
         href: '/', 
     },
+    
+    {
+        icon: FaChalkboardTeacher,
+        label: 'Masters',
+        href: '/masters',
+    },
 
     {
         icon: InfoIcon,
         label: 'About Us',
         href: '/about-us',
-    }
-
+    },
 ]
 
 const teacherRoutes = [
@@ -46,6 +52,11 @@ const teacherRoutes = [
         icon: PersonStanding ,
         label: 'Students',
         href: '/teacher/students',
+    },
+    {
+        icon: FaChalkboardTeacher,
+        label: 'Masters',
+        href: '/teacher/masters',
     }
 ]
 

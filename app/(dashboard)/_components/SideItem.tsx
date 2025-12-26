@@ -6,7 +6,7 @@ import React from 'react';
 import { LucideIcon } from 'lucide-react';
 
 interface SideItemProps {
-    icon: LucideIcon;
+    icon: LucideIcon | React.ComponentType<any>;
     label: string;
     href: string;
     onClick?: () => void;

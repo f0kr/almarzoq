@@ -13,6 +13,7 @@
 
 # testing
 /coverage
+junk
 
 # next.js
 /.next/
@@ -47,3 +48,5 @@ next-env.d.ts
 todo.txt
 
 
+
+/lib/generated/prisma

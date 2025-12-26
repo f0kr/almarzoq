@@ -2,6 +2,7 @@ import { db } from "@/lib/db";
 import { isTeacher } from "@/lib/teacher";
 import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
+import { UTApi } from "uploadthing/server";
 
 export async function DELETE(
     req: Request,
@@ -10,6 +11,14 @@ export async function DELETE(
     try {
         const {userId} = await auth()
         const { categoryId } = await params;
+
+        const utapi = new UTApi();
+
+        function extractKeyFromUploadThingUrl(url: string): string | null {
+            if (!url) return null;
+            const parts = url.split('/');
+            return parts[parts.length - 1] || null;
+        }
 
         if(!userId || !isTeacher(userId)) {
             return new NextResponse("Unauthorized", {
@@ -22,6 +31,11 @@ export async function DELETE(
                 id: categoryId
             }
         })
+
+        if(category.iconUrl){
+            const key = extractKeyFromUploadThingUrl(category.iconUrl);
+            if (key) await utapi.deleteFiles(key);
+        }
 
         return NextResponse.json(category, {
             status: 200

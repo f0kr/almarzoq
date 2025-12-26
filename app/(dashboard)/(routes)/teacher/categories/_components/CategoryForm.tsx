@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { Pencil } from "lucide-react"
+import { PlusCircle } from "lucide-react"
 import { useState } from "react"
 import toast from "react-hot-toast"
 import { useRouter } from "next/navigation"
@@ -76,8 +76,8 @@ export default function CategoryForm({
             "Cancel"
           ) : (
             <>
-              <Pencil className="h-4 w-4 mr-2" />
-              Edit category
+              <PlusCircle className="h-4 w-4 mr-2" />
+              Add a category
             </>
           )}
         </Button>
