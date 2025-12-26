@@ -10,7 +10,6 @@ import CategoryForm from "./_components/CategoryForm"
 import PriceForm from "./_components/PriceForm"
 import { Banner } from "@/components/Banner"
 import { Actions } from "./_components/Actions"
-import TeacherNameForm from "./_components/TeacherNameForm"
 import LecturesForm from "./_components/LecturesForm"
 import GroupUrlsForm from "./_components/GroupUrl"
 
@@ -172,10 +171,10 @@ export default async function CoursePage({
               isFreeCourse={isFreeCourse}
               isChaptersEmpty={isChaptersEmpty}
               />
-              <TeacherNameForm
+{/*               <TeacherNameForm
               initialData={course}
               courseId={course.id}
-              />
+              /> */}
             </div>
           </div>
         </div>
