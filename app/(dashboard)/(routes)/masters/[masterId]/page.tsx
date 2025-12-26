@@ -41,20 +41,17 @@ export default async function MasterProfilePage({
 }>) {
   const { masterId } = await params
 
-  const master = await db.teacher.findUnique({
-    where: { id: masterId },
-    include: {
-      courses: {
-        include: {
-          purchases: true,
-        },
-        select: {
-          isPublished: true,
-        },
-        orderBy: { createdAt: "desc" },
-      },
+const master = await db.teacher.findUnique({
+  where: { id: masterId },
+  include: {
+    courses: {
+      where: { isPublished: true },
+      include: { purchases: true },
+      orderBy: { createdAt: "desc" },
     },
-  })
+  },
+})
+
 
   if (!master) {
     return (
@@ -79,9 +76,9 @@ export default async function MasterProfilePage({
   const totalStudents = studentIds.size
   const totalCourses = master.courses.length
 
-  const bioText =
-    (master.bio && master.bio.replace(/<[^>]*>/g, "").trim()) ||
-    "This master hasn't added a bio yet."
+  const bioHtml =
+    (master.bio && master.bio.trim()) ||
+    "<p>This master hasn't added a bio yet.</p>"
 
   return (
     <div className="relative min-h-[calc(100vh-80px)] bg-slate-50/80">
@@ -147,9 +144,10 @@ export default async function MasterProfilePage({
                   <GraduationCap className="h-4 w-4 text-sky-600" />
                   Bio
                 </div>
-                <p className="mt-3 text-sm leading-relaxed text-slate-700 whitespace-pre-line">
-                  {bioText}
-                </p>
+                <div
+                  className="prose prose-sm mt-3 max-w-none text-slate-700 prose-headings:text-slate-900 prose-a:text-sky-700"
+                  dangerouslySetInnerHTML={{ __html: bioHtml }}
+                />
               </div>
 
               <div className="rounded-xl border border-slate-200 bg-white p-5">
