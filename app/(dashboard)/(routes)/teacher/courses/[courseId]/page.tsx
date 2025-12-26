@@ -12,6 +12,7 @@ import { Banner } from "@/components/Banner"
 import { Actions } from "./_components/Actions"
 import LecturesForm from "./_components/LecturesForm"
 import GroupUrlsForm from "./_components/GroupUrl"
+import TeachersForm from "./_components/TeachersForm"
 
 export default async function CoursePage({
     params
@@ -54,8 +55,13 @@ export default async function CoursePage({
         orderBy: {
           createdAt: 'desc'
         }
-      }
+      },
+      teachers: true
     }
+  })
+
+  const masters = await db.teacher.findMany({
+    orderBy: { name: "asc" }
   })
 
   const categories = await db.category.findMany({
@@ -140,6 +146,14 @@ export default async function CoursePage({
                   label: category.name,
                   value: category.id
                 }))}/>
+                <TeachersForm
+                initialData={course}
+                courseId={course.id}
+                options={masters.map((master)=>({
+                  label: master.name,
+                  value: master.id,
+                  title: master.title || "Title coming soon"
+                }))}/>
                 <GroupUrlsForm
                 initialData={course.groupUrls}
                 courseId={course.id}/>
@@ -171,10 +185,6 @@ export default async function CoursePage({
               isFreeCourse={isFreeCourse}
               isChaptersEmpty={isChaptersEmpty}
               />
-{/*               <TeacherNameForm
-              initialData={course}
-              courseId={course.id}
-              /> */}
             </div>
           </div>
         </div>

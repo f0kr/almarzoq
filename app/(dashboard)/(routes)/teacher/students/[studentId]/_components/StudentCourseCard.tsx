@@ -13,7 +13,7 @@ id: string
 title: string
 imageUrl: string
 price: number
-teacherName: string | null,
+masters: string[],
 studentId: string
 }
 
@@ -23,9 +23,10 @@ export const StudentCourseCard = ({
     title,
     imageUrl,
     price,
-    teacherName,
+    masters,
     studentId
 }: CourseCardProps)=>{
+    const masterLabel = masters.length ? masters.join(", ") : "Unknown master"
     
     const [isLoading, setIsLoading] = useState(false)
     const router = useRouter()
@@ -62,7 +63,7 @@ export const StudentCourseCard = ({
                 </div>
                 <div className="flex flex-col pt-2">
                   <div className="text-xs text-muted-foreground">
-                    {teacherName}
+                    {masterLabel}
                   </div>
                   <div className="text-lg md:text-base font-medium group-hover:text-sky-700 transition line-clamp-2">
                     {title}

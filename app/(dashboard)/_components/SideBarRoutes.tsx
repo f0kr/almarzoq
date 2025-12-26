@@ -18,19 +18,18 @@ const guestRoutes = [
         label: 'Browse',
         href: '/', 
     },
+    
+    {
+        icon: FaChalkboardTeacher,
+        label: 'Masters',
+        href: '/masters',
+    },
 
     {
         icon: InfoIcon,
         label: 'About Us',
         href: '/about-us',
     },
-
-    {
-        icon: FaChalkboardTeacher,
-        label: 'Masters',
-        href: '/masters',
-    }
-
 ]
 
 const teacherRoutes = [

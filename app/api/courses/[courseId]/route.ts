@@ -98,17 +98,26 @@ export async function PATCH(req:Request, {
       const {userId} = await auth()
       const {courseId} = await params
       const values = await req.json()
+      const { teacherIds, ...rest } = values
 
       if(!userId || !isTeacher(userId)) return new NextResponse("Unauthorized", { status: 401 })
+
+        const data: any = {
+            ...rest
+        }
+
+        if (Array.isArray(teacherIds)) {
+            data.teachers = {
+                set: teacherIds.map((id: string) => ({ id }))
+            }
+        }
 
         const course = await db.course.update({
             where: {
                 id: courseId,
                 userId
             },
-             data: {
-                 ...values
-             }
+             data
         })
         return NextResponse.json(course)
 

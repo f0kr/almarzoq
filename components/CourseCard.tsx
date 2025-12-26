@@ -13,7 +13,7 @@ chaptersLength: number
 price: number
 progress: number | null
 category: string
-teacherName: string | null
+masters: string[]
 }
 
 
@@ -25,8 +25,9 @@ export const CourseCard = ({
     price,
     progress,
     category,
-    teacherName
+    masters
 }: CourseCardProps)=>{
+    const masterLabel = masters.length ? masters.join(", ") : "Unknown master"
     return(
         <Link href={`/courses/${id}`}>
             <div className="group hover:shadow-sm transition overflow-hidden border rounded-lg p-3 h-full">
@@ -40,7 +41,7 @@ export const CourseCard = ({
                 </div>
                 <div className="flex flex-col pt-2">
                   <div className="text-xs text-muted-foreground">
-                    {teacherName}
+                    {masterLabel}
                   </div>
                   <div className="text-lg md:text-base font-medium group-hover:text-sky-700 transition line-clamp-2">
                     {title}
