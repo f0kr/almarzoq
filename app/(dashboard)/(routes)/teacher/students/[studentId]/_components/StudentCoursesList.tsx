@@ -25,7 +25,6 @@ export function StudentCoursesList({
                     title={item.title}
                     imageUrl={item.imageUrl!}
                     price={item.price!}
-                    teacherName={item.teacherName}
                     studentId={studentId}
                   />
                 )

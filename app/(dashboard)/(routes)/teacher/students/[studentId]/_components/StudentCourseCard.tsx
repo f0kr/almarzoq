@@ -13,7 +13,6 @@ id: string
 title: string
 imageUrl: string
 price: number
-teacherName: string | null,
 studentId: string
 }
 
@@ -23,7 +22,6 @@ export const StudentCourseCard = ({
     title,
     imageUrl,
     price,
-    teacherName,
     studentId
 }: CourseCardProps)=>{
     

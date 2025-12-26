@@ -172,10 +172,6 @@ export default async function CoursePage({
               isFreeCourse={isFreeCourse}
               isChaptersEmpty={isChaptersEmpty}
               />
-              <TeacherNameForm
-              initialData={course}
-              courseId={course.id}
-              />
             </div>
           </div>
         </div>
