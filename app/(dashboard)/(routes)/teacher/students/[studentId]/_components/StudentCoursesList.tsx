@@ -1,3 +1,4 @@
+import { Course } from "@prisma/client"
 import { StudentCourseCard } from "./StudentCourseCard"
 
 
@@ -6,9 +7,7 @@ export function StudentCoursesList({
   items,
   studentId,
 }: {
-  items: ({
-    teachers?: {id: string, name: string}[]
-  } & Record<string, any>)[]
+  items: Course[]
   studentId: string
 }){
 
@@ -26,7 +25,7 @@ export function StudentCoursesList({
                     title={item.title}
                     imageUrl={item.imageUrl!}
                     price={item.price!}
-                    masters={(item.teachers ?? []).map((t)=> t.name).filter(Boolean)}
+                    teacherName={item.teacherName}
                     studentId={studentId}
                   />
                 )
