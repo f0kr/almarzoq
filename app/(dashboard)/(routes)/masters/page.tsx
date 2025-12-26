@@ -45,6 +45,7 @@ export default async function MastersPage({
           purchases: {
             select: { id: true },
           },
+          isPublished: true,
         },
       },
     },

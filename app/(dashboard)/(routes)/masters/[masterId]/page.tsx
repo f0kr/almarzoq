@@ -48,6 +48,9 @@ export default async function MasterProfilePage({
         include: {
           purchases: true,
         },
+        select: {
+          isPublished: true,
+        },
         orderBy: { createdAt: "desc" },
       },
     },
