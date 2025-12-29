@@ -4,8 +4,8 @@ import { redirect } from "next/navigation"
 
 export async function getStudents() {
   const { userId } = await auth()
-  if (!isTeacher(userId)) return redirect("/")
-
+/*   if (!isTeacher(userId)) return redirect("/")
+ */
   const limit = 100             
   let offset = 0
   const allUsers: any[] = []
