@@ -33,7 +33,5 @@ export async function getStudents() {
     createdAt: user.createdAt,
   }))
 
-  console.log(students)
-
   return students
 }
