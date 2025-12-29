@@ -70,6 +70,8 @@ model Attachment {
   key  String @db.Text
   url  String @db.Text
 
+  isFree Boolean @default(false)
+
   chapterId String?
   chapter   Chapter? @relation(fields: [chapterId], references: [id], onDelete: Cascade)
 

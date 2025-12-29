@@ -125,13 +125,18 @@ const master = await db.teacher.findUnique({
                     const icon = iconForLink(link)
                     const label = icon !== "link" ? icon.charAt(0).toUpperCase() + icon.slice(1) : "Website"
                     return (
+                      <a
+                      key={link}
+                      href={link.split("|")[1]}
+                      target="_blank"
+                      >
                       <span
-                        key={link}
                         className="flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-700"
                       >
                         <Icon name={icon} className={cn("h-4 w-4", icon === "link" && "text-slate-500")} />
                         {label}
                       </span>
+                      </a>
                     )
                   })}
                 </div>

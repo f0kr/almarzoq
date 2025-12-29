@@ -36,6 +36,9 @@ const CourseLayout = async ({
                         position: "asc"
                     }
                 }
+                    },
+                    orderBy: {
+                        position: 'asc'
                     }
                 }
             }

@@ -5,11 +5,10 @@ import { ArrowLeft } from "lucide-react"
 import { getStudents } from "@/actions/getStudents"
 import Groups from "./_components/Groups"
 
-export default async function GroupPage({ params }: { params: Promise<{ studentId: string }> }) {
-    const {studentId} = await params
+export default async function GroupPage({ params }: { params: Promise<{ studentId: string, courseId: string }> }) {
+    const {studentId, courseId} = await params
     const students = await getStudents()
     const student = students.find((s)=> s.id === studentId)
-    const name = student?.fullName
     
     if(!isTeacher) redirect("/")
 
@@ -21,7 +20,7 @@ export default async function GroupPage({ params }: { params: Promise<{ studentI
             className="flex items-center text-sm hover:opacity-75 transition mb-6 p-6"
             >
             <ArrowLeft className="h-4 w-4 mr-2"/>
-            Skip adding a group to {name}
+            Back to student page
             </Link>
             <div className="pb-3 pl-3">
              Please choose a group for{" "}
@@ -31,6 +30,7 @@ export default async function GroupPage({ params }: { params: Promise<{ studentI
               to add to
             </div>
              <Groups
+             courseId={courseId}
              studentId={studentId}
              />
         </div>

@@ -1,28 +1,50 @@
 "use client"
 
 import { Category } from "@prisma/client"
+import { useState, useTransition } from "react"
 import CategoryItem from "./CategoryItem"
-
+import { ListIcon } from "lucide-react"
 
 interface CategoriesProps {
-    items: Category[]
+  items: Category[]
 }
 
+export default function Categories({ items }: CategoriesProps) {
+  const [isPending, startTransition] = useTransition()
+  const [activeValue, setActiveValue] = useState<string | null>(null)
 
-export default function Categories({
-    items,
-}: CategoriesProps){
-   return(
+  const onSelect = (value: string | null, navigate: () => void) => {
+    if (isPending) return
+
+    setActiveValue(value)
+
+    startTransition(() => {
+      navigate()
+    })
+  }
+
+  return (
     <div className="flex items-center gap-x-2 overflow-x-auto pb-2">
-       {items.map((item)=> (
+      {/* ALL */}
+      <CategoryItem
+        label="All"
+        Icon={ListIcon}
+        isPending={isPending}
+        isActive={activeValue === null}
+        onSelect={onSelect}
+      />
+
+      {items.map((item) => (
         <CategoryItem
-        key={item.id}
-        label={item.name}
-        icon={item.iconUrl}
-        value={item.id}
-        >
-        </CategoryItem>
-       ))}
+          key={item.id}
+          label={item.name}
+          iconUrl={item.iconUrl}
+          value={item.id}
+          isPending={isPending}
+          isActive={activeValue === item.id}
+          onSelect={onSelect}
+        />
+      ))}
     </div>
-   )
+  )
 }

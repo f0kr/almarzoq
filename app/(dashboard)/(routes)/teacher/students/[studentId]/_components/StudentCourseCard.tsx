@@ -38,7 +38,7 @@ export const StudentCourseCard = ({
           courseId: id
         })
         toast.success("Student added.")
-        router.refresh()
+        router.push(`/teacher/students/${studentId}/${id}/group`)
       }catch(error){
         console.log(error)
         toast.error("something went wrong")

@@ -176,6 +176,8 @@ export async function PATCH(
                     {url: values.videoUrl},
                 ],
                 playback_policies: ["public"],
+                max_resolution_tier: "2160p",
+                video_quality: "basic",
                 test: false
             })
 

@@ -83,17 +83,4 @@ export const columns: ColumnDef<Student>[] = [
         )
     }
   },
-  {
-    id: "group",
-    cell: ({row})=> {
-        const {id} = row.original
-
-        return(
-                    <Link href={`/teacher/students/${id}/group`}>
-                        <GroupIcon className="h-4 w-4 mr-2"/>
-                        Group
-                    </Link>
-        )
-    }
-  }
 ]

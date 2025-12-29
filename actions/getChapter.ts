@@ -44,6 +44,9 @@ export const getChapter = async ({
         where: {
             id: chapterId,
             isPublished: true
+        },
+        include: {
+            attachments: true
         }
     })
 
@@ -55,7 +58,9 @@ export const getChapter = async ({
     let attachments: Attachment[] = []
     let nextChapter: Chapter | null = null
 
-    if(purchase || chapter.isFree === true){
+    const isFreeAttachment = chapter.attachments?.every((att) => att.isFree === true) ?? false
+
+    if(purchase || chapter.isFree === true && isFreeAttachment){
         attachments = await db.attachment.findMany({
             where: {
                 chapterId 

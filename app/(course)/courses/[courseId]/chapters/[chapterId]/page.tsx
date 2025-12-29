@@ -3,7 +3,6 @@ import { Banner } from "@/components/Banner";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { VideoPlayer } from "./_components/VideoPlayer";
-import { CourseEnrollButton } from "./_components/CourseEnrollButton";
 import { Preview } from "@/components/Preview";
 import { Separator } from "@/components/ui/separator";
 import { File } from "lucide-react";
