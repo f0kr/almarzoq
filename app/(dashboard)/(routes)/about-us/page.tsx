@@ -4,30 +4,29 @@ import React, { useRef, useEffect } from 'react';
 import { Mail, Phone } from 'lucide-react';
 import { FaInstagram, FaFacebook, FaTiktok } from 'react-icons/fa';
 import Logo from '../../_components/Logo';
+import Image from 'next/image';
 
 export default function AboutUsPage() {
   const carouselRef = useRef<HTMLDivElement | null>(null);
 
   const teamMembers = [
     {
-      name: 'Hasanin Al-Mrzoq',
-      role: 'Founder & Director',
-      social: 'https://www.instagram.com/hasanin_art?igsh=d2NjNnZra2Q2OG5t',
-    },
-    {
       name: 'FiqrTech',
       role: 'Development Team',
       social: 'https://www.instagram.com/fiqrtech?igsh=ZGcwOGgyeG0ydXN6',
+      profileImage: '/team/fiqrtech.png',
     },
     {
       name: 'Abu Alqasim Najah',
       role: 'Graphic Designer',
       social: 'https://www.facebook.com/share/16sXroN6UT/?mibextid=wwXIfr',
+      profileImage: '/team/abu-alqasim.jpg',
     },
     {
       name: 'Mary',
       role: 'Student Registration Officer',
       social: null,
+      profileImage: '/team/mary.jpg',
     },
   ];
 
@@ -142,8 +141,13 @@ export default function AboutUsPage() {
                     {teamMembers.map((m, idx) => (
                       <article key={idx} className="snap-center flex-shrink-0 min-w-[260px] bg-gradient-to-br from-white to-gray-50 rounded-xl shadow-md p-6">
                         <div className="flex items-center gap-4">
-                          <div className="w-14 h-14 rounded-full bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center text-white font-bold text-lg">
-                            {m.name.split(' ').map((n) => n[0]).slice(0, 2).join('')}
+                          <div className="w-14 h-14 rounded-full flex items-center justify-center text-white font-bold text-lg">
+                            <Image
+                            src={m.profileImage}
+                            alt={m.name}
+                            width={56}
+                            height={56}
+                            />
                           </div>
                           <div>
                             <p className="font-semibold text-gray-900">{m.name}</p>
