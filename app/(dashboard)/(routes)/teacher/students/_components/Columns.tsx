@@ -74,12 +74,12 @@ export const columns: ColumnDef<Student>[] = [
     id: "actions",
     cell: ({row})=> {
         const {id} = row.original
-
+        
         return(
-                    <Link href={`/teacher/students/${id}`}>
-                        <Edit className="h-4 w-4 mr-2"/>
-                        Edit
-                    </Link>
+          <Link href={`/teacher/students/${id}`}>
+              <Edit className="h-4 w-4 mr-2"/>
+                Edit
+          </Link>
         )
     }
   },
