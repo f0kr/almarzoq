@@ -37,7 +37,7 @@ export default function AboutUsPage() {
       role: 'Student Registration Officer',
       instagram: null,
       facebook: null,
-      profileImage: '/team/abu-alqasim.jpg',
+      profileImage: '/team/mary.jpg',
     },
   ];
 
@@ -142,19 +142,19 @@ export default function AboutUsPage() {
                         </div>
 
                         <div className="mt-4 flex mb-2 items-center justify-center gap-3">
-                          {m.instagram && (
-                              <a href={m.instagram} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-pink-600 hover:opacity-90 border-1 rounded-full p-1">
+                          {
+                            m.instagram && m.facebook ? (
+                              <div className='flex mb-2 items-center justify-center gap-3'>
+                               <a href={m.instagram} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-pink-600 hover:opacity-90 border-1 rounded-full p-1">
                                 <FaInstagram color='gray' />
                               </a>
-                            )
-                          }
-                          {m.facebook && (
                               <a href={m.facebook} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-blue-600 hover:opacity-90 border-1 rounded-full p-1">
                                 <FaFacebookF color='gray' />
                               </a>
-                          )} 
-                          {!m.facebook && !m.instagram &&
-                          <span className="text-sm text-gray-500">No public link</span>
+                              </div>
+                            ) : (
+                              <span className="text-sm text-gray-500">No public link</span>
+                            )
                           }
                         </div>
                       </article>
