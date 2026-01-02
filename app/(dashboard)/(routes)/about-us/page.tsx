@@ -35,8 +35,8 @@ export default function AboutUsPage() {
     {
       name: 'Mary',
       role: 'Student Registration Officer',
-      instagram: null,
-      facebook: null,
+      instagram:'https://www.instagram.com/at.s_artworks/',
+      facebook: 'https://www.facebook.com/share/16sXroN6UT/?mibextid=wwXIfr',
       profileImage: '/team/mary.jpg',
     },
   ];
@@ -90,10 +90,11 @@ export default function AboutUsPage() {
                 </div>
 
                 {/* Paragraph 2 */}
-                <div className='flex gap-4 justify-center items-center'>
+                <div className=''>
                   <Image
                   src="/team/hasanin.jpg"
                   alt='hasanin almarzoq profile picture'
+                  className='float-left mr-2'
                   width={150}
                   height={100}
                   />
@@ -164,10 +165,10 @@ export default function AboutUsPage() {
               </div>
 
               {/* Contact & Social Media Section */}
-              <div className="flex justify-between border-t mx-2 pt-12 mt-12">
+              <div className="flex flex-col  justify-between items-center border-t mx-2 pt-12 mt-12 lg:flex-row">
                 <div className="flex flex-col items-start gap-6 mb-12">
                   {/* Icons */}
-                  <div className='flex items-center justify-center gap-4'>
+                  <div className='flex items-center ml-10 justify-center gap-4'>
                     <Link
                     href='https://www.tiktok.com/@almrzoq.academy?_r=1&_t=ZS-92DO28XgJld'
                     target='_blank'
