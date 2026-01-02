@@ -23,13 +23,9 @@ export async function generateMetadata(){
     },
     description: 'A platform to master drawing with various courses and tutorials from experts.',
     keywords: '',
-    metadataBase: new URL('https://www.fiqrtech.com'),
+    metadataBase: new URL('https://www.almrzoq.academy'),
     alternates: {
       canonical: '/',
-    },
-    languages: {
-      'en': '/en',
-      'ar': '/ar',
     },
     openGraph: {
       title: 'Almrzoq Academy - Master Art from professionals',
