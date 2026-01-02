@@ -35,8 +35,8 @@ export default function AboutUsPage() {
     {
       name: 'Mary',
       role: 'Student Registration Officer',
-      instagram:'https://www.instagram.com/at.s_artworks/',
-      facebook: 'https://www.facebook.com/share/16sXroN6UT/?mibextid=wwXIfr',
+      instagram: null,
+      facebook: null,
       profileImage: '/team/mary.jpg',
     },
   ];

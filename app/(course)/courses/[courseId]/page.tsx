@@ -15,9 +15,16 @@ export default async function CourseId({
             id: courseId
         },
         include: {
-            chapters: {
-                where: {
-                    isPublished: true
+            lectures: {
+                include: {
+                    chapters: {
+                        where: {
+                            isPublished: true
+                        },
+                        orderBy: {
+                        position: "asc"
+                     }
+                    }
                 },
                 orderBy: {
                     position: "asc"
@@ -26,7 +33,8 @@ export default async function CourseId({
         }
     })
 
+
     if(!course) return redirect("/")
 
-    return redirect(`/courses/${course.id}/chapters/${course.chapters[0].id}`)
+    return redirect(`/courses/${course.id}/chapters/${course.lectures[0].chapters[0].id}`)
 }

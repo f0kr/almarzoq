@@ -21,14 +21,10 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Almrzoq Academy",
     description: "A platform to master drawing with various courses and tutorials from experts.",
-    url: "https://www.almrzoq.academy",
+    url: "https://almrzoq.academy",
     siteName: "Almrzoq Academy",
     images: [
-      {
-        url: "https://www.almrzoq.academy/og-image.jpg",
-        width: 1200,
-        height: 630,
-      },
+        "https://almrzoq.academy/og-image.jpg",
     ],
     type: "website",
   },
