@@ -32,7 +32,7 @@ export async function generateMetadata(){
       'ar': '/ar',
     },
     openGraph: {
-      title: 'FiqrTech - Your Trusted Tech Partner',
+      title: 'Almrzoq Academy - Master Art from professionals',
       description: 'A platform to master drawing with various courses and tutorials from experts.',
       url: 'https://www.almrzoq.academy',
       siteName: 'Almrzoq Academy',
