@@ -89,11 +89,11 @@ const master = await db.teacher.findUnique({
         </Link>
 
         <Card className="overflow-hidden border-slate-200 bg-white shadow-sm">
-          <div className="relative h-32 bg-gradient-to-r from-sky-200 via-indigo-100 to-slate-50" />
+          <div className="relative h-32 bg-gradient-to-r from-red-200 via-indigo-100 to-slate-50" />
           <CardContent className="relative -mt-16 pb-8 md:pb-10">
             <div className="flex flex-col gap-4 rounded-2xl bg-white/90 p-4 shadow-sm ring-1 ring-slate-100 backdrop-blur md:flex-row md:items-end md:justify-between md:p-5">
               <div className="flex gap-4 md:gap-6">
-                <div className="relative h-28 w-28 overflow-hidden rounded-2xl border-4 border-white shadow-lg ring-2 ring-sky-100">
+                <div className="relative h-28 w-28 overflow-hidden rounded-2xl border-4 border-white shadow-lg ring-2 ring-red-100">
                   <Image
                     src={master.profileUrl || "/icons/default-avatar.png"}
                     alt={master.name || "Master profile"}
@@ -108,7 +108,7 @@ const master = await db.teacher.findUnique({
                     <Badge variant="secondary" className="bg-slate-100 text-slate-700">
                       Teacher
                     </Badge>
-                    <Badge variant="outline" className="border-sky-200 text-sky-800">
+                    <Badge variant="outline" className="border-red-200 text-red-800">
                       {totalCourses} {totalCourses === 1 ? "Course" : "Courses"}
                     </Badge>
                     <Badge variant="outline" className="border-emerald-200 text-emerald-700">
@@ -146,18 +146,18 @@ const master = await db.teacher.findUnique({
             <div className="mt-8 grid gap-6 md:grid-cols-[2fr_1fr]">
               <div className="rounded-xl border border-slate-200 bg-slate-50 p-5">
                 <div className="flex items-center gap-2 text-sm font-semibold text-slate-800">
-                  <GraduationCap className="h-4 w-4 text-sky-600" />
+                  <GraduationCap className="h-4 w-4 text-red-600" />
                   Bio
                 </div>
                 <div
-                  className="prose prose-sm mt-3 max-w-none text-slate-700 prose-headings:text-slate-900 prose-a:text-sky-700"
+                  className="prose prose-sm mt-3 max-w-none text-slate-700 prose-headings:text-slate-900 prose-a:text-red-700"
                   dangerouslySetInnerHTML={{ __html: bioHtml }}
                 />
               </div>
 
               <div className="rounded-xl border border-slate-200 bg-white p-5">
                 <div className="flex items-center gap-2 text-sm font-semibold text-slate-800">
-                  <BookOpen className="h-4 w-4 text-sky-600" />
+                  <BookOpen className="h-4 w-4 text-red-600" />
                   Courses
                 </div>
                 {master.courses.length === 0 ? (
@@ -168,7 +168,7 @@ const master = await db.teacher.findUnique({
                       <Link
                         key={course.id}
                         href={`/courses/${course.id}`}
-                        className="flex items-center justify-between rounded-lg border border-slate-100 px-3 py-2 text-sm text-slate-800 transition hover:border-sky-200 hover:bg-sky-50"
+                        className="flex items-center justify-between rounded-lg border border-slate-100 px-3 py-2 text-sm text-slate-800 transition hover:border-red-200 hover:bg-red-50"
                       >
                         <div className="flex flex-col">
                           <span className="font-medium">{course.title}</span>

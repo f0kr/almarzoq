@@ -114,17 +114,17 @@ export default function AttachmentsForm({
                             {initialData.attachments.map((attachment) => (
                                 <div key={attachment.id}   className="
                                     flex items-center
-                                    rounded-md border border-sky-200
-                                    bg-sky-50
+                                    rounded-md border border-red-200
+                                    bg-red-50
                                     px-3 py-2
-                                    text-sky-800
+                                    text-red-800
                                 ">
                                     <File className='h-4 w-4 mr-2 flex-shrink-0'/>
                                     <p className='text-xs line-clamp-1 mr-auto'>
                                         {attachment.name}
                                     </p>
                                     <div className="flex items-center gap-2 ml-auto">
-                                        <span className={cn('text-xs font-medium text-sky-700', !attachment.isFree && 'text-xs font-medium text-red-700')}>{attachment.isFree? "Free" : "Paid"}</span>
+                                        <span className={cn('text-xs font-medium text-red-700', !attachment.isFree && 'text-xs font-medium text-red-700')}>{attachment.isFree? "Free" : "Paid"}</span>
                                         <Checkbox
                                           disabled={isUpdating}
                                           checked={attachment.isFree}

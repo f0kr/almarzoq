@@ -56,14 +56,14 @@ return (
     onClick={() => onSelect(value!, navigate)}
     className={cn(
       "flex items-center gap-x-2 rounded-full border px-3 py-2 text-sm transition",
-      "border-slate-200 hover:border-sky-700",
-      isSelected && "border-sky-700 bg-sky-200/20 text-sky-800",
+      "border-slate-200 hover:border-red-700",
+      isSelected && "border-red-700 bg-red-200/20 text-red-800",
       isPending && !isActive && "cursor-not-allowed opacity-50"
     )}
   >
     {/* ICON / SPINNER */}
     {isPending && isActive ? (
-      <div className="h-4 w-4 animate-spin rounded-full border-2 border-sky-600 border-t-transparent" />
+      <div className="h-4 w-4 animate-spin rounded-full border-2 border-red-600 border-t-transparent" />
     ) : Icon ? (
       <Icon className="h-5 w-5 text-slate-600 shrink-0" />
     ) : iconUrl ? (

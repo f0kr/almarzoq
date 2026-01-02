@@ -61,6 +61,9 @@ module.exports = withUt({
                 md: "calc(var(--radius) - 2px)",
                 sm: "calc(var(--radius) - 4px)",
             },
+            scrollBar: {
+                scrollbarnone: "scrollbar-width: none"
+            },
             keyframes: {
                 "accordion-down": {
                     from: { height: 0 },

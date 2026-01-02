@@ -45,7 +45,7 @@ export default function NavBarRoutes() {
             ) : null}
             {!isSignedIn? (
             <SignInButton>
-             <button className="px-4 py-2 bg-blue-600 text-white rounded">
+             <button className="px-3 py-1 bg-gradient-to-br to-[#282828] from-[#282828a9] rounded text-[#cbab3e] shadow-lg shadow-black-800">
                 Sign In
              </button>
             </SignInButton>

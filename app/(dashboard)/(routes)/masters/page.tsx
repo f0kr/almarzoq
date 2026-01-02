@@ -55,7 +55,7 @@ export default async function MastersPage({
     <div className="relative min-h-[calc(100vh-80px)] bg-slate-50/80">
       <div className="relative mx-auto max-w-5xl px-4 py-10 space-y-8">
         <div className="space-y-2">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.35em] text-sky-700">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.35em] text-red-700">
             Masters
           </p>
           <h1 className="text-3xl font-semibold text-slate-900">
@@ -110,9 +110,9 @@ export default async function MastersPage({
 
               return (
                 <Link key={master.id} href={`/masters/${master.id}`} className="group block">
-                  <Card className="relative w-full overflow-hidden border-slate-200 bg-white px-6 py-5 transition-all hover:-translate-y-0.5 hover:border-sky-200 hover:shadow-lg">
-                    <div className="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-sky-400 to-indigo-400" aria-hidden />
-                    <div className="absolute left-4 top-1/2 h-16 w-16 -translate-y-1/2 overflow-hidden rounded-full border-4 border-white shadow-lg ring-2 ring-sky-100 group-hover:ring-sky-200">
+                  <Card className="relative w-full overflow-hidden border-slate-200 bg-white px-6 py-5 transition-all hover:-translate-y-0.5 hover:border-red-200 hover:shadow-lg">
+                    <div className="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-red-400 to-gray-500" aria-hidden />
+                    <div className="absolute left-4 top-1/2 h-16 w-16 -translate-y-1/2 overflow-hidden rounded-full border-4 border-white shadow-lg ring-2 ring-red-100 group-hover:ring-red-200">
                       <Image
                         src={master.profileUrl || "/icons/default-avatar.png"}
                         alt={master.name || "Master profile"}
@@ -124,23 +124,23 @@ export default async function MastersPage({
                     </div>
                     <CardContent className="pl-24 pr-2 sm:pr-4">
                       <div className="flex flex-wrap items-center gap-2 text-sm text-slate-500">
-                        <span className="rounded-full border border-sky-100 bg-sky-50 px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-sky-700">
+                        <span className="rounded-full border border-red-100 bg-red-50 px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-red-700">
                           Teacher
                         </span>
                         <span className="text-xs font-medium text-slate-500 line-clamp-1">
                           {master.title || "Title coming soon"}
                         </span>
                       </div>
-                      <h3 className="mt-2 text-xl font-semibold text-slate-900 transition-colors group-hover:text-sky-800">
+                      <h3 className="mt-2 text-xl font-semibold text-slate-900 transition-colors group-hover:text-red-800">
                         {master.name}
                       </h3>
                       <div className="mt-1 flex flex-wrap gap-2 text-xs font-medium text-slate-500">
                         <span className="flex items-center gap-1 rounded-full bg-slate-100 px-2 py-1">
-                          <span className="h-2 w-2 rounded-full bg-sky-500" aria-hidden />
+                          <span className="h-2 w-2 rounded-full bg-red-700" aria-hidden />
                           {courseCount} {courseCount === 1 ? "course" : "courses"}
                         </span>
                         <span className="flex items-center gap-1 rounded-full bg-slate-100 px-2 py-1">
-                          <span className="h-2 w-2 rounded-full bg-emerald-500" aria-hidden />
+                          <span className="h-2 w-2 rounded-full bg-yellow-500" aria-hidden />
                           {studentCount} {studentCount === 1 ? "student" : "students"}
                         </span>
                       </div>

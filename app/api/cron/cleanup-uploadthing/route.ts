@@ -10,8 +10,8 @@ const getKeyFromUrl = (url: string | null) => {
   try {
     const { pathname } = new URL(url);
     return pathname.split("/f/")[1] ?? null;
-  } catch {
-    return null;
+  } catch(error) {
+    return console.log(error);
   }
 };
 

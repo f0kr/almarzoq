@@ -139,7 +139,7 @@ export default async function ChapterId({
                           <div className="p-4">
                             {attachments.map((attachment)=> (
                                 <a key={attachment.id} target="_blanck" href={attachment.url}
-                                className="flex items-center p-3 w-full bg-sky-200 border text-sky-700 rounded-md hover:underline"
+                                className="flex items-center p-3 w-full bg-red-200 border text-red-700 rounded-md hover:underline"
                                 >
                                   <File
                                   />
