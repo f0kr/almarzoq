@@ -37,7 +37,7 @@ export default function AboutUsPage() {
       role: 'Student Registration Officer',
       instagram: null,
       facebook: null,
-      profileImage: '/team/mary.jpg',
+      profileImage: '/team/abu-alqasim.jpg',
     },
   ];
 
