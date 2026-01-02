@@ -15,10 +15,47 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
+export async function generateMetadata(){
+  return{
+    title: {
+      default: 'Almrzoq Academy - Master Art from professionals',
+      template: '%s | Almrzoq Academy'
+    },
+    description: 'A platform to master drawing with various courses and tutorials from experts.',
+    keywords: '',
+    metadataBase: new URL('https://www.fiqrtech.com'),
+    alternates: {
+      canonical: '/',
+    },
+    languages: {
+      'en': '/en',
+      'ar': '/ar',
+    },
+    openGraph: {
+      title: 'FiqrTech - Your Trusted Tech Partner',
+      description: 'A platform to master drawing with various courses and tutorials from experts.',
+      url: 'https://www.almrzoq.academy',
+      siteName: 'Almrzoq Academy',
+      type: 'website',
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
+    },
+  }
+}
+
+/* export const metadata: Metadata = {
   title: "Almrzoq Academy",
   description: "A platform to master drawing with various courses and tutorials from experts.",
-  openGraph: {
+    openGraph: {
     title: "Almrzoq Academy",
     description: "A platform to master drawing with various courses and tutorials from experts.",
     url: "https://almrzoq.academy",
@@ -32,7 +69,7 @@ export const metadata: Metadata = {
     ],
     type: "website",
   },
-};
+}; */
 
 export default function RootLayout({
   children,
