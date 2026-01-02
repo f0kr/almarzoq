@@ -30,7 +30,7 @@ export async function generateMetadata(){
     openGraph: {
       title: 'Almrzoq Academy - Master Art from professionals',
       description: 'A platform to master drawing with various courses and tutorials from experts.',
-      url: 'https://www.almrzoq.academy/og-image.jpg',
+      url: 'https://www.almrzoq.academy/og.jpg',
       siteName: 'Almrzoq Academy',
       type: 'website',
     },
