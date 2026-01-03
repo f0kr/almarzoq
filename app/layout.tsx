@@ -18,7 +18,7 @@ const geistMono = Geist_Mono({
 export async function generateMetadata(){
   return{
     title: {
-      default: 'Almrzoq Academy - Master Art from professionals',
+      default: 'Almrzoq Academy - Master Art with professionals',
       template: '%s | Almrzoq Academy'
     },
     description: 'A platform to master drawing with various courses and tutorials from experts.',
@@ -28,7 +28,7 @@ export async function generateMetadata(){
       canonical: '/',
     },
     openGraph: {
-      title: 'Almrzoq Academy - Master Art from professionals',
+      title: 'Almrzoq Academy - Master Art with professionals',
       description: 'A platform to master drawing with various courses and tutorials from experts.',
       url: 'https://www.almrzoq.academy/opengraph-image.jpg',
       siteName: 'Almrzoq Academy',

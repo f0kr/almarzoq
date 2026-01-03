@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation"
 import { Button } from "./ui/button"
 import { SearchInput } from "./SearchInput"
 import { isTeacher } from "@/lib/teacher"
+import { FaSignInAlt } from "react-icons/fa"
 
 export default function NavBarRoutes() {
    
@@ -28,6 +29,8 @@ export default function NavBarRoutes() {
             <SearchInput/>
         </div>
       )}
+                  <p className='ld:hidden md:hidden text-center font-bold w-full text-shadow-xs shadow-red-800'>Almrzoq Academy</p>
+
         <div className="flex gap-x-2 ml-auto">
             {isTeacherPage || isCoursePage ? (
                 <Link href="/">
@@ -45,14 +48,14 @@ export default function NavBarRoutes() {
             ) : null}
             {!isSignedIn? (
             <SignInButton>
-             <button className="px-3 py-1 bg-gradient-to-br to-[#282828] from-[#282828a9] rounded text-[#cbab3e] shadow-lg shadow-black-800">
-                Sign In
+             <button>
+                <FaSignInAlt/>
              </button>
             </SignInButton>
             ): (
                 <UserButton/>
             )}
-        </div>
-      </>
+        </div>      
+        </>
     )
 }

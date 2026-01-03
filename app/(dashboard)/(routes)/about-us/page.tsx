@@ -3,7 +3,6 @@
 import React, { useRef, useEffect } from 'react';
 import { Mail, Phone } from 'lucide-react';
 import { FaInstagram, FaFacebook, FaTiktok, FaFacebookF, FaYoutube } from 'react-icons/fa';
-import Logo from '../../_components/Logo';
 import Image from 'next/image';
 import ExpandableText from '../../_components/ExpandableText';
 import Link from 'next/link';
@@ -13,18 +12,12 @@ export default function AboutUsPage() {
 
   const teamMembers = [
     {
-      name: 'Hasanin Al-Marzouq',
+      name: 'Hasanin Al-Mrzoq',
       role: 'Founder',
       instagram: 'https://www.instagram.com/hasanin_art?igsh=d2NjNnZra2Q2OG5t',
       facebook:  'https://www.facebook.com/share/1BhfVPtcWs/?mibextid=wwXIfr',
       profileImage: '/team/hasanin.jpg',
     },
-/*     {
-      name: 'FiqrTech',
-      role: 'Development Team',
-      social: 'https://www.instagram.com/fiqrtech?igsh=ZGcwOGgyeG0ydXN6',
-      profileImage: '/team/fiqrtech.png',
-    }, */
     {
       name: 'Abu Alqasim Najah',
       role: 'Graphic Designer',
@@ -37,7 +30,13 @@ export default function AboutUsPage() {
       role: 'Student Registration Officer',
       instagram: null,
       facebook: null,
-      profileImage: '/team/mary.jpg',
+      profileImage: '/team/mary-profile.jpg',
+    },
+    {
+      name: 'FiqrTech',
+      role: 'Development Team',
+      social: 'https://www.instagram.com/fiqrtech?igsh=ZGcwOGgyeG0ydXN6',
+      profileImage: '/team/fiqrtech-w&b.png',
     },
   ];
 
