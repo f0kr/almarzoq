@@ -6,9 +6,10 @@ const {withUt} = require("uploadthing/tw")
 module.exports = withUt({
     darkMode: ["class"],
     content: [
-        "./app/**/*.{html,js,ts,jsx,tsx}",
-        "./components/**/*.{html,js,ts,jsx,tsx}",
-        "./(dashboard)/_components/*.{html,js,ts,jsx,tsx}",
+  "./app/**/*.{js,ts,jsx,tsx,mdx}",
+  "./components/**/*.{js,ts,jsx,tsx,mdx}",
+  "./lib/**/*.{js,ts,jsx,tsx}",
+  "./pages/**/*.{js,ts,jsx,tsx}", // just in case
 
     ],
     theme: {
@@ -78,6 +79,9 @@ module.exports = withUt({
                 "accordion-down": "accordion-down 0.2s ease-out",
                 "accordion-up": "accordion-up 0.2s ease-out",
             },
+      fontFamily: {
+        SnellFont: ['var(--font-snell)', 'sans-serif'], // Reference the CSS variable
+      },
         },
     },
     plugins: [],

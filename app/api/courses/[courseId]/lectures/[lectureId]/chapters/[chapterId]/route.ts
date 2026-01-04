@@ -178,7 +178,7 @@ export async function PATCH(
                 playback_policies: ["public"],
                 max_resolution_tier: "2160p",
                 video_quality: "basic",
-                test: false
+                test: false,
             })
 
         await db.muxData.create({

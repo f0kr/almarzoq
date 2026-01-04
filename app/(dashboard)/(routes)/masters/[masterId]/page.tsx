@@ -111,7 +111,7 @@ const master = await db.teacher.findUnique({
                     <Badge variant="outline" className="border-red-200 text-red-800">
                       {totalCourses} {totalCourses === 1 ? "Course" : "Courses"}
                     </Badge>
-                    <Badge variant="outline" className="border-emerald-200 text-emerald-700">
+                    <Badge variant="outline" className="border-yellow-200 text-yellow-700">
                       {totalStudents} {totalStudents === 1 ? "Student" : "Students"}
                     </Badge>
                   </div>

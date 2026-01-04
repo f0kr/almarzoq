@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useRef, useEffect } from 'react';
-import { Mail, Phone } from 'lucide-react';
+import { Contact, Contact2, ContactRound, Mail, MessageCircle, Phone } from 'lucide-react';
 import { FaInstagram, FaFacebook, FaTiktok, FaFacebookF, FaYoutube } from 'react-icons/fa';
 import Image from 'next/image';
 import ExpandableText from '../../_components/ExpandableText';
@@ -123,7 +123,7 @@ export default function AboutUsPage() {
                 </div>
 
                 <div className="relative">
-                  <div ref={carouselRef} className="flex gap-6 overflow-x-auto no-scrollbar snap-x snap-mandatory scroll-smooth pb-4">
+                  <div ref={carouselRef} className="flex gap-6 overflow-x-hidden no-scrollbar snap-x snap-mandatory scroll-smooth pb-4">
                     {teamMembers.map((m, idx) => (
                       <article key={idx} className="snap-center flex-shrink-0 min-w-[260px] shadow-xs">
                         <div className="flex flex-col justify-center items-center gap-4">
@@ -146,7 +146,7 @@ export default function AboutUsPage() {
                             m.instagram && m.facebook ? (
                               <div className='flex mb-2 items-center justify-center gap-3'>
                                <a href={m.instagram} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-pink-600 hover:opacity-90 border-1 rounded-full p-1">
-                                <FaInstagram color='gray' />
+                                <FaInstagram color='red' />
                               </a>
                               <a href={m.facebook} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-blue-600 hover:opacity-90 border-1 rounded-full p-1">
                                 <FaFacebookF color='gray' />
@@ -165,9 +165,10 @@ export default function AboutUsPage() {
 
               {/* Contact & Social Media Section */}
               <div className="flex flex-col  justify-between items-center border-t mx-2 pt-12 mt-12 lg:flex-row">
-                <div className="flex flex-col items-start gap-6 mb-12">
+                <div className="flex flex-col justify-center items-start gap-6 mb-12">
                   {/* Icons */}
-                  <div className='flex items-center ml-10 justify-center gap-4'>
+                  <div className='flex items-center justify-center gap-4'>
+                    <MessageCircle/>
                     <Link
                     href='https://www.tiktok.com/@almrzoq.academy?_r=1&_t=ZS-92DO28XgJld'
                     target='_blank'
@@ -184,7 +185,7 @@ export default function AboutUsPage() {
                     href='https://www.instagram.com/almrzoq.academy?igsh=bWs5dHluMDJkYXNh'
                     target='_blank'
                     >
-                    <FaInstagram className='h-5 w-5'  />
+                    <FaInstagram color='red' className='h-5 w-5'  />
                     </Link>
                     <Link
                     href='https://youtube.com/@almrzoq.academy?si=Nvb3uGQ40X09rT6I'
@@ -220,11 +221,11 @@ export default function AboutUsPage() {
                   </div>
                 </div>
                 {/* Logo */}
-                <div>
+                <div className='hidden mb-13 lg:flex'>
                   <Image
-                  src='/logo2.svg'
-                  width={100}
-                  height={100}
+                  src='/logo2.png'
+                  width={200}
+                  height={200}
                   alt='Almarzoq academy logo'
                   />
                 </div>

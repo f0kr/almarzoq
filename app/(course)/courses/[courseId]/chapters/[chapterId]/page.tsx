@@ -159,7 +159,7 @@ export default async function ChapterId({
                       href={course.groupUrls?.find((g)=> g.studentIds.includes(userId!))?.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2 px-4 py-2 bg-blue-100 text-blue-800 rounded-md hover:bg-blue-200 transition-colors font-medium underline"
+                      className="flex items-center gap-2 px-4 py-2 bg-red-100 text-red-800 rounded-md hover:bg-red-200 transition-colors font-medium underline"
                       
                       >
                       <svg

@@ -65,7 +65,7 @@ export const CourseProgressButton = (
         className="w-full md:w-auto"
 
         >
-            {isCompleted ? "Not completed" : " completed"}
+            {isCompleted ? "Set uncompleted" : "Set completed"}
         </Button>
     )
 }
