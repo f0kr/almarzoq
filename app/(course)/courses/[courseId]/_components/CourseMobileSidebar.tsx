@@ -2,7 +2,7 @@
 
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Chapter, Course, Lecture, Purchase, UserProgress } from "@prisma/client"
-import { Menu } from "lucide-react"
+import { ListVideo, Menu } from "lucide-react"
 import CourseSidebar from "./CourseSidebar"
 import { useState } from "react"
 
@@ -29,7 +29,7 @@ export default function CourseMobileSidebar({
     return(
    <Sheet open={open} onOpenChange={setOpen}>
     <SheetTrigger className="md:hidden pr-4 hover:opacity-75 transition">
-        <Menu/>
+        <ListVideo/> 
     </SheetTrigger>
     <SheetContent side="left" className="p-0 bg-white w-72">
         <CourseSidebar
