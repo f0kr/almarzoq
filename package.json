@@ -1,6 +1,6 @@
 {
   "name": "almarzoq",
-  "version": "0.1.0",
+  "version": "2.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -36,7 +36,7 @@
     "dotenv": "^17.2.3",
     "i18next": "^25.6.0",
     "lucide-react": "^0.503.0",
-    "next": "16.0.7",
+    "next": "16.1.1",
     "pg": "^8.16.3",
     "pnpm": "^10.25.0",
     "query-string": "^9.2.2",

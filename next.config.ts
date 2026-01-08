@@ -1,10 +1,8 @@
 import type { NextConfig } from "next";
-import path from "path";
-console.log('next.config.js loaded from', __dirname); // temporary debug line
 
 const nextConfig: NextConfig = {
   devIndicators: {
-  position: "top-right",
+  position: "bottom-right",
   },
   images: {
     remotePatterns: [
