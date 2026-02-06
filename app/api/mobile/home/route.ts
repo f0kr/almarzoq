@@ -7,7 +7,7 @@ export async function OPTIONS(request: NextRequest) {
   return handleCorsPreFlight(request.headers.get('origin') || undefined);
 }
 
-export async function GET(req: Request) {
+export async function GET(req: NextRequest) {
   try{
     const courses = await db.course.findMany({
       where: { isPublished: true },
