@@ -139,7 +139,7 @@ export default async function ChapterId({
                           <div className="p-4">
                             {attachments.map((attachment)=> (
                                 <a key={attachment.id} target="_blanck" href={attachment.url}
-                                className="flex items-center p-3 w-full bg-red-200 border text-red-700 rounded-md hover:underline"
+                                className="flex items-center p-3 w-full border rounded-md hover:underline bg-primary text-primary-foreground shadow-xs hover:bg-primary/90"
                                 >
                                   <File
                                   />
@@ -159,7 +159,7 @@ export default async function ChapterId({
                       href={course.groupUrls?.find((g)=> g.studentIds.includes(userId!))?.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2 px-4 py-2 bg-red-100 text-red-800 rounded-md hover:bg-red-200 transition-colors font-medium underline"
+                      className="flex items-center gap-2 px-4 py-2 rounded-md transition-colors font-medium underline bg-primary text-primary-foreground shadow-xs hover:bg-primary/90"
                       
                       >
                       <svg

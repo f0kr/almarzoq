@@ -36,27 +36,24 @@ export default function CourseSidebarItem({
         onClick={handleClick}
         type="button"
         className={cn(
-            "flex items-center gap-x-2 text-slate-500 text-sm font-[500] pl-6 transition-all hover:text-slate-600 hover:bg-slate-300/20",
-            isActive && "text-slate-700 gb-slate-200/20 hover:bg-slate-200/20 hover:text-slate-700",
-            isCompleted && "text-yellow-700 hover:text-yellow-700",
-            isCompleted && isActive && "bg-yellow-200/20"
+            "flex items-center gap-x-2 text-black text-sm font-[500] pl-6 transition-all",
         )}
         >
-            <div>
+            <div className="flex items-center gap-x-2">
                 <Icon
                 size={22}
                 className={cn(
-                    "text-slate-500",
-                    isActive && "text-slate-700",
-                    isCompleted && "text-yellow-700"
+                    "text-black/60",
+                    isActive && "text-black",
+                    isCompleted && "text-black"
                 )}
                 />
-                {label}
+                <span className="ml-2">{label}</span>
             </div>
             <div className={cn(
-                "ml-auto opacity-0 border-2 border-slate-700 h-[40px] transition-all",
+                "ml-auto opacity-0 border-2 border-black/40 h-[40px] transition-all",
                 isActive && "opacity-100",
-                isCompleted && "border-yellow-700"
+                isCompleted && "border-black"
             )}/>
         </button>
     )
