@@ -1,4 +1,4 @@
-/* import { db } from "@/lib/db";
+import { db } from "@/lib/db";
 import { Course, Purchase } from "@prisma/client";
 
 type PurchaseWithCourse = Purchase & {
@@ -55,11 +55,4 @@ export const getAnalytics = async (userId: string)=> {
             totalSales: 0
         }
     }
-} */
-
-    export const getAnalytics = async (userId: string) => {
-        const data = [{name: "None", total : 1}]
-        const totalRevenue = 1
-        const totalSales = 1
-        return {data, totalRevenue, totalSales}
-    }
+}
