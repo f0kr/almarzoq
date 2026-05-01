@@ -40,6 +40,35 @@ async function removeStudentFromGroup(input: { groupId: string; studentId: strin
   })
 }
 
+async function addStudentToGroup(input: { groupId: string; studentId: string }) {
+  "use server"
+
+  const { userId } = await auth()
+  if (!userId || !isTeacher(userId)) throw new Error("Unauthorized")
+
+  const group = await db.groupUrl.findUnique({
+    where: { id: input.groupId },
+    include: {
+      course: {
+        select: { userId: true },
+      },
+    },
+  })
+
+  if (!group || group.course.userId !== userId) throw new Error("Group not found")
+
+  const nextStudentIds = Array.from(new Set([...group.studentIds, input.studentId]))
+
+  await db.groupUrl.update({
+    where: { id: group.id },
+    data: {
+      studentIds: {
+        set: nextStudentIds,
+      },
+    },
+  })
+}
+
 async function moveStudentToGroup(input: {
   fromGroupId: string
   toGroupId: string
@@ -124,17 +153,30 @@ export default async function GroupStudentsPage({
 
   if (!group || group.course.userId !== userId) redirect("/teacher/groups")
 
+  const purchases = await db.purchase.findMany({
+    where: {
+      courseId: group.courseId,
+    },
+    select: {
+      userId: true,
+    },
+  })
+
+  const courseStudentIds = Array.from(new Set(purchases.map((purchase) => purchase.userId)))
+  const memberIds = Array.from(new Set(group.studentIds))
+  const allStudentIds = Array.from(new Set([...courseStudentIds, ...memberIds]))
+
   const students = await getStudents()
   const studentsById = new Map(students.map((s) => [s.id, s]))
 
-  const memberIds = Array.from(new Set(group.studentIds))
-  const members = memberIds
+  const members = allStudentIds
     .map((id) => {
       const s = studentsById.get(id)
       return {
         id,
         fullName: s?.fullName ?? null,
         email: s?.email ?? "",
+        inGroup: memberIds.includes(id),
       }
     })
     .sort((a, b) => (a.fullName ?? a.id).localeCompare(b.fullName ?? b.id))
@@ -185,6 +227,10 @@ export default async function GroupStudentsPage({
             toGroupId: input.toGroupId,
             studentId: input.studentId,
           })
+        }}
+        onAdd={async (studentId) => {
+          "use server"
+          await addStudentToGroup({ groupId: group.id, studentId })
         }}
       />
     </div>
