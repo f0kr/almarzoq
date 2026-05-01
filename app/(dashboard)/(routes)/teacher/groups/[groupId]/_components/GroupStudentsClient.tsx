@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 import toast from "react-hot-toast"
 
 import { ConfirmModal } from "@/components/modals/ConfirmModal"
+import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -28,6 +29,7 @@ type StudentRow = {
   id: string
   fullName: string | null
   email: string
+  inGroup: boolean
 }
 
 type GroupOption = {
@@ -39,12 +41,14 @@ export function GroupStudentsClient({
   groupId,
   students,
   otherGroups,
+  onAdd,
   onRemove,
   onMove,
 }: {
   groupId: string
   students: StudentRow[]
   otherGroups: GroupOption[]
+  onAdd: (studentId: string) => Promise<void>
   onRemove: (studentId: string) => Promise<void>
   onMove: (input: { studentId: string; toGroupId: string }) => Promise<void>
 }) {
@@ -52,20 +56,31 @@ export function GroupStudentsClient({
   const [isPending, startTransition] = React.useTransition()
 
   const [query, setQuery] = React.useState("")
+  const [filter, setFilter] = React.useState<"all" | "inGroup" | "notInGroup">("all")
   const [moveOpen, setMoveOpen] = React.useState(false)
   const [moveStudent, setMoveStudent] = React.useState<StudentRow | null>(null)
   const [toGroupId, setToGroupId] = React.useState("")
 
   const filtered = React.useMemo(() => {
     const q = query.trim().toLowerCase()
-    if (!q) return students
 
     return students.filter((s) => {
       const name = (s.fullName ?? "").toLowerCase()
       const email = (s.email ?? "").toLowerCase()
-      return name.includes(q) || email.includes(q) || s.id.toLowerCase().includes(q)
+      const matchesQuery =
+        q === "" ||
+        name.includes(q) ||
+        email.includes(q) ||
+        s.id.toLowerCase().includes(q)
+
+      const matchesFilter =
+        filter === "all" ||
+        (filter === "inGroup" && s.inGroup) ||
+        (filter === "notInGroup" && !s.inGroup)
+
+      return matchesQuery && matchesFilter
     })
-  }, [query, students])
+  }, [query, filter, students])
 
   const openMove = (student: StudentRow) => {
     if (otherGroups.length === 0) return
@@ -93,6 +108,19 @@ export function GroupStudentsClient({
     })
   }
 
+  const handleAdd = (student: StudentRow) => {
+    startTransition(async () => {
+      try {
+        await onAdd(student.id)
+        toast.success("Student added")
+        router.refresh()
+      } catch (error) {
+        console.log(error)
+        toast.error("Something went wrong")
+      }
+    })
+  }
+
   const handleMove = () => {
     if (!moveStudent || toGroupId.trim() === "" || toGroupId === groupId) return
 
@@ -111,15 +139,29 @@ export function GroupStudentsClient({
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between gap-4">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <Input
           placeholder="Search students..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           className="max-w-sm"
         />
-        <div className="text-sm text-muted-foreground">
-          {students.length} student{students.length === 1 ? "" : "s"}
+        <div className="flex items-center gap-3">
+          <Select value={filter} onValueChange={(value) => setFilter(value as "all" | "inGroup" | "notInGroup")}
+            disabled={isPending}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Filter" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All students</SelectItem>
+              <SelectItem value="inGroup">In group</SelectItem>
+              <SelectItem value="notInGroup">Not in group</SelectItem>
+            </SelectContent>
+          </Select>
+          <div className="text-sm text-muted-foreground">
+            Showing {filtered.length} of {students.length} students
+          </div>
         </div>
       </div>
 
@@ -129,13 +171,14 @@ export function GroupStudentsClient({
             <TableRow>
               <TableHead>Name</TableHead>
               <TableHead>Email</TableHead>
+              <TableHead>Status</TableHead>
               <TableHead className="text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {filtered.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={3} className="h-24 text-center">
+                <TableCell colSpan={4} className="h-24 text-center">
                   No students.
                 </TableCell>
               </TableRow>
@@ -146,27 +189,47 @@ export function GroupStudentsClient({
                     {s.fullName && s.fullName.trim() !== "" ? s.fullName : "Unknown"}
                   </TableCell>
                   <TableCell>{s.email && s.email.trim() !== "" ? s.email : "-"}</TableCell>
+                  <TableCell>
+                    <Badge
+                      className={s.inGroup ? "bg-green-700" : "bg-slate-500"}
+                    >
+                      {s.inGroup ? "In group" : "Not added"}
+                    </Badge>
+                  </TableCell>
                   <TableCell className="text-right">
                     <div className="inline-flex items-center gap-2">
-                      <Button
-                        type="button"
-                        size="sm"
-                        variant="outline"
-                        disabled={isPending || otherGroups.length === 0}
-                        onClick={() => openMove(s)}
-                      >
-                        Move
-                      </Button>
-                      <ConfirmModal onConfirm={() => handleRemove(s)}>
+                      {!s.inGroup ? (
                         <Button
                           type="button"
                           size="sm"
-                          variant="destructive"
                           disabled={isPending}
+                          onClick={() => handleAdd(s)}
                         >
-                          Remove
+                          Add
                         </Button>
-                      </ConfirmModal>
+                      ) : (
+                        <>
+                          <Button
+                            type="button"
+                            size="sm"
+                            variant="outline"
+                            disabled={isPending || otherGroups.length === 0}
+                            onClick={() => openMove(s)}
+                          >
+                            Move
+                          </Button>
+                          <ConfirmModal onConfirm={() => handleRemove(s)}>
+                            <Button
+                              type="button"
+                              size="sm"
+                              variant="destructive"
+                              disabled={isPending}
+                            >
+                              Remove
+                            </Button>
+                          </ConfirmModal>
+                        </>
+                      )}
                     </div>
                   </TableCell>
                 </TableRow>
