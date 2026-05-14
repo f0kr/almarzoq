@@ -84,7 +84,7 @@ export const getChapter = async ({
                     {
                         lecture: {
                             position: {
-                                gt: chapter.lecture.position
+                                gt: chapter.lecture?.position
                             }
                         }
                     },
@@ -92,7 +92,7 @@ export const getChapter = async ({
                         AND: [
                             {
                                 lecture: {
-                                    position: chapter.lecture.position
+                                    position: chapter.lecture?.position
                                 }
                             },
                             {
