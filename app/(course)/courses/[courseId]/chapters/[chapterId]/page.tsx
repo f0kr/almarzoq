@@ -66,6 +66,10 @@ export default async function ChapterId({
   });
 
   if (!chapter || !course) return redirect("/");
+  console.log("chapter position", chapter.position)
+  console.log("Next chapter position", nextChapter.position )
+  console.log("lectureId 1", chapter.id)
+  console.log("lectureId 2", nextChapter.id)
 
   const isLocked = !chapter.isFree && !purchase;
   const completeOnEnd = !userProgress?.isCompleted;

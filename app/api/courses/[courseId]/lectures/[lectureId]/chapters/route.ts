@@ -30,7 +30,7 @@ export async function POST(
 
         const lastChapter = await db.chapter.findFirst({
             where: {
-                courseId: courseId
+                lectureId: lectureId
             },
             orderBy: {
                 position: 'desc'
