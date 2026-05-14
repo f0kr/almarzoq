@@ -46,7 +46,8 @@ export const getChapter = async ({
             isPublished: true
         },
         include: {
-            attachments: true
+            attachments: true,
+            lecture: true
         }
     })
 
@@ -76,16 +77,46 @@ export const getChapter = async ({
         })
 
         nextChapter = await db.chapter.findFirst({
-            where:{
+            where: {
                 courseId,
                 isPublished: true,
-                position: {
-                    gt: chapter?.position
-                }
+                OR: [
+                    {
+                        lecture: {
+                            position: {
+                                gt: chapter.lecture.position
+                            }
+                        }
+                    },
+                    {
+                        AND: [
+                            {
+                                lecture: {
+                                    position: chapter.lecture.position
+                                }
+                            },
+                            {
+                                position: {
+                                    gt: chapter.position
+                                }
+                            }
+                        ]
+                    }
+                ]
             },
-            orderBy: {
-                position: "asc"
-            }
+            include: {
+                lecture: true
+            },
+            orderBy: [
+                {
+                    lecture: {
+                        position: "asc"
+                    }
+                },
+                {
+                    position: "asc"
+                }
+            ]
         })
     }
 
