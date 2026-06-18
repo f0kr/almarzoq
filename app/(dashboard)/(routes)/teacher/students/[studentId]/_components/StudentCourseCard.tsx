@@ -13,7 +13,7 @@ id: string
 title: string
 imageUrl: string
 price: number
-teacherName: string | null,
+masters: string[],
 studentId: string
 }
 
@@ -23,9 +23,10 @@ export const StudentCourseCard = ({
     title,
     imageUrl,
     price,
-    teacherName,
+    masters,
     studentId
 }: CourseCardProps)=>{
+    const masterLabel = masters?.length ? masters.join(", ") : "Unknown master"
     
     const [isLoading, setIsLoading] = useState(false)
     const router = useRouter()
@@ -37,7 +38,7 @@ export const StudentCourseCard = ({
           courseId: id
         })
         toast.success("Student added.")
-        router.refresh()
+        router.push(`/teacher/students/${studentId}/${id}/group`)
       }catch(error){
         console.log(error)
         toast.error("something went wrong")
@@ -62,14 +63,14 @@ export const StudentCourseCard = ({
                 </div>
                 <div className="flex flex-col pt-2">
                   <div className="text-xs text-muted-foreground">
-                    {teacherName}
+                    {masterLabel}
                   </div>
-                  <div className="text-lg md:text-base font-medium group-hover:text-sky-700 transition line-clamp-2">
+                  <div className="text-lg md:text-base font-medium group-hover:text-red-700 transition line-clamp-2">
                     {title}
                   </div>
                   {
                     price === 0 ? (
-                        <span className="inline-block px-2 py-0.5 text-xs font-semibold bg-green-100 text-green-700 rounded-full">
+                        <span className="inline-block px-2 py-0.5 text-xs font-semibold bg-red-100 text-red-700 rounded-full">
                             Free
                         </span>
                     ) : (

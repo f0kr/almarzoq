@@ -1,12 +1,12 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { DropdownMenuContent, DropdownMenuTrigger, DropdownMenu, DropdownMenuItem } from "@/components/ui/dropdown-menu"
+import { DropdownMenuContent, DropdownMenuTrigger, DropdownMenu } from "@/components/ui/dropdown-menu"
 import { Category } from "@prisma/client"
 import { ColumnDef } from "@tanstack/react-table"
-import { ArrowUpDown, MoreHorizontal, Pencil } from "lucide-react"
-import Link from "next/link"
+import { ArrowUpDown, MoreHorizontal } from "lucide-react"
 import { CategoryDelete } from "./CategoryDelete"
+import CategoryEdit from "./CategoryEdit"
 
 export const columns: ColumnDef<Category>[] = [
   {
@@ -26,7 +26,7 @@ export const columns: ColumnDef<Category>[] = [
   {
     id: "actions",
     cell: ({row})=> {
-        const {id} = row.original
+        const {id, name, iconUrl} = row.original
 
         return(
             <DropdownMenu>
@@ -36,7 +36,12 @@ export const columns: ColumnDef<Category>[] = [
                         <MoreHorizontal className="h-4 w-4"/>
                     </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
+                <DropdownMenuContent align="center" className="flex justify-center space-x-2 p-2">
+                    <CategoryEdit
+                    name= {name}
+                    oldIconUrl= {iconUrl}
+                    categoryId={id}
+                    />
                     <CategoryDelete
                         categoryId={id}
                     />

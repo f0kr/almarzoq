@@ -9,6 +9,8 @@ import toast from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
 import { Attachment, Chapter, MuxData } from '@prisma/client'
 import FileUpload from '@/components/FileUpload'
+import { Checkbox } from '@/components/ui/checkbox'
+import { cn } from '@/lib/utils'
 
 
 interface AttachmentsFormProps {
@@ -34,6 +36,7 @@ export default function AttachmentsForm({
 
     const [isEditing, setIsEditing] = useState(false)
     const [deletingId, setDeletingId] = useState<string | null>(null)
+    const [isUpdating, setIsUpdating] = useState(false)
 
     const toggleEditing = () => {
         setIsEditing((prev) => !prev)
@@ -68,6 +71,19 @@ export default function AttachmentsForm({
         }
     }
 
+    const onCheckedChange = async (id: string, isFree: boolean) => {
+        try {
+            setIsUpdating(true)
+            await axios.patch(`/api/courses/${courseId}/lectures/${lectureId}/chapters/${chapterId}/attachments/${id}`, { isFree })
+            router.refresh()
+        } catch(err) {
+            toast.error('Something went wrong.')
+            console.log(err)
+        } finally {
+            setIsUpdating(false)
+        }
+    }
+
     return(
         <div className='mt-6 border bg-slate-100 rounded-md p-4'>
             <div className='font-medium flex items-center justify-between'>
@@ -96,18 +112,34 @@ export default function AttachmentsForm({
                     {initialData.attachments.length > 0 && (
                         <div className='space-y-2'>
                             {initialData.attachments.map((attachment) => (
-                                <div key={attachment.id} className='flex items-center p-3 w-full bg-sky-100 border-sky-200 border text-sky-700 rounded-md'>
+                                <div key={attachment.id}   className="
+                                    flex items-center
+                                    rounded-md border border-red-200
+                                    bg-red-50
+                                    px-3 py-2
+                                    text-red-800
+                                ">
                                     <File className='h-4 w-4 mr-2 flex-shrink-0'/>
-                                    <p className='text-xs line-clamp-1'>
+                                    <p className='text-xs line-clamp-1 mr-auto'>
                                         {attachment.name}
                                     </p>
+                                    <div className="flex items-center gap-2 ml-auto">
+                                        <span className={cn('text-xs font-medium text-red-700', !attachment.isFree && 'text-xs font-medium text-red-700')}>{attachment.isFree? "Free" : "Paid"}</span>
+                                        <Checkbox
+                                          disabled={isUpdating}
+                                          checked={attachment.isFree}
+                                          onCheckedChange={(checked) =>
+                                            onCheckedChange(attachment.id, checked as boolean)
+                                          }
+                                        />
+                                      </div>
                                     {deletingId === attachment.id && (
                                         <div>
                                             <Loader2 className='h-4 w-4 animate-spin'/>
                                         </div>
                                     )}
                                     {deletingId !== attachment.id && (
-                                        <button onClick={()=> onDelete(attachment.id)} className='ml-auto hover:opacity-75 transition'>
+                                        <button onClick={()=> onDelete(attachment.id)} className='ml-2 hover:opacity-75 transition'>
                                             <X className='h-4 w-4'/>
                                         </button>
                                     )}

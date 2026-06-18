@@ -5,6 +5,7 @@ import * as React from "react"
 import {
   ColumnDef,
   ColumnFiltersState,
+  GlobalFilterTableState,
   SortingState,
   flexRender,
   getCoreRowModel,
@@ -35,7 +36,7 @@ export function DataTable<TData, TValue>({
   data,
 }: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = React.useState<SortingState>([])
-    const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
+    const [globalFilter, setGlobalFilter] = React.useState<string>("")
     
     const table = useReactTable({
     data,
@@ -44,25 +45,35 @@ export function DataTable<TData, TValue>({
     getPaginationRowModel: getPaginationRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
-    onColumnFiltersChange: setColumnFilters,
+    onGlobalFilterChange: setGlobalFilter,
     getFilteredRowModel: getFilteredRowModel(),
     state: {
       sorting,
-      columnFilters
+      globalFilter
     },
+    globalFilterFn: (row, _columnId, filterValue) => {
+    const search = filterValue.toLowerCase()
+
+    const email = (row.original as any).email?.toLowerCase() ?? ""
+    const fullName = (row.original as any).fullName?.toLowerCase() ?? ""
+
+    return (
+      email.includes(search) ||
+      fullName.includes(search)
+    )
+  },
   })
 
   return (
   <div>
     <div className="flex items-center py-4 justify-between">
-      <Input
-        placeholder="Filter students"
-        value={(table.getColumn("fullName")?.getFilterValue() as string) ?? ""}
-        onChange={(event) =>
-        table.getColumn("fullName")?.setFilterValue(event.target.value)
-        }
-        className="max-w-sm"
-        />
+        <Input
+  placeholder="Filter students"
+  value={globalFilter}
+  onChange={(e) => setGlobalFilter(e.target.value)}
+  className="max-w-sm"
+/>
+
     </div>
     <div className="rounded-md border">
       <Table>

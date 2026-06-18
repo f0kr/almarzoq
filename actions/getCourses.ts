@@ -6,6 +6,7 @@ type CourseWithProgressWithCategory = Course & {
     category: Category | null
     chapters: {id : string}[]
     progress: number | null
+    teachers: { id: string, name: string }[]
 }
 
 type GetCourses = {
@@ -42,6 +43,12 @@ const courses  = await db.course.findMany({
             },
             select: {
                 id: true
+            }
+        },
+        teachers: {
+            select: {
+                id: true,
+                name: true
             }
         },
         purchases: {

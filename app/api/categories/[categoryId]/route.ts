@@ -48,3 +48,32 @@ export async function DELETE(
         })
     }
 }
+
+export async function PATCH(req:Request, {
+    params
+}: Readonly<{
+  params: Promise<{ categoryId: string }>
+
+}>) {
+    try{
+      const {userId} = await auth()
+      const {categoryId} = await params
+      const values = await req.json()
+
+      if(!userId || !isTeacher(userId)) return new NextResponse("Unauthorized", { status: 401 })
+
+        const category = await db.category.update({
+            where: {
+                id: categoryId,
+            },
+             data: {
+                 ...values
+             }
+        })
+        return NextResponse.json(category)
+
+    }catch (error) {
+     console.log("[CATEGORY]", error)
+        return new NextResponse("Internal Server Error", { status: 500 })
+    }
+}

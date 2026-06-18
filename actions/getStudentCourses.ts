@@ -23,6 +23,14 @@ export async function getStudentCourses(studentId: string) {
             id: {
                 notIn: courseIds
             }
+            },
+            include: {
+                teachers: {
+                    select: {
+                        id: true,
+                        name: true
+                    }
+                }
             }
         })
 

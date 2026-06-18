@@ -44,6 +44,10 @@ export const getChapter = async ({
         where: {
             id: chapterId,
             isPublished: true
+        },
+        include: {
+            attachments: true,
+            lecture: true
         }
     })
 
@@ -55,7 +59,9 @@ export const getChapter = async ({
     let attachments: Attachment[] = []
     let nextChapter: Chapter | null = null
 
-    if(purchase || chapter.isFree === true){
+    const isFreeAttachment = chapter.attachments?.every((att) => att.isFree === true) ?? false
+
+    if(purchase || chapter.isFree === true && isFreeAttachment){
         attachments = await db.attachment.findMany({
             where: {
                 chapterId 
@@ -71,16 +77,46 @@ export const getChapter = async ({
         })
 
         nextChapter = await db.chapter.findFirst({
-            where:{
+            where: {
                 courseId,
                 isPublished: true,
-                position: {
-                    gt: chapter?.position
-                }
+                OR: [
+                    {
+                        lecture: {
+                            position: {
+                                gt: chapter.lecture?.position
+                            }
+                        }
+                    },
+                    {
+                        AND: [
+                            {
+                                lecture: {
+                                    position: chapter.lecture?.position
+                                }
+                            },
+                            {
+                                position: {
+                                    gt: chapter.position
+                                }
+                            }
+                        ]
+                    }
+                ]
             },
-            orderBy: {
-                position: "asc"
-            }
+            include: {
+                lecture: true
+            },
+            orderBy: [
+                {
+                    lecture: {
+                        position: "asc"
+                    }
+                },
+                {
+                    position: "asc"
+                }
+            ]
         })
     }
 

@@ -37,13 +37,14 @@ export const CategoryDelete = ({ categoryId }: CategoryDeleteProps) => {
 
 
     return (
-        <div className="flex items-center gap-x-2">
+        <div className="flex items-center">
             <ConfirmModal onConfirm={onDelete}>
             <Button
-                size="sm"
+                size="icon"
+                variant='ghost'
                 disabled={isLoading}
             >
-                <Trash className="h-4 w-4" />
+                <Trash className="h-4 w-4 text-red-500"/>
             </Button>
             </ConfirmModal>
         </div>
