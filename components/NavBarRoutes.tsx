@@ -9,6 +9,7 @@ import { SearchInput } from "./SearchInput"
 import { isTeacher } from "@/lib/teacher"
 import { FaSignInAlt } from "react-icons/fa"
 import localFont from "next/font/local"
+import { cn } from "@/lib/utils"
 
 const snellFont = localFont({
   src: [
@@ -45,11 +46,13 @@ export default function NavBarRoutes() {
             <SearchInput/>
         </div>
       )}
-            <div className={`flex text-lg md:hidden lg:hidden ${snellFont.className}`}>
+            <div className={cn(`flex text-lg md:hidden lg:hidden ${snellFont.className}`,
+                            isCoursePage && 'hidden'
+            )}>
             <div className='text-center flex w-full'>Al<h1 className='text-yellow-500'>mrzoq </h1></div>
             <p>Academy</p>
             </div>
-        <div className="flex gap-x-2 ml-auto">
+        <div className="flex gap-x-2 ml-auto justify-center items-center">
             {isTeacherPage || isCoursePage ? (
                 <Link href="/">
                 <Button size="sm" variant="ghost">
