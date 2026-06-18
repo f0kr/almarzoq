@@ -32,7 +32,7 @@ const formSchema = z.object({
     .string()
     .url("Invalid URL")
     .regex(
-      /^(https?:\/\/)?((t\.me\/(\+?[A-Za-z0-9_-]+))|(chat\.whatsapp\.com\/[A-Za-z0-9]+))$/,
+      /^(https?:\/\/)?((t\.me\/(\+?[A-Za-z0-9_-]+))|(chat\.whatsapp\.com\/[A-Za-z0-9]+))(\?[^#]*)?(#.*)?$/,
       "Must be a valid Telegram or WhatsApp group link",
     ),
 });
