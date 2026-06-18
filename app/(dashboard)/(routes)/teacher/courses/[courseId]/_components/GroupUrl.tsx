@@ -31,7 +31,10 @@ const formSchema = z.object({
   url: z
     .string()
     .url("Invalid URL")
-    .regex(/^(https?:\/\/)?(t\.me)\/(\+?[A-Za-z0-9_-]+)$/),
+    .regex(
+      /^(https?:\/\/)?((t\.me\/(\+?[A-Za-z0-9_-]+))|(chat\.whatsapp\.com\/[A-Za-z0-9]+))(\?[^#]*)?(#.*)?$/,
+      "Must be a valid Telegram or WhatsApp group link",
+    ),
 });
 
 export default function GroupUrlsForm({ initialData, courseId }: Props) {
@@ -78,13 +81,22 @@ export default function GroupUrlsForm({ initialData, courseId }: Props) {
         <h3 className="font-semibold">Group URLs</h3>
 
         <Button variant="ghost" onClick={toggleCreating}>
-          {isCreating ? "Cancel" : <><PlusCircle className="h-4 w-4 mr-2" /> Add Group</>}
+          {isCreating ? (
+            "Cancel"
+          ) : (
+            <>
+              <PlusCircle className="h-4 w-4 mr-2" /> Add Group
+            </>
+          )}
         </Button>
       </div>
 
       {isCreating && (
         <Form {...form}>
-          <form className="space-y-4 mt-4" onSubmit={form.handleSubmit(onSubmit)}>
+          <form
+            className="space-y-4 mt-4"
+            onSubmit={form.handleSubmit(onSubmit)}
+          >
             <FormField
               name="name"
               control={form.control}
@@ -92,7 +104,11 @@ export default function GroupUrlsForm({ initialData, courseId }: Props) {
                 <FormItem>
                   <FormLabel>Group Name</FormLabel>
                   <FormControl>
-                    <Input disabled={isSubmitting} {...field} placeholder="VIP Group" />
+                    <Input
+                      disabled={isSubmitting}
+                      {...field}
+                      placeholder="VIP Group"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -118,14 +134,23 @@ export default function GroupUrlsForm({ initialData, courseId }: Props) {
             />
 
             <Button type="submit" disabled={!isValid || isSubmitting}>
-              {isSubmitting ? <Loader2 className="animate-spin h-4 w-4" /> : "Create"}
+              {isSubmitting ? (
+                <Loader2 className="animate-spin h-4 w-4" />
+              ) : (
+                "Create"
+              )}
             </Button>
           </form>
         </Form>
       )}
 
       {!isCreating && (
-        <div className={cn("mt-4 space-y-3", !initialData.length && "text-slate-500 italic")}>
+        <div
+          className={cn(
+            "mt-4 space-y-3",
+            !initialData.length && "text-slate-500 italic",
+          )}
+        >
           {!initialData.length && "No groups added"}
 
           {initialData.map((g) => (
@@ -133,15 +158,16 @@ export default function GroupUrlsForm({ initialData, courseId }: Props) {
               key={g.id}
               className="flex items-center justify-between bg-white border rounded-md p-3"
             >
-              <div>
-                <p className="font-medium">{g.name}</p>
-                <p className="text-xs text-slate-600">{g.url}</p>
+              <div className="min-w-0 flex-1 mr-2">
+                <p className="font-medium truncate">{g.name}</p>
+                <p className="text-xs text-slate-600 truncate">{g.url}</p>
               </div>
 
               <Button
                 onClick={() => onDelete(g.id)}
                 variant="ghost"
                 size="icon"
+                className="shrink-0"
               >
                 <Trash className="h-4 w-4 text-red-600" />
               </Button>

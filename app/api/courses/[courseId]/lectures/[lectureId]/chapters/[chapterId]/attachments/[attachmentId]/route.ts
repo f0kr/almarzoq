@@ -48,3 +48,40 @@ export async function DELETE(
         })
     }
 }
+
+export async function PATCH(
+    req: Request,
+    { params }: { params: Promise<{ chapterId: string; attachmentId: string }> }
+) {
+    try {
+        const {userId} = await auth()
+        const { chapterId, attachmentId } = await params
+
+        if(!userId || !isTeacher(userId)) {
+            return new NextResponse("Unauthorized", {
+                status: 401
+            })
+        }
+
+        const body = await req.json()
+        const attachment = await db.attachment.update({
+            where: {
+                id: attachmentId,
+                chapterId: chapterId
+            },
+            data: {
+                isFree: body.isFree
+            }
+        })
+
+        return NextResponse.json(attachment, {
+            status: 200
+        })
+
+    } catch (error) {
+        console.error('Error updating attachment:', error)
+        return new NextResponse("Internal Server Error", {
+            status: 500
+        })
+    }
+}
