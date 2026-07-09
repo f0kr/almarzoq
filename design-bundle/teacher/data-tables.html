@@ -1,0 +1,48 @@
+<!-- @dsCard group="Teacher" title="Data tables — categories / students / masters / groups" -->
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Atelier — Data Tables</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{--cream:#fcfaf7;--ink:#272727;--grey:#4a4a4c;--clay:#9c6349;--sage:#839c49;--sage-pale:#f2f5ea;--beige:#ede8e4;--paper:#faf5f0}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--cream);color:var(--ink);font-family:Inter,sans-serif;padding:32px}
+  .wrap{max-width:920px;margin:0 auto}
+  .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+  h1{font-family:"Playfair Display",serif;font-weight:600;font-size:27px;margin:0}
+  .btn{background:var(--clay);color:#fff;border:none;border-radius:999px;padding:10px 20px;font-weight:600;font-size:13.5px}
+  .tabs{display:flex;gap:6px;margin-bottom:16px}
+  .tab{font-size:13px;font-weight:500;padding:8px 16px;border-radius:999px;border:1px solid var(--beige);background:#fff;color:var(--grey)}
+  .tab.on{background:var(--clay);color:#fff;border-color:var(--clay)}
+  .search{width:100%;max-width:300px;background:#fff;border:1px solid var(--beige);border-radius:999px;padding:10px 16px;font-size:13.5px;color:var(--grey);margin-bottom:14px}
+  .panel{background:#fff;border:1px solid var(--beige);border-radius:16px;overflow:hidden}
+  table{width:100%;border-collapse:collapse}
+  th{text-align:left;font-size:11.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--grey);font-weight:600;padding:13px 18px;background:var(--paper);border-bottom:1px solid var(--beige)}
+  td{padding:13px 18px;font-size:14px;border-bottom:1px solid var(--beige)}
+  tr:last-child td{border-bottom:none}
+  .av{width:30px;height:30px;border-radius:999px;background:linear-gradient(135deg,var(--clay),var(--sage));display:inline-block;vertical-align:middle;margin-right:10px}
+  .name{font-weight:600}
+  .pub{font-size:11px;font-weight:600;color:var(--sage);background:var(--sage-pale);padding:4px 11px;border-radius:999px}
+  .draft{font-size:11px;font-weight:600;color:var(--clay);background:#f4ece6;padding:4px 11px;border-radius:999px}
+  .dots{color:var(--grey);font-weight:700;cursor:pointer}
+  .pag{display:flex;justify-content:flex-end;gap:8px;padding:14px 18px}
+  .pg{font-size:12.5px;border:1px solid var(--beige);background:#fff;border-radius:8px;padding:6px 12px;color:var(--grey)}
+</style></head>
+<body><div class="wrap">
+  <div class="top"><h1>Students</h1><button class="btn">+ Add student</button></div>
+  <div class="tabs"><span class="tab on">Students</span><span class="tab">Masters</span><span class="tab">Categories</span><span class="tab">Groups</span></div>
+  <input class="search" placeholder="Filter by name or email…" />
+  <div class="panel">
+    <table>
+      <thead><tr><th>Student</th><th>Email</th><th>Courses</th><th>Status</th><th></th></tr></thead>
+      <tbody>
+        <tr><td class="name"><span class="av"></span>Sara Mahmoud</td><td>sara@example.com</td><td>3</td><td><span class="pub">Active</span></td><td class="dots">&#8942;</td></tr>
+        <tr><td class="name"><span class="av"></span>Ahmed Tariq</td><td>ahmed@example.com</td><td>1</td><td><span class="pub">Active</span></td><td class="dots">&#8942;</td></tr>
+        <tr><td class="name"><span class="av"></span>Noor Salim</td><td>noor@example.com</td><td>0</td><td><span class="draft">Invited</span></td><td class="dots">&#8942;</td></tr>
+        <tr><td class="name"><span class="av"></span>Kareem Adel</td><td>kareem@example.com</td><td>2</td><td><span class="pub">Active</span></td><td class="dots">&#8942;</td></tr>
+      </tbody>
+    </table>
+    <div class="pag"><span class="pg">Previous</span><span class="pg">Next</span></div>
+  </div>
+</div></body></html>

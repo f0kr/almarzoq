@@ -65,16 +65,16 @@ export const StudentCourseCard = ({
                   <div className="text-xs text-muted-foreground">
                     {masterLabel}
                   </div>
-                  <div className="text-lg md:text-base font-medium group-hover:text-red-700 transition line-clamp-2">
+                  <div className="text-lg md:text-base font-medium group-hover:text-primary transition line-clamp-2">
                     {title}
                   </div>
                   {
                     price === 0 ? (
-                        <span className="inline-block px-2 py-0.5 text-xs font-semibold bg-red-100 text-red-700 rounded-full">
+                        <span className="inline-block px-2 py-0.5 text-xs font-semibold bg-primary/10 text-primary rounded-full">
                             Free
                         </span>
                     ) : (
-                        <p className="text-md md:text-sm font-medium text-slate-700">
+                        <p className="text-md md:text-sm font-medium text-foreground">
                             {formatPrice(price)}
                         </p>
                     )

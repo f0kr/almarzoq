@@ -1,0 +1,56 @@
+<!-- @dsCard group="Foundations" title="Color — Atelier (HerStrength-inspired)" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Atelier — Colors</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --cream:#fcfaf7; --paper:#faf5f0; --beige:#f1edea; --beige-2:#ede8e4;
+    --ink:#272727; --grey:#4a4a4c;
+    --clay:#9c6349; --tan:#b47a5f; --sage:#839c49; --sage-pale:#f2f5ea;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--cream);color:var(--ink);font-family:Inter,system-ui,sans-serif;padding:44px}
+  h1{font-family:"Playfair Display",serif;font-weight:600;font-size:34px;margin:0 0 4px}
+  h1 em{font-style:italic;color:var(--clay)}
+  .sub{color:var(--grey);margin:0 0 32px;font-size:14px;max-width:560px}
+  h2{font-family:"Playfair Display",serif;font-weight:500;font-size:17px;margin:30px 0 12px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px}
+  .swatch{border:1px solid var(--beige-2);border-radius:14px;overflow:hidden;background:#fff}
+  .chip{height:80px}
+  .meta{padding:10px 13px}
+  .name{font-weight:600;font-size:13px}
+  .val{color:var(--grey);font-size:11px;font-family:ui-monospace,monospace;margin-top:2px}
+</style>
+</head>
+<body>
+  <h1>Atelier — <em>Color</em></h1>
+  <p class="sub">Warm cream canvas, charcoal ink, and a clay-terracotta pigment, borrowed from the HerStrength palette and re-tuned for an art academy. The artwork always stays the hero.</p>
+
+  <h2>Canvas &amp; surfaces</h2>
+  <div class="grid">
+    <div class="swatch"><div class="chip" style="background:#fcfaf7"></div><div class="meta"><div class="name">Background · Cream</div><div class="val">#fcfaf7</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#faf5f0"></div><div class="meta"><div class="name">Paper</div><div class="val">#faf5f0</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#f1edea"></div><div class="meta"><div class="name">Beige surface</div><div class="val">#f1edea</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#ede8e4"></div><div class="meta"><div class="name">Border / divider</div><div class="val">#ede8e4</div></div></div>
+  </div>
+
+  <h2>Ink</h2>
+  <div class="grid">
+    <div class="swatch"><div class="chip" style="background:#272727"></div><div class="meta"><div class="name">Foreground · Ink</div><div class="val">#272727</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#4a4a4c"></div><div class="meta"><div class="name">Muted text</div><div class="val">#4a4a4c</div></div></div>
+  </div>
+
+  <h2>Pigment accents</h2>
+  <div class="grid">
+    <div class="swatch"><div class="chip" style="background:#9c6349"></div><div class="meta"><div class="name">Primary · Clay</div><div class="val">#9c6349</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#b47a5f"></div><div class="meta"><div class="name">Primary hover · Tan</div><div class="val">#b47a5f</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#839c49"></div><div class="meta"><div class="name">Secondary · Sage</div><div class="val">#839c49</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#f2f5ea"></div><div class="meta"><div class="name">Sage surface</div><div class="val">#f2f5ea</div></div></div>
+  </div>
+</body>
+</html>

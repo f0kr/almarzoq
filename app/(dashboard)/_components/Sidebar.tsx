@@ -7,7 +7,7 @@ import { FaFacebook, FaFacebookF, FaInstagram, FaInstagramSquare, FaTiktok, FaYo
 
 export default function Sidebar({ onRouteClick }: { onRouteClick?: () => void }) {
     return(
-        <div className="h-full border-r flex flex-col justify-between overflow-y-auto bg-white shadow-sm">
+        <div className="h-full border-r border-sidebar-border flex flex-col justify-between overflow-y-auto bg-sidebar text-sidebar-foreground shadow-sm">
             <div className="h-full overflow-y-hidden">
          <div className="p-6">
             <Logo />
@@ -18,7 +18,7 @@ export default function Sidebar({ onRouteClick }: { onRouteClick?: () => void })
             </div>
          <div className="mx-auto border-t-2 w-full pt-4 flex justify-center items-center gap-4 mb-6 self-start">
                   <p className="text-muted-foreground text-s">Follow us</p>
-                  <div className='flex items-center justify-center gap-2'>
+                  <div className='flex items-center justify-center gap-3 text-muted-foreground [&_a:hover]:text-primary [&_a]:transition-colors'>
                     <Link
                     href='https://www.tiktok.com/@almrzoq.academy?_r=1&_t=ZS-92DO28XgJld'
                     target='_blank'
@@ -35,7 +35,7 @@ export default function Sidebar({ onRouteClick }: { onRouteClick?: () => void })
                     href='https://www.instagram.com/almrzoq.academy?igsh=bWs5dHluMDJkYXNh'
                     target='_blank'
                     >
-                    <FaInstagram color="red" className='h-4 w-4'  />
+                    <FaInstagram className='h-4 w-4' />
                     </Link>
                     <Link
                     href='https://youtube.com/@almrzoq.academy?si=Nvb3uGQ40X09rT6I'

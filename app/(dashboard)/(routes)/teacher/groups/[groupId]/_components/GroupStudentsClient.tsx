@@ -191,7 +191,7 @@ export function GroupStudentsClient({
                   <TableCell>{s.email && s.email.trim() !== "" ? s.email : "-"}</TableCell>
                   <TableCell>
                     <Badge
-                      className={s.inGroup ? "bg-green-700" : "bg-slate-500"}
+                      className={s.inGroup ? "bg-success" : "bg-muted-foreground"}
                     >
                       {s.inGroup ? "In group" : "Not added"}
                     </Badge>

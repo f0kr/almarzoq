@@ -44,7 +44,7 @@ export const CategoryDelete = ({ categoryId }: CategoryDeleteProps) => {
                 variant='ghost'
                 disabled={isLoading}
             >
-                <Trash className="h-4 w-4 text-red-500"/>
+                <Trash className="h-4 w-4 text-destructive"/>
             </Button>
             </ConfirmModal>
         </div>

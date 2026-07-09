@@ -1,0 +1,73 @@
+<!-- @dsCard group="Mobile App" title="App — home & my learning" -->
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Atelier — App Home</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{--cream:#fcfaf7;--ink:#272727;--grey:#4a4a4c;--clay:#9c6349;--tan:#b47a5f;--sage:#839c49;--sage-pale:#f2f5ea;--beige:#ede8e4;--paper:#faf5f0}
+  *{box-sizing:border-box}
+  body{margin:0;background:#efe9e3;font-family:Inter,sans-serif;padding:30px;display:flex;gap:44px;justify-content:center;flex-wrap:wrap}
+  .phone{width:380px;background:var(--cream);border-radius:42px;border:11px solid #1f1d1b;overflow:hidden;box-shadow:0 28px 64px rgba(31,29,27,.30)}
+  .screen{height:800px;display:flex;flex-direction:column;position:relative;overflow:hidden}
+  .status{height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;font-size:13px;font-weight:600}
+  .scroll{flex:1;overflow:auto;padding:0 18px 90px}
+  .hi{font-size:13px;color:var(--grey)}
+  h1{font-family:"Playfair Display",serif;font-weight:600;font-size:25px;margin:2px 0 16px}
+  h1 em{font-style:italic;color:var(--clay)}
+  .search{background:#fff;border:1px solid var(--beige);border-radius:999px;padding:11px 16px;font-size:13.5px;color:var(--grey);margin-bottom:18px}
+  .pills{display:flex;gap:8px;overflow:auto;margin-bottom:16px}
+  .pill{flex:none;font-size:12.5px;font-weight:500;padding:7px 14px;border-radius:999px;border:1px solid var(--beige);background:#fff;color:var(--grey)}
+  .pill.on{background:var(--clay);color:#fff;border-color:var(--clay)}
+  .feat{border-radius:18px;overflow:hidden;position:relative;height:170px;margin-bottom:20px}
+  .feat img{width:100%;height:100%;object-fit:cover}
+  .feat .ov{position:absolute;inset:0;background:linear-gradient(180deg,transparent,rgba(31,29,27,.8));display:flex;flex-direction:column;justify-content:flex-end;padding:16px;color:#fff}
+  .feat .ov h3{font-family:"Playfair Display",serif;font-weight:600;font-size:18px;margin:0 0 4px}
+  .feat .ov span{font-size:12px;opacity:.9}
+  .seclbl{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+  .seclbl h2{font-family:"Playfair Display",serif;font-weight:600;font-size:17px;margin:0}
+  .seclbl a{font-size:12.5px;color:var(--clay);font-weight:600}
+  .hcard{display:flex;gap:12px;background:#fff;border:1px solid var(--beige);border-radius:14px;padding:9px;margin-bottom:12px}
+  .ht{width:96px;aspect-ratio:1/1;border-radius:10px;overflow:hidden;flex:none}.ht img{width:100%;height:100%;object-fit:cover}
+  .hi2{flex:1;min-width:0}
+  .hi2 .c{font-size:11px;color:var(--clay);font-weight:600}
+  .hi2 .n{font-weight:600;font-size:14px;margin:3px 0 8px}
+  .bar{height:6px;border-radius:999px;background:var(--beige);overflow:hidden}.fill{height:100%;background:var(--clay)}.fill.done{background:var(--sage)}
+  .pm{font-size:11px;color:var(--grey);margin-top:6px}.pm.done{color:var(--sage);font-weight:600}
+  .tabs{position:absolute;left:0;right:0;bottom:0;height:74px;background:#fff;border-top:1px solid var(--beige);display:flex;justify-content:space-around;padding-top:12px}
+  .tab{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:10.5px;color:var(--grey);font-weight:500}
+  .tab.on{color:var(--clay);font-weight:600}
+  .tab .ic{width:22px;height:22px;border-radius:6px;background:currentColor;opacity:.5}.tab.on .ic{opacity:1}
+  .cap{text-align:center;font-size:12px;color:var(--grey);margin-top:8px}
+</style></head>
+<body>
+  <!-- HOME -->
+  <div><div class="phone"><div class="screen">
+    <div class="status"><span>9:41</span><span>&#128246; &#9211;</span></div>
+    <div class="scroll">
+      <p class="hi">Good evening,</p>
+      <h1>Find your <em>next</em> course</h1>
+      <div class="search">Search courses &amp; masters…</div>
+      <div class="pills"><span class="pill on">All</span><span class="pill">Drawing</span><span class="pill">Painting</span><span class="pill">Digital</span></div>
+      <div class="feat"><img src="https://images.unsplash.com/photo-1499781350541-7783f6c6a0c8?w=700&q=80"/><div class="ov"><h3>Portrait Drawing from Scratch</h3><span>Layla Hassan · 12 chapters</span></div></div>
+      <div class="seclbl"><h2>Popular now</h2><a>See all</a></div>
+      <div class="hcard"><div class="ht"><img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=200&q=80"/></div><div class="hi2"><div class="c">Sketching</div><div class="n">Gesture &amp; Line Fundamentals</div><span style="font-size:13px;color:var(--sage);font-weight:600">Free</span></div></div>
+      <div class="hcard"><div class="ht"><img src="https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=200&q=80"/></div><div class="hi2"><div class="c">Watercolor</div><div class="n">Loose Watercolor Landscapes</div><span style="font-size:13px;font-weight:600">$39</span></div></div>
+    </div>
+    <div class="tabs"><div class="tab on"><span class="ic"></span>Home</div><div class="tab"><span class="ic"></span>Learning</div><div class="tab"><span class="ic"></span>Search</div><div class="tab"><span class="ic"></span>Profile</div></div>
+  </div></div><p class="cap">Home · catalog</p></div>
+
+  <!-- MY LEARNING -->
+  <div><div class="phone"><div class="screen">
+    <div class="status"><span>9:41</span><span>&#128246; &#9211;</span></div>
+    <div class="scroll">
+      <h1 style="margin-top:8px">My <em>Learning</em></h1>
+      <div class="pills"><span class="pill on">In progress</span><span class="pill">Completed</span></div>
+      <div class="hcard"><div class="ht"><img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=200&q=80"/></div><div class="hi2"><div class="c">Drawing</div><div class="n">Portrait Drawing</div><div class="bar"><div class="fill" style="width:45%"></div></div><div class="pm">45% · Chapter 2 of 12</div></div></div>
+      <div class="hcard"><div class="ht"><img src="https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=200&q=80"/></div><div class="hi2"><div class="c">Watercolor</div><div class="n">Watercolor Landscapes</div><div class="bar"><div class="fill" style="width:20%"></div></div><div class="pm">20% · Chapter 1 of 9</div></div></div>
+      <div class="seclbl" style="margin-top:18px"><h2>Completed</h2></div>
+      <div class="hcard"><div class="ht"><img src="https://images.unsplash.com/photo-1607457561901-e6ec3a6d16cf?w=200&q=80"/></div><div class="hi2"><div class="c">Inking</div><div class="n">Pen &amp; Ink Mastery</div><div class="bar"><div class="fill done" style="width:100%"></div></div><div class="pm done">&#10003; Completed · Certificate ready</div></div></div>
+    </div>
+    <div class="tabs"><div class="tab"><span class="ic"></span>Home</div><div class="tab on"><span class="ic"></span>Learning</div><div class="tab"><span class="ic"></span>Search</div><div class="tab"><span class="ic"></span>Profile</div></div>
+  </div></div><p class="cap">My Learning · progress</p></div>
+</body></html>
