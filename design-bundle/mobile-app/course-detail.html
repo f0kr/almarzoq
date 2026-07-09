@@ -1,0 +1,130 @@
+<!-- @dsCard group="Mobile App" title="App — course detail & lesson" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Atelier — App Course Detail</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{--cream:#fcfaf7;--ink:#272727;--grey:#4a4a4c;--clay:#9c6349;--tan:#b47a5f;--sage:#839c49;--sage-pale:#f2f5ea;--beige:#ede8e4;--paper:#faf5f0}
+  *{box-sizing:border-box}
+  body{margin:0;background:#efe9e3;font-family:Inter,sans-serif;padding:30px;display:flex;gap:44px;justify-content:center;flex-wrap:wrap}
+  .phone{width:380px;background:var(--cream);border-radius:42px;border:11px solid #1f1d1b;overflow:hidden;box-shadow:0 28px 64px rgba(31,29,27,.30);position:relative}
+  .screen{height:800px;display:flex;flex-direction:column;position:relative;overflow:hidden}
+  .status{position:absolute;top:0;left:0;right:0;height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;font-size:13px;font-weight:600;color:#fff;z-index:6}
+  .status.dark{color:var(--ink)}
+  .scroll{flex:1;overflow:auto}
+  /* hero */
+  .hero{position:relative;height:300px}
+  .hero img{width:100%;height:100%;object-fit:cover}
+  .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(31,29,27,.35),rgba(31,29,27,0) 45%,rgba(252,250,247,1))}
+  .navbtn{position:absolute;top:54px;z-index:5;width:38px;height:38px;border-radius:999px;background:rgba(252,250,247,.9);display:flex;align-items:center;justify-content:center;color:var(--ink);font-size:18px}
+  .navbtn.l{left:16px}.navbtn.r{right:16px}
+  .content{padding:4px 20px 16px;margin-top:-8px;position:relative;z-index:3}
+  .cat{display:inline-block;background:#f4ece6;color:var(--clay);font-size:11.5px;font-weight:600;padding:5px 12px;border-radius:999px;margin-bottom:10px}
+  h1{font-family:"Playfair Display",serif;font-weight:600;font-size:26px;line-height:1.15;margin:0 0 12px}
+  .masters{display:flex;align-items:center;gap:9px;margin-bottom:16px}
+  .av{width:30px;height:30px;border-radius:999px;background:linear-gradient(135deg,var(--clay),var(--tan));border:2px solid var(--cream)}
+  .av:nth-child(2){margin-left:-16px;background:linear-gradient(135deg,var(--sage),var(--tan))}
+  .mtext{font-size:13px;color:var(--grey)}.mtext b{color:var(--ink);font-weight:600}
+  .stats{display:flex;gap:18px;padding:14px 0;border-top:1px solid var(--beige);border-bottom:1px solid var(--beige);margin-bottom:16px}
+  .stat .n{font-weight:700;font-size:15px}.stat .l{font-size:11px;color:var(--grey)}
+  .desc{font-size:13.5px;color:var(--grey);line-height:1.6;margin-bottom:18px}
+  .sec{font-family:"Playfair Display",serif;font-weight:600;font-size:18px;margin:0 0 12px}
+  .ch{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--beige);border-radius:13px;padding:13px 14px;margin-bottom:9px}
+  .num{width:26px;height:26px;border-radius:999px;background:var(--paper);color:var(--clay);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex:none}
+  .ch .t{font-size:13.5px;font-weight:500}
+  .ch .ico{margin-left:auto;color:var(--grey)}
+  .ch.free .ico{color:var(--sage)}
+  .freep{margin-left:auto;font-size:10.5px;font-weight:600;color:var(--sage);background:var(--sage-pale);padding:3px 9px;border-radius:999px}
+  /* sticky CTA */
+  .cta{position:absolute;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--beige);padding:14px 20px 26px;display:flex;align-items:center;gap:14px;z-index:7}
+  .price{font-family:"Playfair Display",serif;font-weight:600;font-size:22px}
+  .price small{display:block;font-family:Inter;font-size:11px;color:var(--grey);font-weight:500}
+  .enroll{margin-left:auto;background:var(--clay);color:#fff;border:none;border-radius:999px;padding:14px 30px;font-size:15px;font-weight:600}
+  /* tab bar (player phone) */
+  .tabs{position:absolute;left:0;right:0;bottom:0;height:74px;background:#fff;border-top:1px solid var(--beige);display:flex;align-items:flex-start;justify-content:space-around;padding-top:12px;z-index:7}
+  .tab{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:10.5px;color:var(--grey);font-weight:500}
+  .tab.on{color:var(--clay);font-weight:600}
+  .tab .ic{width:22px;height:22px;border-radius:6px;background:currentColor;opacity:.5}
+  .tab.on .ic{opacity:1}
+  /* player */
+  .pvideo{aspect-ratio:16/9;position:relative;background:#222;margin-top:44px}
+  .pvideo img{width:100%;height:100%;object-fit:cover;opacity:.85}
+  .play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+  .play span{width:58px;height:58px;border-radius:999px;background:rgba(252,250,247,.92);display:flex;align-items:center;justify-content:center;color:var(--clay);font-size:22px;padding-left:4px}
+  .pbody{padding:18px 20px}
+  .pbody h2{font-family:"Playfair Display",serif;font-weight:600;font-size:22px;margin:0 0 6px}
+  .pmeta{font-size:12.5px;color:var(--grey);margin-bottom:16px}
+  .markbtn{width:100%;background:var(--sage);color:#fff;border:none;border-radius:999px;padding:13px;font-size:14px;font-weight:600;margin-bottom:18px}
+  .upbar{height:7px;border-radius:999px;background:var(--beige);overflow:hidden}.upfill{height:100%;width:45%;background:var(--clay)}
+  .upm{font-size:12px;color:var(--grey);margin-top:7px}
+  .cap{text-align:center;font-size:12px;color:var(--grey);margin-top:8px}
+</style>
+</head>
+<body>
+  <!-- COURSE DETAIL -->
+  <div>
+  <div class="phone"><div class="screen">
+    <div class="status"><span>9:41</span><span>&#9679;&#9679;&#9679; &#128246; &#9211;</span></div>
+    <div class="scroll" style="padding-bottom:96px">
+      <div class="hero">
+        <span class="navbtn l">&larr;</span>
+        <span class="navbtn r">&#9825;</span>
+        <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=800&q=80" alt="" />
+      </div>
+      <div class="content">
+        <span class="cat">Drawing</span>
+        <h1>Portrait Drawing from Scratch</h1>
+        <div class="masters">
+          <span class="av"></span><span class="av"></span>
+          <span class="mtext">By <b>Layla Hassan</b> &amp; Omar Farouk</span>
+        </div>
+        <div class="stats">
+          <div class="stat"><div class="n">12</div><div class="l">Chapters</div></div>
+          <div class="stat"><div class="n">3h 40m</div><div class="l">Duration</div></div>
+          <div class="stat"><div class="n">Beginner</div><div class="l">Level</div></div>
+        </div>
+        <p class="desc">Learn to draw lifelike portraits step by step — from construction and proportion to shading and likeness. Includes downloadable reference sheets.</p>
+        <h3 class="sec">Chapters</h3>
+        <div class="ch free"><span class="num">1</span><span class="t">Proportions of the head</span><span class="freep">Free</span></div>
+        <div class="ch free"><span class="num">2</span><span class="t">Placing the features</span><span class="freep">Free</span></div>
+        <div class="ch"><span class="num">3</span><span class="t">Shading the form</span><svg class="ico" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></div>
+        <div class="ch"><span class="num">4</span><span class="t">Building likeness</span><svg class="ico" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></div>
+      </div>
+    </div>
+    <div class="cta">
+      <div class="price">$49<small>one-time</small></div>
+      <button class="enroll">Enroll now</button>
+    </div>
+  </div></div>
+  <p class="cap">Course detail · hero, chapters, sticky enroll</p>
+  </div>
+
+  <!-- IN-APP PLAYER -->
+  <div>
+  <div class="phone"><div class="screen">
+    <div class="status"><span>9:41</span><span>&#9679;&#9679;&#9679; &#128246; &#9211;</span></div>
+    <div class="scroll" style="padding-bottom:84px">
+      <div class="pvideo"><img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=800&q=80"/><div class="play"><span>&#9654;</span></div></div>
+      <div class="pbody">
+        <h2>Placing the features</h2>
+        <div class="pmeta">Chapter 2 of 12 · 14 min</div>
+        <button class="markbtn">Mark as complete &#10003;</button>
+        <div class="upbar"><div class="upfill"></div></div>
+        <div class="upm">Course progress · 45%</div>
+      </div>
+    </div>
+    <div class="tabs">
+      <div class="tab on"><span class="ic"></span>Home</div>
+      <div class="tab"><span class="ic"></span>Learning</div>
+      <div class="tab"><span class="ic"></span>Search</div>
+      <div class="tab"><span class="ic"></span>Profile</div>
+    </div>
+  </div></div>
+  <p class="cap">In-app lesson player + tab bar</p>
+  </div>
+</body>
+</html>

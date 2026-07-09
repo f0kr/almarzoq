@@ -1,0 +1,37 @@
+<!-- @dsCard group="Components" title="Loading & empty states" -->
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Atelier — States</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{--cream:#fcfaf7;--ink:#272727;--grey:#4a4a4c;--clay:#9c6349;--sage:#839c49;--beige:#ede8e4;--paper:#faf5f0}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--cream);color:var(--ink);font-family:Inter,sans-serif;padding:40px}
+  h1{font-family:"Playfair Display",serif;font-weight:500;font-size:24px;margin:0 0 6px}
+  .label{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--grey);margin:24px 0 12px}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:840px}
+  .sk-card{background:#fff;border:1px solid var(--beige);border-radius:16px;padding:10px}
+  .sk{background:linear-gradient(90deg,var(--paper) 25%,#f3ece6 37%,var(--paper) 63%);background-size:400% 100%;animation:sh 1.4s ease infinite;border-radius:8px}
+  @keyframes sh{0%{background-position:100% 0}100%{background-position:-100% 0}}
+  .sk.thumb{aspect-ratio:16/9;border-radius:11px}
+  .sk.line{height:12px;margin-top:10px}
+  .sk.short{width:55%}
+  .sk.mid{width:80%}
+  .empty{max-width:520px;border:1.5px dashed var(--beige);background:var(--paper);border-radius:18px;padding:42px;text-align:center}
+  .empty .ic{font-size:34px}
+  .empty h3{font-family:"Playfair Display",serif;font-weight:600;font-size:20px;margin:14px 0 6px}
+  .empty p{font-size:13.5px;color:var(--grey);margin:0 0 18px}
+  .empty .btn{background:var(--clay);color:#fff;border:none;border-radius:999px;padding:11px 22px;font-size:13.5px;font-weight:600}
+</style></head>
+<body>
+  <h1>Loading &amp; empty states</h1>
+  <p class="label">Skeleton — course grid (loading.tsx)</p>
+  <div class="grid">
+    <div class="sk-card"><div class="sk thumb"></div><div class="sk line short"></div><div class="sk line mid"></div><div class="sk line short"></div></div>
+    <div class="sk-card"><div class="sk thumb"></div><div class="sk line short"></div><div class="sk line mid"></div><div class="sk line short"></div></div>
+    <div class="sk-card"><div class="sk thumb"></div><div class="sk line short"></div><div class="sk line mid"></div><div class="sk line short"></div></div>
+  </div>
+  <p class="label">Empty state</p>
+  <div class="empty"><div class="ic">&#127912;</div><h3>No courses yet</h3><p>When you enroll in a course it will show up here. Explore the catalog to find your first one.</p><button class="btn">Browse courses</button></div>
+</body></html>

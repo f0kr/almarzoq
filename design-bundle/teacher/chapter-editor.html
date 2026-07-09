@@ -1,0 +1,53 @@
+<!-- @dsCard group="Teacher" title="Chapter editor" -->
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Atelier — Chapter Editor</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{--cream:#fcfaf7;--ink:#272727;--grey:#4a4a4c;--clay:#9c6349;--sage:#839c49;--sage-pale:#f2f5ea;--beige:#ede8e4;--paper:#faf5f0}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--cream);color:var(--ink);font-family:Inter,sans-serif;padding:30px}
+  .wrap{max-width:980px;margin:0 auto}
+  .banner{background:#f6efe9;color:var(--clay);border:1px solid #ecdfd6;border-radius:12px;padding:11px 16px;font-size:13px;font-weight:600;margin-bottom:20px}
+  .top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:6px}
+  .back{font-size:13px;color:var(--grey)}
+  h1{font-family:"Playfair Display",serif;font-weight:600;font-size:26px;margin:6px 0 0}
+  .actions{display:flex;gap:10px}
+  .btn{font-weight:600;font-size:13px;border:none;border-radius:999px;padding:9px 18px;cursor:pointer}
+  .pub{background:var(--clay);color:#fff}.del{background:#fff;border:1px solid var(--beige);color:var(--grey)}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:30px}
+  .sec{display:flex;align-items:center;gap:9px;margin-bottom:13px}
+  .badge{width:32px;height:32px;border-radius:9px;background:#f4ece6;color:var(--clay);display:flex;align-items:center;justify-content:center;font-size:15px}
+  .sec h2{font-family:"Playfair Display",serif;font-weight:500;font-size:18px;margin:0}
+  .card{background:#fff;border:1px solid var(--beige);border-radius:14px;padding:15px 16px;margin-bottom:14px}
+  .lab{display:flex;justify-content:space-between;font-size:12.5px;font-weight:600;margin-bottom:8px}.lab a{color:var(--clay);font-size:12px;text-decoration:none}
+  .val{font-size:13.5px;color:var(--grey);line-height:1.5}
+  .access{display:inline-block;font-size:12px;font-weight:600;color:var(--sage);background:var(--sage-pale);padding:4px 11px;border-radius:999px}
+  .video{aspect-ratio:16/9;border-radius:12px;background:#2b2b2b;position:relative;overflow:hidden}
+  .video img{width:100%;height:100%;object-fit:cover;opacity:.8}
+  .video .pl{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:26px}
+  .attach{display:flex;align-items:center;gap:9px;background:var(--paper);border:1px solid var(--beige);border-radius:10px;padding:10px 12px;font-size:13px;margin-top:8px}
+  .attach .x{margin-left:auto;color:var(--clay)}
+</style></head>
+<body><div class="wrap">
+  <div class="banner">&#9888; This chapter is unpublished. It won't be visible in the course.</div>
+  <div class="top">
+    <div><p class="back">&larr; Back to course setup</p><h1>Chapter setup</h1></div>
+    <div class="actions"><button class="btn del">Delete</button><button class="btn pub">Publish</button></div>
+  </div>
+  <div class="cols">
+    <div>
+      <div class="sec"><span class="badge">&#9635;</span><h2>Customize</h2></div>
+      <div class="card"><div class="lab">Chapter title <a>Edit</a></div><div class="val">Placing the features</div></div>
+      <div class="card"><div class="lab">Description <a>Edit</a></div><div class="val">Map the eyes, nose and mouth onto the loomis construction…</div></div>
+      <div class="card"><div class="lab">Access settings <a>Edit</a></div><span class="access">Free preview</span></div>
+    </div>
+    <div>
+      <div class="sec"><span class="badge">&#9654;</span><h2>Chapter video</h2></div>
+      <div class="card"><div class="video"><img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=600&q=80"/><span class="pl">&#9654;</span></div></div>
+      <div class="sec" style="margin-top:22px"><span class="badge">&#128206;</span><h2>Attachments</h2></div>
+      <div class="card"><div class="attach">&#128196; reference-sheet.pdf <span class="x">&times;</span></div><div class="attach">&#128196; head-proportions.jpg <span class="x">&times;</span></div></div>
+    </div>
+  </div>
+</div></body></html>

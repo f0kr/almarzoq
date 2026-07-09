@@ -40,12 +40,12 @@ const SearchInputInner = ()=> {
     return (
       <div className="flex w-full md:w-[350px] items-center gap-2">
       <div className="relative flex-1">
-        <Search className="h-4 w-4 absolute top-3 left-3 text-slate-600" />
+        <Search className="h-4 w-4 absolute top-3 left-3 text-muted-foreground" />
         <Input
         onChange={(e) => setValue(e.target.value)}
         value={value}
-        className="w-full pl-9 rounded-full bg-slate-100 focus-visible:ring-slate-200"
-        placeholder="Search for a course"
+        className="w-full pl-9 rounded-full bg-secondary/50 border-border focus-visible:ring-primary/40"
+        placeholder="Search courses & masters…"
         />
       </div>
       <Button
@@ -55,13 +55,13 @@ const SearchInputInner = ()=> {
         onClick={() => setShowFree((prev) => !prev)}
         className={cn(
               "flex items-center gap-x-2 rounded-full border px-3 py-2 text-sm transition ",
-              "border-slate-200 hover:border-red-700",
-              showFree && "border-red-700 bg-red-200/20 text-red-800",
+              "border-border hover:border-primary",
+              showFree && "border-primary bg-primary/20 text-primary",
               isPending && "cursor-not-allowed opacity-50"
             )}
       >
     {isPending ? (
-      <div className="h-4 w-4 animate-spin rounded-full border-2 border-red-600 border-t-transparent" />
+      <div className="h-4 w-4 animate-spin rounded-full border-2 border-primary border-t-transparent" />
     ) : "Free"}
       </Button>
       </div>

@@ -84,10 +84,10 @@ export default function ChaptersFormForLectures({
     }
 
     return(
-        <div className='relative mt-6 border bg-slate-100 rounded-md p-4'>
+        <div className='relative mt-6 border bg-muted rounded-md p-4'>
             {isUpdating && (
-                <div className='absolute h-full w-full bg-slate-500/20 top-0 right-0 rounded-m flex items-center justify-center'>
-                    <Loader2 className='animate-spin h-6 w-6 text-red-700'/>
+                <div className='absolute h-full w-full bg-foreground/10 top-0 right-0 rounded-m flex items-center justify-center'>
+                    <Loader2 className='animate-spin h-6 w-6 text-primary'/>
                 </div>
             )}
               <Button
@@ -127,7 +127,7 @@ export default function ChaptersFormForLectures({
             )}
 
             {!isCreating && (
-                <div className={cn("text-sm mt-2", !initialData.chapters.length && "text-slate-500 italic")}>
+                <div className={cn("text-sm mt-2", !initialData.chapters.length && "text-muted-foreground italic")}>
                     {!initialData.chapters.length && "No chapters"}
                     <ChaptersListForLectures
                     onEdit= {onEdit}

@@ -1,0 +1,50 @@
+<!-- @dsCard group="Screens" title="Auth — sign in / sign up" -->
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Atelier — Auth</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{--cream:#fcfaf7;--ink:#272727;--grey:#4a4a4c;--clay:#9c6349;--tan:#b47a5f;--sage:#839c49;--beige:#ede8e4;--paper:#faf5f0}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Inter,sans-serif;color:var(--ink)}
+  .split{display:grid;grid-template-columns:1.1fr 1fr;min-height:760px}
+  .art{position:relative;overflow:hidden;background:#2b2622}
+  .art img{width:100%;height:100%;object-fit:cover;opacity:.82}
+  .art .quote{position:absolute;left:40px;bottom:48px;right:40px;color:var(--cream)}
+  .art .quote p{font-family:"Playfair Display",serif;font-style:italic;font-size:24px;line-height:1.3;margin:0 0 10px}
+  .art .quote span{font-size:13px;opacity:.85}
+  .form-side{background:var(--cream);display:flex;align-items:center;justify-content:center;padding:40px}
+  .box{width:340px}
+  .brand{font-family:"Playfair Display",serif;font-weight:600;font-size:24px;margin:0 0 30px}
+  .brand em{font-style:italic;color:var(--clay)}
+  h1{font-family:"Playfair Display",serif;font-weight:600;font-size:26px;margin:0 0 6px}
+  .sub{font-size:13.5px;color:var(--grey);margin:0 0 26px}
+  .lab{font-size:12.5px;font-weight:600;margin:0 0 6px}
+  .inp{width:100%;background:#fff;border:1px solid var(--beige);border-radius:11px;padding:12px 14px;font-size:14px;margin-bottom:16px}
+  .btn{width:100%;background:var(--clay);color:#fff;border:none;border-radius:999px;padding:13px;font-size:14.5px;font-weight:600;margin-top:4px}
+  .oauth{width:100%;background:#fff;border:1px solid var(--beige);border-radius:999px;padding:12px;font-size:14px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:9px;margin-bottom:14px}
+  .div{display:flex;align-items:center;gap:12px;color:var(--grey);font-size:12px;margin:18px 0}
+  .div::before,.div::after{content:"";flex:1;height:1px;background:var(--beige)}
+  .foot{text-align:center;font-size:13px;color:var(--grey);margin-top:22px}
+  .foot a{color:var(--clay);font-weight:600;text-decoration:none}
+</style></head>
+<body>
+  <div class="split">
+    <div class="art">
+      <img src="https://images.unsplash.com/photo-1499781350541-7783f6c6a0c8?w=900&q=80" alt="" />
+      <div class="quote"><p>"Every artist was first an amateur."</p><span>Almarzoq Academy</span></div>
+    </div>
+    <div class="form-side"><div class="box">
+      <p class="brand">Al<em>marzoq</em></p>
+      <h1>Welcome back</h1>
+      <p class="sub">Sign in to continue learning.</p>
+      <button class="oauth">&#71;&nbsp; Continue with Google</button>
+      <div class="div">or</div>
+      <p class="lab">Email</p><input class="inp" value="you@example.com" />
+      <p class="lab">Password</p><input class="inp" type="password" value="········" />
+      <button class="btn">Sign in</button>
+      <p class="foot">New to Almarzoq? <a>Create an account</a></p>
+    </div></div>
+  </div>
+</body></html>
