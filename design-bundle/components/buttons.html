@@ -1,0 +1,55 @@
+<!-- @dsCard group="Components" title="Buttons" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Atelier — Buttons</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{--cream:#fcfaf7;--ink:#272727;--grey:#4a4a4c;--clay:#9c6349;--tan:#b47a5f;--sage:#839c49;--beige:#ede8e4;--paper:#faf5f0}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--cream);color:var(--ink);font-family:Inter,sans-serif;padding:48px}
+  h1{font-family:"Playfair Display",serif;font-weight:500;font-size:26px;margin:0 0 28px}
+  .label{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--grey);margin:26px 0 12px}
+  .row{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+  .btn{font-family:Inter;font-weight:600;font-size:14px;border:none;cursor:pointer;border-radius:999px;padding:12px 24px;display:inline-flex;align-items:center;gap:8px;transition:.18s}
+  .primary{background:var(--clay);color:#fff}
+  .primary:hover{background:var(--tan)}
+  .secondary{background:var(--sage);color:#fff}
+  .outline{background:transparent;color:var(--ink);border:1px solid var(--ink)}
+  .outline:hover{background:var(--ink);color:var(--cream)}
+  .ghost{background:transparent;color:var(--ink)}
+  .ghost:hover{background:var(--beige)}
+  .soft{background:var(--paper);color:var(--clay);border:1px solid var(--beige)}
+  .sm{padding:8px 16px;font-size:13px}
+  .lg{padding:15px 30px;font-size:15px}
+  .arrow{font-size:15px}
+</style>
+</head>
+<body>
+  <h1>Buttons</h1>
+
+  <p class="label">Variants</p>
+  <div class="row">
+    <button class="btn primary">Find Your Course <span class="arrow">&rarr;</span></button>
+    <button class="btn secondary">Enroll Free</button>
+    <button class="btn outline">Browse Masters</button>
+    <button class="btn ghost">Learn more</button>
+    <button class="btn soft">Preview lesson</button>
+  </div>
+
+  <p class="label">Sizes</p>
+  <div class="row">
+    <button class="btn primary lg">Start Learning</button>
+    <button class="btn primary">Start Learning</button>
+    <button class="btn primary sm">Start Learning</button>
+  </div>
+
+  <p class="label">Pill CTA — hero style</p>
+  <div class="row">
+    <button class="btn primary lg">Master the Art of Drawing <span class="arrow">&rarr;</span></button>
+  </div>
+</body>
+</html>

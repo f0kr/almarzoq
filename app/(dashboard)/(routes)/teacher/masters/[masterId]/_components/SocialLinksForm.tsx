@@ -96,7 +96,7 @@ export default function SocialLinksForm({ initialData, masterId }: SocialLinksFo
     }
 
     return (
-        <div className="mt-6 border bg-slate-100 rounded-lg p-4">
+        <div className="mt-6 border bg-muted rounded-lg p-4">
             <div className="font-medium flex items-center justify-between">
                 Social Links
                 <Button
@@ -116,17 +116,17 @@ export default function SocialLinksForm({ initialData, masterId }: SocialLinksFo
             {!isEditing && (
                 <div className='mt-2'>
                     {fields.length === 0 ? (
-                        <p className='text-sm text-slate-500 italic'>No social links added</p>
+                        <p className='text-sm text-muted-foreground italic'>No social links added</p>
                     ) : (
                         <div className='space-y-2'>
                             {fields.map((field, index) => (
                                 <div key={field.id} className='text-sm'>
-                                    <span className='font-medium text-slate-700'>{field.platform}:</span>{' '}
+                                    <span className='font-medium text-foreground'>{field.platform}:</span>{' '}
                                     <a
                                         href={field.url}
                                         target='_blank'
                                         rel='noopener noreferrer'
-                                        className='text-blue-600 hover:underline break-all'
+                                        className='text-primary hover:underline break-all'
                                     >
                                         {field.url}
                                     </a>
@@ -193,7 +193,7 @@ export default function SocialLinksForm({ initialData, masterId }: SocialLinksFo
                                         onClick={() => remove(index)}
                                         className='flex-shrink-0'
                                     >
-                                        <Trash2 className='h-4 w-4 text-red-500' />
+                                        <Trash2 className='h-4 w-4 text-destructive' />
                                     </Button>
                                 </div>
                             ))}

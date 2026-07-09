@@ -1,0 +1,49 @@
+<!-- @dsCard group="Teacher" title="Analytics dashboard" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Atelier — Teacher Analytics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{--cream:#fcfaf7;--ink:#272727;--grey:#4a4a4c;--clay:#9c6349;--tan:#b47a5f;--sage:#839c49;--sage-pale:#f2f5ea;--beige:#ede8e4;--paper:#faf5f0}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--cream);color:var(--ink);font-family:Inter,sans-serif;padding:32px}
+  .wrap{max-width:960px;margin:0 auto}
+  h1{font-family:"Playfair Display",serif;font-weight:600;font-size:28px;margin:0 0 22px}
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:22px}
+  .stat{background:#fff;border:1px solid var(--beige);border-radius:16px;padding:18px}
+  .stat .l{font-size:12.5px;color:var(--grey);font-weight:500}
+  .stat .n{font-family:"Playfair Display",serif;font-weight:600;font-size:30px;margin-top:6px}
+  .stat .d{font-size:12px;color:var(--sage);font-weight:600;margin-top:4px}
+  .panel{background:#fff;border:1px solid var(--beige);border-radius:16px;padding:20px}
+  .panel h2{font-family:"Playfair Display",serif;font-weight:500;font-size:18px;margin:0 0 18px}
+  .chart{display:flex;align-items:flex-end;gap:14px;height:200px;padding-top:10px}
+  .bar{flex:1;background:linear-gradient(180deg,var(--tan),var(--clay));border-radius:8px 8px 0 0;position:relative}
+  .bar span{position:absolute;bottom:-22px;left:0;right:0;text-align:center;font-size:11px;color:var(--grey)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Analytics</h1>
+  <div class="cards">
+    <div class="stat"><div class="l">Total revenue</div><div class="n">$12,480</div><div class="d">&#9650; 8% this month</div></div>
+    <div class="stat"><div class="l">Total sales</div><div class="n">254</div><div class="d">&#9650; 12 this week</div></div>
+    <div class="stat"><div class="l">Active students</div><div class="n">1,932</div><div class="d">&#9650; 4% this month</div></div>
+  </div>
+  <div class="panel">
+    <h2>Revenue by course</h2>
+    <div class="chart">
+      <div class="bar" style="height:55%"><span>Portrait</span></div>
+      <div class="bar" style="height:80%"><span>Watercolor</span></div>
+      <div class="bar" style="height:35%"><span>Sketching</span></div>
+      <div class="bar" style="height:95%"><span>Ink</span></div>
+      <div class="bar" style="height:60%"><span>Digital</span></div>
+      <div class="bar" style="height:45%"><span>Calligraphy</span></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

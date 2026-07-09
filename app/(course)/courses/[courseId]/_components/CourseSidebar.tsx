@@ -87,8 +87,8 @@ export default function CourseSidebar({
               <Accordion.Header>
                 <Accordion.Trigger
                   className={cn(
-                    "w-full flex justify-between items-center px-4 py-3 font-medium text-left bg-gray-50 hover:bg-gray-100 transition",
-                    "data-[state=open]:bg-gray-100"
+                    "w-full flex justify-between items-center px-4 py-3 font-medium text-left bg-muted hover:bg-muted transition",
+                    "data-[state=open]:bg-muted"
                   )}
                 >
                   <span>{lecture.title}</span>

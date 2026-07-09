@@ -1,7 +1,5 @@
 import Image from "next/image"
 import Link from "next/link"
-import { IconBadge } from "./IconBadge"
-import { BookOpen } from "lucide-react"
 import { formatPrice } from "@/lib/format"
 import { CourseProgress } from "./CourseProgress"
 
@@ -30,8 +28,11 @@ export const CourseCard = ({
     const masterLabel = masters.length ? masters.join(", ") : "Unknown master"
     return(
         <Link href={`/courses/${id}`}>
-            <div className="group hover:shadow-sm transition overflow-hidden border rounded-lg p-3 h-full">
-                <div className="relative w-full aspect-video rounded-md overflow-hidden">
+            <div className="group h-full bg-card border border-border rounded-2xl p-3 transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_12px_30px_rgba(39,39,39,0.10)]">
+                <div className="relative w-full aspect-[16/10] rounded-xl overflow-hidden">
+                   <span className="absolute z-10 top-2.5 left-2.5 bg-background/90 backdrop-blur-sm text-foreground text-[11px] font-semibold px-2.5 py-1 rounded-full">
+                     {category ? category : "Uncategorized"}
+                   </span>
                    <Image
                    fill
                    className="object-cover"
@@ -39,46 +40,40 @@ export const CourseCard = ({
                    src={imageUrl}
                    />
                 </div>
-                <div className="flex flex-col pt-2">
-                  <div className="text-xs text-muted-foreground">
-                    {masterLabel}
+                <div className="flex flex-col pt-3 px-1.5">
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground mb-1.5">
+                    <span className="w-5 h-5 rounded-full bg-gradient-to-br from-primary to-[#b47a5f] shrink-0" />
+                    <span className="line-clamp-1">{masterLabel}</span>
                   </div>
-                  <div className="text-lg md:text-base font-medium group-hover:text-red-700 transition line-clamp-2">
+                  <h3 className="font-serif font-semibold text-lg leading-tight line-clamp-2 mb-2.5 transition-colors group-hover:text-primary">
                     {title}
-                  </div>
-                  <p className="text-xs text-muted-foreground">
-                    {category? category : "Uncategorized"}
-                  </p>
-                  <div className="my-3 flex items-center gap-x-2 text-sm md:text-xs">
-                    <div className="flex items-center gap-x-1 text-slate-500">
-                        <IconBadge
-                        size="sm"
-                        icon={BookOpen}
-                        />
-                        <span>
-                            {chaptersLength} {chaptersLength === 1 ? "Chapter": "Chapters"}
-                        </span>
-                    </div>
-                  </div>
+                  </h3>
                   {progress !== null ? (
-                    <div>
-                        <CourseProgress
-                        variant={progress === 100 ? "success": "default"}
-                        size="sm"
-                        value={progress}
-
-                        />
-                    </div>
+                    <CourseProgress
+                      variant={progress === 100 ? "success" : "default"}
+                      size="sm"
+                      value={progress}
+                    />
                   ) : (
-                    price === 0 ? (
-                        <span className="inline-block px-2 py-0.5 text-xs font-semibold bg-yellow-100 text-yellow-700 rounded-full">
+                    <>
+                      <p className="text-xs text-muted-foreground mb-3.5">
+                        {chaptersLength} {chaptersLength === 1 ? "Chapter" : "Chapters"}
+                      </p>
+                      <div className="flex items-center justify-between">
+                        {price === 0 ? (
+                          <span className="bg-success/15 text-success text-xs font-semibold px-3 py-1.5 rounded-full">
                             Free
-                        </span>
-                    ) : (
-                        <p className="text-md md:text-sm font-medium text-slate-700">
+                          </span>
+                        ) : (
+                          <span className="font-semibold text-base text-foreground">
                             {formatPrice(price)}
-                        </p>
-                    )
+                          </span>
+                        )}
+                        <span className="text-xs font-semibold text-primary">
+                          {price === 0 ? "Start now" : "View course"} &rarr;
+                        </span>
+                      </div>
+                    </>
                   )}
                 </div>
             </div>

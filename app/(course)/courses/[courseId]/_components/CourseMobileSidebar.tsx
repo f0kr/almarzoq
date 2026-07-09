@@ -28,9 +28,9 @@ export default function CourseMobileSidebar({
 
     return(
    <Sheet open={open} onOpenChange={setOpen}>
-    <SheetTrigger className="md:hidden px-3 py-2 hover:opacity-85 transition flex items-center mr-2 gap-2 bg-gradient-to-br to-gray-150 from-gray-200 rounded-lg hover:bg-red-200/30">
-        <ListVideo className="h-5 w-5 text-red-700" />
-        <span className="font-medium text-red-700">Chapters</span>
+    <SheetTrigger className="md:hidden px-3 py-2 hover:opacity-85 transition flex items-center mr-2 gap-2 bg-gradient-to-br to-muted from-muted rounded-lg hover:bg-primary/30">
+        <ListVideo className="h-5 w-5 text-primary" />
+        <span className="font-medium text-primary">Chapters</span>
     </SheetTrigger>
     <SheetContent side="left" className="p-0 bg-white w-72">
         <CourseSidebar

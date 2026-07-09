@@ -163,7 +163,7 @@ export function StudentGroupsClient({
                   <TableCell className="font-medium">{g.name}</TableCell>
                   <TableCell className="max-w-[340px] truncate">{g.url}</TableCell>
                   <TableCell>
-                    <Badge className={cn("bg-slate-500", g.isMember && "bg-green-700")}>
+                    <Badge className={cn("bg-muted-foreground", g.isMember && "bg-success")}>
                       {g.isMember ? "Member" : "Not added"}
                     </Badge>
                   </TableCell>

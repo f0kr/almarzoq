@@ -76,7 +76,7 @@ export default function GroupUrlsForm({ initialData, courseId }: Props) {
   };
 
   return (
-    <div className="mt-6 border bg-slate-100 rounded-md p-4">
+    <div className="mt-6 border bg-muted rounded-md p-4">
       <div className="flex items-center justify-between">
         <h3 className="font-semibold">Group URLs</h3>
 
@@ -148,7 +148,7 @@ export default function GroupUrlsForm({ initialData, courseId }: Props) {
         <div
           className={cn(
             "mt-4 space-y-3",
-            !initialData.length && "text-slate-500 italic",
+            !initialData.length && "text-muted-foreground italic",
           )}
         >
           {!initialData.length && "No groups added"}
@@ -160,7 +160,7 @@ export default function GroupUrlsForm({ initialData, courseId }: Props) {
             >
               <div className="min-w-0 flex-1 mr-2">
                 <p className="font-medium truncate">{g.name}</p>
-                <p className="text-xs text-slate-600 truncate">{g.url}</p>
+                <p className="text-xs text-muted-foreground truncate">{g.url}</p>
               </div>
 
               <Button
@@ -169,7 +169,7 @@ export default function GroupUrlsForm({ initialData, courseId }: Props) {
                 size="icon"
                 className="shrink-0"
               >
-                <Trash className="h-4 w-4 text-red-600" />
+                <Trash className="h-4 w-4 text-destructive" />
               </Button>
             </div>
           ))}

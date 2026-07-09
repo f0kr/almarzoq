@@ -1,0 +1,53 @@
+<!-- @dsCard group="Foundations" title="Typography — Playfair + Inter" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Atelier — Typography</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{--cream:#fcfaf7;--ink:#272727;--grey:#4a4a4c;--clay:#9c6349;--beige:#ede8e4}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--cream);color:var(--ink);font-family:Inter,sans-serif;padding:48px;line-height:1.35}
+  .serif{font-family:"Playfair Display",serif}
+  em{font-style:italic;color:var(--clay)}
+  .label{font-family:Inter;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--grey);margin:0 0 6px}
+  .row{padding:20px 0;border-bottom:1px solid var(--beige)}
+  .d1{font-size:56px;font-weight:600;line-height:1.04;margin:0}
+  .d2{font-size:38px;font-weight:600;margin:0}
+  .h3{font-size:24px;font-weight:500;margin:0}
+  .body{font-size:16px;color:var(--grey);max-width:600px;margin:0}
+  .small{font-size:13px;color:var(--grey);margin:0}
+  .specs{font-size:12px;color:var(--grey);font-family:ui-monospace,monospace;margin-top:8px}
+</style>
+</head>
+<body>
+  <div class="row">
+    <p class="label">Display · Playfair Display</p>
+    <h1 class="serif d1">Master the <em>Art</em><br/>of Drawing.</h1>
+    <p class="specs">Playfair Display · 600 · italic emphasis on the key word, clay pigment</p>
+  </div>
+  <div class="row">
+    <p class="label">Heading · Playfair Display</p>
+    <h2 class="serif d2">Courses from real <em>masters</em></h2>
+    <p class="specs">Playfair Display · 600 · 38px</p>
+  </div>
+  <div class="row">
+    <p class="label">Subheading · Playfair Display</p>
+    <h3 class="serif h3">Find your line</h3>
+    <p class="specs">Playfair Display · 500 · 24px</p>
+  </div>
+  <div class="row">
+    <p class="label">Body · Inter</p>
+    <p class="body">Learn drawing, painting and digital art through structured courses taught by professional artists. Track your progress chapter by chapter and build a portfolio you are proud of.</p>
+    <p class="specs">Inter · 400 · 16px · color #4a4a4c</p>
+  </div>
+  <div class="row" style="border-bottom:none">
+    <p class="label">Small / meta · Inter</p>
+    <p class="small">12 chapters · 3h 40m · Beginner friendly</p>
+    <p class="specs">Inter · 500 · 13px</p>
+  </div>
+</body>
+</html>

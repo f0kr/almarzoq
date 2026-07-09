@@ -1,0 +1,59 @@
+<!-- @dsCard group="Components" title="Forms & inputs" -->
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Atelier — Forms</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{--cream:#fcfaf7;--ink:#272727;--grey:#4a4a4c;--clay:#9c6349;--sage:#839c49;--sage-pale:#f2f5ea;--beige:#ede8e4;--paper:#faf5f0}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--cream);color:var(--ink);font-family:Inter,sans-serif;padding:40px}
+  h1{font-family:"Playfair Display",serif;font-weight:500;font-size:24px;margin:0 0 24px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:30px;max-width:880px}
+  .lab{display:block;font-size:13px;font-weight:600;margin:0 0 7px}
+  .hint{font-size:12px;color:var(--grey);margin:6px 0 0}
+  .err{font-size:12px;color:var(--clay);margin:6px 0 0;font-weight:500}
+  .inp,.ta,.sel{width:100%;background:#fff;border:1px solid var(--beige);border-radius:11px;padding:11px 14px;font-size:14px;font-family:Inter;color:var(--ink)}
+  .inp:focus,.ta:focus{outline:none;border-color:var(--clay);box-shadow:0 0 0 3px rgba(156,99,73,.15)}
+  .inp.bad{border-color:var(--clay);box-shadow:0 0 0 3px rgba(156,99,73,.15)}
+  .ta{min-height:84px;resize:none}
+  .field{margin-bottom:22px}
+  .sel{display:flex;justify-content:space-between;align-items:center;cursor:pointer}
+  .row{display:flex;align-items:center;gap:10px}
+  .check{width:20px;height:20px;border-radius:6px;border:1.5px solid var(--beige);background:#fff;display:flex;align-items:center;justify-content:center}
+  .check.on{background:var(--clay);border-color:var(--clay);color:#fff;font-size:12px}
+  .combo{background:#fff;border:1px solid var(--beige);border-radius:11px;overflow:hidden}
+  .combo .search{padding:10px 14px;border-bottom:1px solid var(--beige);font-size:13px;color:var(--grey)}
+  .combo .opt{padding:9px 14px;font-size:13.5px;display:flex;justify-content:space-between}
+  .combo .opt.sel{background:#f4ece6;color:var(--clay);font-weight:600}
+  .drop{border:1.5px dashed var(--beige);border-radius:14px;background:var(--paper);padding:28px;text-align:center;color:var(--grey)}
+  .drop .ic{font-size:26px;color:var(--clay)}
+  .drop b{display:block;color:var(--ink);font-size:14px;margin:8px 0 3px}
+  .toolbar{display:flex;gap:4px;border:1px solid var(--beige);border-bottom:none;border-radius:11px 11px 0 0;background:var(--paper);padding:7px 10px}
+  .tb{width:30px;height:28px;border-radius:6px;background:#fff;border:1px solid var(--beige);font-size:13px;display:flex;align-items:center;justify-content:center;font-weight:700}
+  .editor{border:1px solid var(--beige);border-radius:0 0 11px 11px;padding:12px 14px;font-size:13.5px;color:var(--grey);min-height:70px;background:#fff}
+</style></head>
+<body>
+  <h1>Forms &amp; inputs</h1>
+  <div class="grid">
+    <div>
+      <div class="field"><label class="lab">Course title</label><input class="inp" value="Portrait Drawing from Scratch" /><p class="hint">Visible to your students.</p></div>
+      <div class="field"><label class="lab">Short description</label><textarea class="ta">Learn to draw lifelike portraits step by step.</textarea></div>
+      <div class="field"><label class="lab">Price</label><input class="inp bad" value="-5" /><p class="err">Price must be a positive number.</p></div>
+      <div class="field"><label class="lab">Category</label><div class="sel">Drawing <span>&#9662;</span></div></div>
+      <div class="field"><div class="row"><span class="check on">&#10003;</span><span style="font-size:14px">This chapter is free to preview</span></div></div>
+    </div>
+    <div>
+      <div class="field"><label class="lab">Assign master (combobox)</label>
+        <div class="combo"><div class="search">Search masters…</div><div class="opt sel">Layla Hassan <span>&#10003;</span></div><div class="opt">Omar Farouk</div><div class="opt">Mona Adel</div></div>
+      </div>
+      <div class="field"><label class="lab">Course image</label>
+        <div class="drop"><div class="ic">&#8682;</div><b>Drag &amp; drop or browse</b>16:9 · up to 4MB</div>
+      </div>
+      <div class="field"><label class="lab">Description (rich text)</label>
+        <div class="toolbar"><span class="tb">B</span><span class="tb" style="font-style:italic">I</span><span class="tb" style="text-decoration:underline">U</span><span class="tb">&#8226;</span><span class="tb">&#128279;</span></div>
+        <div class="editor">In this course you will learn the fundamentals of portraiture…</div>
+      </div>
+    </div>
+  </div>
+</body></html>

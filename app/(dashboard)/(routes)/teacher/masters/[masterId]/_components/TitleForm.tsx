@@ -55,7 +55,7 @@ export default function TitleForm({ initialData, masterId }: TitleFormProps) {
     }
 
     return (
-        <div className="mt-6 border bg-slate-100 rounded-lg p-4">
+        <div className="mt-6 border bg-muted rounded-lg p-4">
             <div className="font-medium flex items-center justify-between">
                 Master Title
                 <Button
@@ -75,7 +75,7 @@ export default function TitleForm({ initialData, masterId }: TitleFormProps) {
             {!isEditing && (
                     <p className={cn(
                         "text-sm mt-2",
-                        !initialData.title && "text-slate-500 italic"
+                        !initialData.title && "text-muted-foreground italic"
                     )}>
                         {!initialData.title ? "No title" : initialData.title}
                     </p>
