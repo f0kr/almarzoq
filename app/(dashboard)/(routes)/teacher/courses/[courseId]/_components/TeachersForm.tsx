@@ -81,7 +81,7 @@ export default function TeachersForm({ initialData, courseId, options }: Teacher
   }, [options, search])
 
   return (
-    <div className="mt-6 rounded-md border bg-slate-100 p-4">
+    <div className="mt-6 rounded-md border bg-muted p-4">
       <div className="flex items-center justify-between font-medium">
         Masters
         <div className="flex items-center gap-2">
@@ -105,7 +105,7 @@ export default function TeachersForm({ initialData, courseId, options }: Teacher
       </div>
 
       {!isEditing && (
-        <div className={cn("text-sm mt-2", selectedLabels.length === 0 && "text-slate-500 italic")}>
+        <div className={cn("text-sm mt-2", selectedLabels.length === 0 && "text-muted-foreground italic")}>
           {selectedLabels.length > 0 ? selectedLabels.join(", ") : "No masters assigned"}
         </div>
       )}
@@ -129,14 +129,14 @@ export default function TeachersForm({ initialData, courseId, options }: Teacher
                       />
                       <div className="max-h-64 overflow-auto space-y-2">
                         {filteredOptions.length === 0 && (
-                          <p className="text-xs text-slate-500 px-1">No master found.</p>
+                          <p className="text-xs text-muted-foreground px-1">No master found.</p>
                         )}
                         {filteredOptions.map((option) => {
                           const isSelected = field.value?.includes(option.value)
                           return (
                             <label
                               key={option.value}
-                              className="flex cursor-pointer items-start gap-3 rounded-md px-2 py-2 hover:bg-slate-50"
+                              className="flex cursor-pointer items-start gap-3 rounded-md px-2 py-2 hover:bg-muted"
                             >
                               <Checkbox
                                 checked={isSelected}
@@ -151,7 +151,7 @@ export default function TeachersForm({ initialData, courseId, options }: Teacher
                               />
                               <div className="flex flex-col">
                                 <span className="text-sm font-medium">{option.label}</span>
-                                <span className="text-xs text-slate-500 line-clamp-1">
+                                <span className="text-xs text-muted-foreground line-clamp-1">
                                   {option.title || "Title coming soon"}
                                 </span>
                               </div>

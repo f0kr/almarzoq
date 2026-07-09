@@ -1,0 +1,100 @@
+<!-- @dsCard group="Components" title="Course card" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Atelier — Course Card</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{--cream:#fcfaf7;--ink:#272727;--grey:#4a4a4c;--clay:#9c6349;--tan:#b47a5f;--sage:#839c49;--sage-pale:#f2f5ea;--beige:#ede8e4;--paper:#faf5f0}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--cream);color:var(--ink);font-family:Inter,sans-serif;padding:44px}
+  h1{font-family:"Playfair Display",serif;font-weight:500;font-size:24px;margin:0 0 24px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:22px;max-width:900px}
+  .card{background:#fff;border:1px solid var(--beige);border-radius:18px;padding:12px;transition:.2s;cursor:pointer}
+  .card:hover{box-shadow:0 12px 30px rgba(39,39,39,.10);transform:translateY(-3px)}
+  .thumb{position:relative;aspect-ratio:16/10;border-radius:12px;overflow:hidden}
+  .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+  .chip{position:absolute;top:10px;left:10px;background:rgba(252,250,247,.92);color:var(--ink);font-size:11px;font-weight:600;padding:5px 10px;border-radius:999px;backdrop-filter:blur(4px)}
+  .body{padding:12px 6px 6px}
+  .master{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--grey);margin-bottom:6px}
+  .av{width:22px;height:22px;border-radius:999px;background:linear-gradient(135deg,var(--clay),var(--tan));display:inline-block}
+  .title{font-family:"Playfair Display",serif;font-weight:600;font-size:19px;line-height:1.25;margin:0 0 10px}
+  .meta{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--grey);margin-bottom:14px}
+  .foot{display:flex;align-items:center;justify-content:space-between}
+  .price{font-weight:600;font-size:16px}
+  .free{background:var(--sage-pale);color:var(--sage);font-size:12px;font-weight:600;padding:5px 12px;border-radius:999px}
+  .cta{font-size:13px;font-weight:600;color:var(--clay)}
+  /* progress */
+  .bar{height:7px;border-radius:999px;background:var(--beige);overflow:hidden;margin-bottom:8px}
+  .fill{height:100%;background:var(--clay);border-radius:999px}
+  .fill.done{background:var(--sage)}
+  .pct{font-size:12px;color:var(--grey);font-weight:500}
+  .pct.done{color:var(--sage)}
+</style>
+</head>
+<body>
+  <h1>Course cards</h1>
+  <div class="grid">
+
+    <!-- priced -->
+    <div class="card">
+      <div class="thumb">
+        <span class="chip">Digital Painting</span>
+        <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=600&q=80" alt="" />
+      </div>
+      <div class="body">
+        <div class="master"><span class="av"></span> Layla Hassan</div>
+        <h3 class="title">Portrait Drawing from Scratch</h3>
+        <div class="meta">12 chapters · 3h 40m</div>
+        <div class="foot"><span class="price">$49</span><span class="cta">View course &rarr;</span></div>
+      </div>
+    </div>
+
+    <!-- free -->
+    <div class="card">
+      <div class="thumb">
+        <span class="chip">Sketching</span>
+        <img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=600&q=80" alt="" />
+      </div>
+      <div class="body">
+        <div class="master"><span class="av"></span> Omar Farouk</div>
+        <h3 class="title">Gesture &amp; Line Fundamentals</h3>
+        <div class="meta">8 chapters · 2h 10m</div>
+        <div class="foot"><span class="free">Free</span><span class="cta">Start now &rarr;</span></div>
+      </div>
+    </div>
+
+    <!-- in progress -->
+    <div class="card">
+      <div class="thumb">
+        <span class="chip">Watercolor</span>
+        <img src="https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=600&q=80" alt="" />
+      </div>
+      <div class="body">
+        <div class="master"><span class="av"></span> Mona Adel</div>
+        <h3 class="title">Loose Watercolor Landscapes</h3>
+        <div class="bar"><div class="fill" style="width:45%"></div></div>
+        <span class="pct">45% complete</span>
+      </div>
+    </div>
+
+    <!-- complete -->
+    <div class="card">
+      <div class="thumb">
+        <span class="chip">Inking</span>
+        <img src="https://images.unsplash.com/photo-1607457561901-e6ec3a6d16cf?w=600&q=80" alt="" />
+      </div>
+      <div class="body">
+        <div class="master"><span class="av"></span> Yusuf Karim</div>
+        <h3 class="title">Pen &amp; Ink Mastery</h3>
+        <div class="bar"><div class="fill done" style="width:100%"></div></div>
+        <span class="pct done">&#10003; Completed</span>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>

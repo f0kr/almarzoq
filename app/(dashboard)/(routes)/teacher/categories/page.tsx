@@ -20,7 +20,6 @@ const CategoriesPage = async () => {
         <CategoryForm
         initialData= {{
           name: "",
-          iconUrl: ""
         }}
         />
         <DataTable

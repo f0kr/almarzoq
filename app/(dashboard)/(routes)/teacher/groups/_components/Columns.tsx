@@ -224,7 +224,7 @@ export const columns: ColumnDef<GroupRow>[] = [
       const count = Array.isArray(studentIds) ? studentIds.length : 0
 
       return (
-        <Badge className={cn("bg-slate-500", count > 0 && "bg-green-700")}>
+        <Badge className={cn("bg-muted-foreground", count > 0 && "bg-success")}>
           {count}
         </Badge>
       )

@@ -1,0 +1,41 @@
+<!-- @dsCard group="Teacher" title="Student detail" -->
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Atelier — Student Detail</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{--cream:#fcfaf7;--ink:#272727;--grey:#4a4a4c;--clay:#9c6349;--sage:#839c49;--sage-pale:#f2f5ea;--beige:#ede8e4;--paper:#faf5f0}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--cream);color:var(--ink);font-family:Inter,sans-serif;padding:32px}
+  .wrap{max-width:860px;margin:0 auto}
+  .back{font-size:13px;color:var(--grey);margin-bottom:16px}
+  .head{display:flex;align-items:center;gap:18px;background:#fff;border:1px solid var(--beige);border-radius:18px;padding:20px 22px;margin-bottom:22px}
+  .av{width:64px;height:64px;border-radius:999px;background:linear-gradient(135deg,var(--clay),var(--sage))}
+  .head h1{font-family:"Playfair Display",serif;font-weight:600;font-size:23px;margin:0 0 4px}
+  .head .em{font-size:13px;color:var(--grey)}
+  .stats{margin-left:auto;display:flex;gap:26px;text-align:center}
+  .stats .n{font-family:"Playfair Display",serif;font-weight:600;font-size:22px}.stats .l{font-size:11.5px;color:var(--grey)}
+  h2{font-family:"Playfair Display",serif;font-weight:600;font-size:18px;margin:0 0 14px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .card{display:flex;gap:12px;background:#fff;border:1px solid var(--beige);border-radius:14px;padding:10px}
+  .t{width:96px;aspect-ratio:16/10;border-radius:9px;overflow:hidden;flex:none}.t img{width:100%;height:100%;object-fit:cover}
+  .info{flex:1;min-width:0}
+  .info .nm{font-weight:600;font-size:14px;margin:2px 0 8px}
+  .bar{height:6px;border-radius:999px;background:var(--beige);overflow:hidden}.fill{height:100%;background:var(--clay)}.fill.done{background:var(--sage)}
+  .pm{font-size:11.5px;color:var(--grey);margin-top:6px}.pm.done{color:var(--sage);font-weight:600}
+</style></head>
+<body><div class="wrap">
+  <p class="back">&larr; Back to Students</p>
+  <div class="head">
+    <span class="av"></span>
+    <div><h1>Sara Mahmoud</h1><div class="em">sara@example.com</div></div>
+    <div class="stats"><div><div class="n">3</div><div class="l">Enrolled</div></div><div><div class="n">1</div><div class="l">Completed</div></div></div>
+  </div>
+  <h2>Enrolled courses</h2>
+  <div class="grid">
+    <div class="card"><div class="t"><img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=300&q=80"/></div><div class="info"><div class="nm">Portrait Drawing</div><div class="bar"><div class="fill" style="width:60%"></div></div><div class="pm">60% complete</div></div></div>
+    <div class="card"><div class="t"><img src="https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=300&q=80"/></div><div class="info"><div class="nm">Watercolor Landscapes</div><div class="bar"><div class="fill" style="width:25%"></div></div><div class="pm">25% complete</div></div></div>
+    <div class="card"><div class="t"><img src="https://images.unsplash.com/photo-1607457561901-e6ec3a6d16cf?w=300&q=80"/></div><div class="info"><div class="nm">Pen &amp; Ink Mastery</div><div class="bar"><div class="fill done" style="width:100%"></div></div><div class="pm done">&#10003; Completed</div></div></div>
+  </div>
+</div></body></html>

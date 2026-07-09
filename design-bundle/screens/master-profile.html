@@ -1,0 +1,56 @@
+<!-- @dsCard group="Screens" title="Master profile" -->
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Atelier — Master Profile</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{--cream:#fcfaf7;--ink:#272727;--grey:#4a4a4c;--clay:#9c6349;--tan:#b47a5f;--sage:#839c49;--sage-pale:#f2f5ea;--beige:#ede8e4;--paper:#faf5f0}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--cream);color:var(--ink);font-family:Inter,sans-serif;padding:30px}
+  .wrap{max-width:840px;margin:0 auto}
+  .back{font-size:13px;color:var(--grey);margin-bottom:16px}
+  .cardp{background:#fff;border:1px solid var(--beige);border-radius:20px;overflow:hidden}
+  .cover{height:120px;background:linear-gradient(110deg,var(--tan),var(--sage-pale) 70%,var(--paper))}
+  .head{padding:0 24px 22px;margin-top:-46px;display:flex;gap:18px;align-items:flex-end;flex-wrap:wrap}
+  .av{width:96px;height:96px;border-radius:20px;background:linear-gradient(135deg,var(--clay),var(--sage));border:4px solid #fff;box-shadow:0 6px 18px rgba(0,0,0,.12)}
+  .badges{display:flex;gap:8px;margin-bottom:8px}
+  .b{font-size:11px;font-weight:600;padding:4px 11px;border-radius:999px}
+  .b.gray{background:var(--paper);color:var(--grey);border:1px solid var(--beige)}
+  .b.clay{background:#f4ece6;color:var(--clay)}
+  .b.sage{background:var(--sage-pale);color:var(--sage)}
+  h1{font-family:"Playfair Display",serif;font-weight:600;font-size:25px;margin:0}
+  .title{font-size:13.5px;color:var(--grey)}
+  .social{margin-left:auto;display:flex;gap:8px;align-self:center}
+  .so{width:34px;height:34px;border-radius:999px;background:var(--paper);border:1px solid var(--beige);display:flex;align-items:center;justify-content:center;color:var(--grey)}
+  .body{padding:24px}
+  .body h2{font-family:"Playfair Display",serif;font-weight:600;font-size:18px;margin:0 0 8px}
+  .bio{font-size:14px;color:var(--grey);line-height:1.6;margin:0 0 24px}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .cc{border:1px solid var(--beige);border-radius:14px;padding:8px}
+  .cc .t{aspect-ratio:16/9;border-radius:9px;overflow:hidden}.cc img{width:100%;height:100%;object-fit:cover}
+  .cc .n{font-weight:600;font-size:13.5px;margin:8px 3px 4px}
+  .cc .p{font-size:12.5px;color:var(--clay);font-weight:600;margin:0 3px 4px}
+</style></head>
+<body><div class="wrap">
+  <p class="back">&larr; Back to Masters</p>
+  <div class="cardp">
+    <div class="cover"></div>
+    <div class="head">
+      <span class="av"></span>
+      <div><div class="badges"><span class="b gray">Teacher</span><span class="b clay">6 Courses</span><span class="b sage">1,240 Students</span></div>
+        <h1>Layla Hassan</h1><div class="title">Portrait &amp; figure drawing specialist</div></div>
+      <div class="social"><span class="so">&#119979;</span><span class="so">&#9658;</span><span class="so">&#9993;</span></div>
+    </div>
+    <div class="body">
+      <h2>About</h2>
+      <p class="bio">Layla has taught classical drawing for over a decade, blending academic rigour with a warm, encouraging studio approach. Her courses focus on seeing accurately and drawing with confidence.</p>
+      <h2>Courses by Layla</h2>
+      <div class="grid">
+        <div class="cc"><div class="t"><img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=400&q=80"/></div><div class="n">Portrait Drawing</div><div class="p">$49</div></div>
+        <div class="cc"><div class="t"><img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=400&q=80"/></div><div class="n">Figure Fundamentals</div><div class="p">$39</div></div>
+        <div class="cc"><div class="t"><img src="https://images.unsplash.com/photo-1607457561901-e6ec3a6d16cf?w=400&q=80"/></div><div class="n">Charcoal Studies</div><div class="p">Free</div></div>
+      </div>
+    </div>
+  </div>
+</div></body></html>

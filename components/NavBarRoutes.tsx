@@ -8,23 +8,7 @@ import { Button } from "./ui/button"
 import { SearchInput } from "./SearchInput"
 import { isTeacher } from "@/lib/teacher"
 import { FaSignInAlt } from "react-icons/fa"
-import localFont from "next/font/local"
 import { cn } from "@/lib/utils"
-
-const snellFont = localFont({
-  src: [
-    {
-      path: '../public/fonts/snellroundhand_black.otf',
-      weight: '400',
-      style: 'normal',
-    },
-    {
-      path: '../public/fonts/snellroundhand_bold.otf',
-      weight: '700',
-      style: 'bold',
-    },
-  ],
-})
 
 export default function NavBarRoutes() {
    
@@ -46,10 +30,10 @@ export default function NavBarRoutes() {
             <SearchInput/>
         </div>
       )}
-            <div className={cn(`flex text-lg md:hidden lg:hidden ${snellFont.className}`,
+            <div className={cn(`flex text-lg md:hidden lg:hidden font-serif`,
                             isCoursePage && 'hidden'
             )}>
-            <div className='text-center flex w-full'>Al<h1 className='text-yellow-500'>mrzoq </h1></div>
+            <div className='text-center flex w-full'>Al<h1 className='text-success'>mrzoq </h1></div>
             <p>Academy</p>
             </div>
         <div className="flex gap-x-2 ml-auto justify-center items-center">
@@ -70,7 +54,7 @@ export default function NavBarRoutes() {
             {!isSignedIn? (
             <SignInButton>
 
-             <button className="px-3 py-1 bg-gradient-to-br to-[#282828] from-[#282828a9] rounded-sm text-[#cbab3e] shadow-lg shadow-black-800">
+             <button className="px-4 py-1.5 bg-primary text-primary-foreground rounded-full text-sm font-medium shadow-sm hover:bg-primary/90 transition">
                 Sign In
              </button>
             </SignInButton>

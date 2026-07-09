@@ -68,7 +68,7 @@ export default async function MasterPage({
                     <h1 className="text-2xl font-medium">
                         Master setup
                     </h1>
-                    <span className="text-sm text-slate-700">Complete all fields {completionText}</span>
+                    <span className="text-sm text-foreground">Complete all fields {completionText}</span>
                 </div>
                 <Actions
                 disabled={!isComplete}
@@ -77,7 +77,7 @@ export default async function MasterPage({
                 />
             </div>
             <div className="p-6">
-                <Link href="/teacher/masters" className="flex items-center text-sm text-slate-600 hover:text-slate-900 mb-6">
+                <Link href="/teacher/masters" className="flex items-center text-sm text-muted-foreground hover:text-foreground mb-6">
                     <ArrowLeft className="h-4 w-4 mr-2" />
                     Back to Masters
                 </Link>
@@ -127,7 +127,7 @@ export default async function MasterPage({
                             </div>
                             <div className="mt-4">
                                 {master.courses.length === 0 ? (
-                                    <p className="text-sm text-slate-500">No courses assigned yet.</p>
+                                    <p className="text-sm text-muted-foreground">No courses assigned yet.</p>
                                 ) : (
                                     <div className="space-y-2">
                                         {master.courses.map((course) => (
@@ -135,7 +135,7 @@ export default async function MasterPage({
                                             key={course.id}
                                             href={`/teacher/courses/${course.id}`}
                                             >
-                                                <div className="p-4 border border-slate-200 rounded-md hover:bg-slate-50">
+                                                <div className="p-4 border border-border rounded-md hover:bg-muted">
                                                     <h3 className="font-medium">{course.title}</h3>
                                                 </div>
                                             </Link>
