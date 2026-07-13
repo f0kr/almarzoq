@@ -52,7 +52,7 @@ export default function ProfileImageForm({
     }
 
     return(
-        <div className='mt-6 border bg-muted rounded-md p-4'>
+        <div className='mt-6 border border-beige bg-card rounded-2xl p-4'>
             <div className='font-medium flex items-center justify-between'>
               Profile Image
               <Button

@@ -70,14 +70,14 @@ export const ChaptersListForLectures = ({
                             >
                                 {(provided)=> (
                                     <div
-                                    className={cn("flex items-center gap-x-2 bg-secondary border-border border text-foreground rounded-md mb-4 text-sm",
-                                        chapter.isPublished && "bg-primary/10 border-primary/30 text-primary"
+                                    className={cn("flex items-center gap-x-2 bg-paper border-beige border text-foreground rounded-lg mb-2 text-sm",
+                                        chapter.isPublished && "bg-sage-pale/60 border-sage/30"
                                     )}
                                     ref={provided.innerRef}
                                     {...provided.draggableProps}
                                     >
-                                        <div className={cn("px-2 py-3 border-2 border-r-slate-200 hover:bg-secondary rounded-l-md transition",
-                                            chapter.isPublished && "border-r-primary/30 hover:bg-primary/20"
+                                        <div className={cn("px-2 py-3 border-r border-r-beige text-grey/60 hover:bg-beige rounded-l-lg transition",
+                                            chapter.isPublished && "border-r-sage/30 hover:bg-sage-pale"
                                         )}
                                             {...provided.dragHandleProps}
                                         >
@@ -86,15 +86,13 @@ export const ChaptersListForLectures = ({
                                            {chapter.title}
                                            <div className="ml-auto pr-2 flex items-center gap-x-2">
                                             {chapter.isFree && (
-                                                <Badge>
+                                                <Badge variant="sage">
                                                     Free
                                                 </Badge>
                                             )}
 
                                             <Badge
-                                            className={cn("bg-muted-foreground",
-                                                chapter.isPublished && "bg-primary"
-                                            )}
+                                            variant={chapter.isPublished ? "sage" : "level"}
                                             >
                                             
                                                {chapter.isPublished ? "Published" : "Draft"}

@@ -81,7 +81,7 @@ export default function TeachersForm({ initialData, courseId, options }: Teacher
   }, [options, search])
 
   return (
-    <div className="mt-6 rounded-md border bg-muted p-4">
+    <div className="mt-6 rounded-2xl border border-beige bg-card p-4">
       <div className="flex items-center justify-between font-medium">
         Masters
         <div className="flex items-center gap-2">
