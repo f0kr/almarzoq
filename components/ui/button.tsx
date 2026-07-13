@@ -9,20 +9,22 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
+        /* Atelier reversed palette (buttons card): light buttons carry the
+           accent as text+border, dark buttons are solid ink */
         default:
-          "bg-primary text-primary-foreground shadow-xs hover:bg-tan",
+          "bg-card text-clay border border-clay shadow-xs hover:bg-paper",
         destructive:
           "bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
         outline:
-          "border border-ink bg-transparent text-ink hover:bg-ink hover:text-cream",
+          "bg-ink text-cream hover:bg-grey",
         secondary:
           "bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80",
         ghost:
-          "hover:bg-beige hover:text-ink dark:hover:bg-accent/50",
-        soft: "bg-paper text-clay border border-beige hover:bg-clay-tint",
+          "bg-ink text-cream hover:bg-grey",
+        soft: "bg-clay text-paper hover:bg-tan",
         link: "text-primary underline-offset-4 hover:underline",
-        success: "bg-success text-white hover:bg-success/90",
-        tan: "bg-tan text-white hover:bg-tan/90"
+        success: "bg-card text-sage border border-sage hover:bg-paper",
+        tan: "bg-card text-tan border border-tan hover:bg-paper"
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",

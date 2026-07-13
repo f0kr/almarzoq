@@ -19,13 +19,6 @@ export default function AboutUsPage() {
       profileImage: '/team/hasanin.jpg',
     },
     {
-      name: 'Abu Alqasim Najah',
-      role: 'Graphic Designer',
-      instagram:'https://www.instagram.com/at.s_artworks/',
-      facebook: 'https://www.facebook.com/share/16sXroN6UT/?mibextid=wwXIfr',
-      profileImage: '/team/abu-alqasim.jpg',
-    },
-    {
       name: 'Mary',
       role: 'Student Registration Officer',
       instagram: null,

@@ -52,7 +52,7 @@ items
                 description="Your enrolled courses and progress will show up here."
                 action={
                     <SignInButton mode="modal">
-                        <button className="rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground transition hover:bg-tan">
+                        <button className="rounded-full bg-card px-6 py-2.5 text-sm font-semibold text-clay border border-clay transition hover:bg-paper">
                             Sign in
                         </button>
                     </SignInButton>

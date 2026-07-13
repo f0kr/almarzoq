@@ -8,9 +8,10 @@ const bannerVariants = cva(
     {
         variants: {
             variant: {
-                warning: "bg-clay/10 border-clay/20 text-clay",
-                success: "bg-sage-pale border-sage/30 text-sage",
-                info: "bg-paper border-beige text-ink",
+                /* Atelier reversed (banners card): solid fills, pale text */
+                warning: "bg-clay border-clay text-clay-tint",
+                success: "bg-sage border-sage text-sage-pale",
+                info: "bg-ink border-ink text-paper",
             }
         },
         defaultVariants: {

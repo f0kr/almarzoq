@@ -125,7 +125,7 @@ export default async function MastersPage({
                     </div>
                     <CardContent className="pl-24 pr-2 sm:pr-4">
                       <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
-                        <span className="rounded-full bg-clay-tint px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-clay">
+                        <span className="rounded-full bg-clay px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-clay-tint">
                           Teacher
                         </span>
                         <span className="text-xs font-medium text-muted-foreground line-clamp-1">

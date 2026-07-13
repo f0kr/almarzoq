@@ -70,7 +70,7 @@ export const StudentCourseCard = ({
                   </div>
                   {
                     price === 0 ? (
-                        <span className="inline-block w-fit px-3 py-1 text-xs font-semibold bg-sage-pale text-sage rounded-full">
+                        <span className="inline-block w-fit px-3 py-1 text-xs font-semibold bg-sage text-sage-pale rounded-full">
                             Free
                         </span>
                     ) : (
