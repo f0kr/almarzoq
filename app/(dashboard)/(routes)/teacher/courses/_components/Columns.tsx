@@ -3,7 +3,6 @@
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { DropdownMenuContent, DropdownMenuTrigger, DropdownMenu, DropdownMenuItem } from "@/components/ui/dropdown-menu"
-import { cn } from "@/lib/utils"
 import { Course } from "@prisma/client"
 import { ColumnDef } from "@tanstack/react-table"
 import { ArrowUpDown, MoreHorizontal, Pencil } from "lucide-react"
@@ -65,10 +64,7 @@ export const columns: ColumnDef<Course>[] = [
         const isPublished = row.getValue("isPublished") || false
 
         return(
-            <Badge className={cn(
-                "bg-slate-500",
-                isPublished && "bg-red-700"
-            )}>
+            <Badge variant={isPublished ? "sage" : "clay"}>
                 {isPublished? "Published" : "Draft"}
             </Badge>
         )

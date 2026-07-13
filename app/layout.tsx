@@ -1,12 +1,18 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, Playfair_Display, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import ToasterProvider from "@/components/providers/ToasterProvider";
 import { ConfettiProvider } from "@/components/providers/ConfettiProvider";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
+});
+
+const playfair = Playfair_Display({
+  variable: "--font-playfair",
+  subsets: ["latin"],
+  style: ["normal", "italic"],
 });
 
 const geistMono = Geist_Mono({
@@ -78,7 +84,7 @@ export default function RootLayout({
     >
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable}  antialiased`}
+        className={`${inter.variable} ${playfair.variable} ${geistMono.variable}  antialiased`}
       >
         <ConfettiProvider/>
         <ToasterProvider/>

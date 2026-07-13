@@ -1,0 +1,65 @@
+<!-- @dsCard group="Mobile" title="Mobile — teacher course editor" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Atelier — Mobile Teacher Editor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{--cream:#fcfaf7;--ink:#272727;--grey:#4a4a4c;--clay:#9c6349;--sage:#839c49;--sage-pale:#f2f5ea;--beige:#ede8e4;--paper:#faf5f0}
+  *{box-sizing:border-box}
+  body{margin:0;background:#efe9e3;font-family:Inter,sans-serif;padding:30px;display:flex;justify-content:center}
+  .phone{width:380px;background:var(--cream);border-radius:38px;border:10px solid #1f1d1b;overflow:hidden;box-shadow:0 26px 60px rgba(31,29,27,.28)}
+  .screen{height:760px;overflow:auto;position:relative}
+  .notch{position:absolute;top:4px;left:50%;transform:translateX(-50%);width:120px;height:26px;background:#1f1d1b;border-radius:0 0 16px 16px;z-index:5}
+  .bar{display:flex;align-items:center;gap:10px;padding:22px 14px 12px;border-bottom:1px solid var(--beige);background:#fff;position:sticky;top:0}
+  .ham{width:22px;height:22px;color:var(--ink)}
+  .bt{font-family:"Playfair Display",serif;font-weight:600;font-size:17px}
+  .pad{padding:16px}
+  .banner{background:#f6efe9;color:var(--clay);border:1px solid #ecdfd6;border-radius:11px;padding:11px 14px;font-size:12.5px;font-weight:600;margin-bottom:16px}
+  .htitle{font-family:"Playfair Display",serif;font-weight:600;font-size:24px;margin:0 0 4px}
+  .comp{font-size:12.5px;color:var(--grey);margin-bottom:14px}.comp b{color:var(--clay)}
+  .row{display:flex;gap:10px;margin-bottom:20px}
+  .btn{flex:1;font-weight:600;font-size:13.5px;border:none;border-radius:999px;padding:11px;text-align:center}
+  .pub{background:var(--clay);color:#fff}.del{background:#fff;border:1px solid var(--beige);color:var(--grey)}
+  .sec{display:flex;align-items:center;gap:9px;margin:22px 0 12px}
+  .badge{width:30px;height:30px;border-radius:9px;background:#f4ece6;color:var(--clay);display:flex;align-items:center;justify-content:center;font-size:14px}
+  .sec h2{font-family:"Playfair Display",serif;font-weight:500;font-size:17px;margin:0}
+  .card{background:#fff;border:1px solid var(--beige);border-radius:13px;padding:13px 15px;margin-bottom:11px}
+  .lab{display:flex;justify-content:space-between;font-size:12.5px;font-weight:600;margin-bottom:6px}
+  .lab a{color:var(--clay);font-size:12px;text-decoration:none}
+  .val{font-size:13.5px;color:var(--grey)}
+  .chip{display:inline-block;background:var(--sage-pale);color:var(--sage);font-size:11.5px;font-weight:600;padding:4px 10px;border-radius:999px}
+  .chapter{display:flex;align-items:center;gap:9px;background:var(--paper);border:1px solid var(--beige);border-radius:9px;padding:9px 11px;margin-bottom:7px;font-size:12.5px}
+  .grip{opacity:.45}
+  .pubp{margin-left:auto;font-size:10px;font-weight:600;color:var(--sage);background:var(--sage-pale);padding:3px 8px;border-radius:999px}
+</style>
+</head>
+<body>
+  <div class="phone"><div class="notch"></div><div class="screen">
+    <div class="bar">
+      <svg class="ham" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      <span class="bt">Course setup</span>
+    </div>
+    <div class="pad">
+      <div class="banner">&#9888; This course is unpublished.</div>
+      <h1 class="htitle">Course setup</h1>
+      <div class="comp">Complete all fields <b>(5/6)</b></div>
+      <div class="row"><span class="btn del">Delete</span><span class="btn pub">Publish</span></div>
+
+      <div class="sec"><span class="badge">&#9635;</span><h2>Customize</h2></div>
+      <div class="card"><div class="lab">Title <a>Edit</a></div><div class="val">Portrait Drawing from Scratch</div></div>
+      <div class="card"><div class="lab">Category <a>Edit</a></div><span class="chip">Drawing</span></div>
+      <div class="card"><div class="lab">Master <a>Edit</a></div><span class="chip">Layla Hassan</span></div>
+
+      <div class="sec"><span class="badge">&#9776;</span><h2>Chapters</h2></div>
+      <div class="card">
+        <div class="chapter"><span class="grip">&#8942;&#8942;</span> Proportions of the head <span class="pubp">Live</span></div>
+        <div class="chapter"><span class="grip">&#8942;&#8942;</span> Placing the features <span class="pubp">Live</span></div>
+      </div>
+    </div>
+  </div></div>
+</body>
+</html>

@@ -114,7 +114,7 @@ export default async function CoursePage({
                 <h1 className="text-2xl font-medium">
                     Course setup
                 </h1>
-                <span className="text-sm text-slate-700">Complete all fields {completionText}</span>
+                <span className="text-sm text-foreground">Complete all fields {completionText}</span>
             </div>
             <Actions
             disabled={!isComplete}

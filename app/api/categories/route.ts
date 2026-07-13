@@ -8,7 +8,7 @@ export async function POST(
 ) {
     try {
         const {userId} = await auth()
-        const {categoryName, iconUrl} = await req.json()
+        const {categoryName} = await req.json()
 
         if (!isTeacher(userId)) {
             return new NextResponse("Unauthorized", { status: 401 });
@@ -17,7 +17,6 @@ export async function POST(
         const attachments = await db.category.create({
             data: {
                 name: categoryName,
-                iconUrl: iconUrl,
             }
         })
 

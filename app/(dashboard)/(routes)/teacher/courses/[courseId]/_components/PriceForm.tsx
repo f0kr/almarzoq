@@ -66,7 +66,7 @@ export default function PriceForm({
     }
 
     return(
-        <div className='mt-6 border bg-slate-100 rounded-md p-4'>
+        <div className='mt-6 border border-beige bg-card rounded-2xl p-4'>
             <div className='font-medium flex items-center justify-between'>
               Course Price
               <Button
@@ -88,7 +88,7 @@ export default function PriceForm({
             {!isEditing && (
                 <p className={cn(
                     "text-sm mt-2",
-                    !initialData.price && !isFreeCourse && "text-slate-500 italic"
+                    !initialData.price && !isFreeCourse && "text-muted-foreground italic"
                 )}>{isChaptersEmpty ? "Please create chapters first" : isFreeCourse ? "Free" : initialData.price != null ? formatPrice(initialData.price) : "No price set"}
                 </p>
             )}

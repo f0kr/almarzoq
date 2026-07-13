@@ -1,0 +1,100 @@
+<!-- @dsCard group="Course" title="Course player — watch & navigate" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Atelier — Course Player</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{--cream:#fcfaf7;--ink:#272727;--grey:#4a4a4c;--clay:#9c6349;--tan:#b47a5f;--sage:#839c49;--sage-pale:#f2f5ea;--beige:#ede8e4;--paper:#faf5f0}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--cream);color:var(--ink);font-family:Inter,sans-serif;padding:28px}
+  .shell{display:flex;border:1px solid var(--beige);border-radius:20px;overflow:hidden;background:#fff;max-width:1080px;margin:0 auto;min-height:660px}
+  /* sidebar */
+  .side{width:300px;background:var(--cream);border-right:1px solid var(--beige);display:flex;flex-direction:column}
+  .side-head{padding:22px 20px;border-bottom:1px solid var(--beige)}
+  .side-head h1{font-family:"Playfair Display",serif;font-weight:600;font-size:19px;margin:0 0 14px;line-height:1.25}
+  .pbar{height:8px;border-radius:999px;background:var(--beige);overflow:hidden}
+  .pfill{height:100%;width:45%;background:var(--sage);border-radius:999px}
+  .pmeta{font-size:12px;color:var(--sage);font-weight:600;margin-top:7px}
+  .acc{padding:12px;display:flex;flex-direction:column;gap:10px;overflow:auto}
+  .lec{border:1px solid var(--beige);border-radius:14px;overflow:hidden;background:#fff}
+  .lec-h{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;font-weight:600;font-size:14px;background:var(--paper);cursor:pointer}
+  .lec-h.open{background:#f4ece6;color:var(--clay)}
+  .chev{transition:.2s}.lec-h.open .chev{transform:rotate(180deg)}
+  .lec-body{padding:6px}
+  .ch{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:9px;font-size:13.5px;color:var(--grey);cursor:pointer}
+  .ch:hover{background:var(--paper)}
+  .ch.active{background:#f4ece6;color:var(--clay);font-weight:600}
+  .ch .ico{width:17px;height:17px;flex:none}
+  .ch.done{color:var(--sage)}
+  /* main */
+  .main{flex:1;display:flex;flex-direction:column}
+  .banner{background:var(--sage-pale);color:var(--sage);font-size:13px;font-weight:600;padding:11px 22px;display:flex;gap:8px;align-items:center}
+  .video{margin:18px 22px 0;border-radius:16px;aspect-ratio:16/9;background:linear-gradient(135deg,#2b2b2b,#3a3330);position:relative;overflow:hidden}
+  .video img{width:100%;height:100%;object-fit:cover;opacity:.85}
+  .play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+  .play span{width:64px;height:64px;border-radius:999px;background:rgba(252,250,247,.92);display:flex;align-items:center;justify-content:center;color:var(--clay);font-size:24px;padding-left:5px}
+  .detail{padding:22px}
+  .detail-top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .detail-top h2{font-family:"Playfair Display",serif;font-weight:600;font-size:26px;margin:0}
+  .btn{font-family:Inter;font-weight:600;font-size:14px;border:none;cursor:pointer;border-radius:999px;padding:11px 22px;display:inline-flex;gap:8px;align-items:center;background:var(--clay);color:#fff}
+  .btn.done{background:var(--sage)}
+  .rule{height:1px;background:var(--beige);margin:18px 0}
+  .desc{color:var(--grey);font-size:14.5px;line-height:1.6;max-width:560px}
+  .attach{display:flex;align-items:center;gap:10px;border:1px solid var(--beige);background:var(--paper);border-radius:12px;padding:11px 14px;font-size:13.5px;font-weight:500;margin-top:12px;max-width:360px}
+  .attach .fi{color:var(--clay)}
+  .group{display:inline-flex;align-items:center;gap:9px;background:var(--clay);color:#fff;border-radius:999px;padding:10px 18px;font-size:13.5px;font-weight:600;margin-top:16px}
+</style>
+</head>
+<body>
+  <div class="shell">
+    <aside class="side">
+      <div class="side-head">
+        <h1>Portrait Drawing from Scratch</h1>
+        <div class="pbar"><div class="pfill"></div></div>
+        <div class="pmeta">45% complete</div>
+      </div>
+      <div class="acc">
+        <div class="lec">
+          <div class="lec-h open">Fundamentals <span class="chev">&#9662;</span></div>
+          <div class="lec-body">
+            <div class="ch done"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg> Proportions of the head</div>
+            <div class="ch active"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M10 8l6 4-6 4z" fill="currentColor"/></svg> Placing the features</div>
+            <div class="ch"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M10 8l6 4-6 4z" fill="currentColor"/></svg> Shading the form</div>
+          </div>
+        </div>
+        <div class="lec">
+          <div class="lec-h">Likeness &amp; expression <span class="chev">&#9662;</span></div>
+        </div>
+        <div class="lec">
+          <div class="lec-h">Premium: full portrait <span class="chev">&#9662;</span></div>
+          <div class="lec-body">
+            <div class="ch"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> Final demo (locked)</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <div class="main">
+      <div class="banner">&#10003; You've already completed this chapter</div>
+      <div class="video">
+        <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=900&q=80" alt="" />
+        <div class="play"><span>&#9654;</span></div>
+      </div>
+      <div class="detail">
+        <div class="detail-top">
+          <h2>Placing the features</h2>
+          <button class="btn done">Completed &#10003;</button>
+        </div>
+        <div class="rule"></div>
+        <p class="desc">In this chapter we map the eyes, nose and mouth onto the loomis construction, keeping everything aligned to the centre line. Follow along and pause whenever you need to.</p>
+        <div class="attach"><span class="fi">&#128196;</span> reference-sheet.pdf</div>
+        <a class="group">&#9993; Join the course group</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

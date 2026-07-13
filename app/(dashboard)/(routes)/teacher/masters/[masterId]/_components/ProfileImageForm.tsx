@@ -52,7 +52,7 @@ export default function ProfileImageForm({
     }
 
     return(
-        <div className='mt-6 border bg-slate-100 rounded-md p-4'>
+        <div className='mt-6 border border-beige bg-card rounded-2xl p-4'>
             <div className='font-medium flex items-center justify-between'>
               Profile Image
               <Button
@@ -77,8 +77,8 @@ export default function ProfileImageForm({
             </div>
             {!isEditing && (
                 !initialData.profileImage ? (
-                    <div className='flex items-center rounded-md justify-center h-60 bg-slate-200 '>
-                        <ImageIcon className='h-10 w-10 text-slate-500 '/>
+                    <div className='flex items-center rounded-md justify-center h-60 bg-secondary '>
+                        <ImageIcon className='h-10 w-10 text-muted-foreground '/>
                     </div>
                 ) : (
                     <div className='relative aspect-square mt-2 max-w-xs'>

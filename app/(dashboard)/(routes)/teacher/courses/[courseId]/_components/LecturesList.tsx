@@ -154,8 +154,8 @@ return (
                         flex items-center justify-center
                         rounded-md
                         p-2
-                        text-slate-500
-                        hover:bg-slate-100
+                        text-muted-foreground
+                        hover:bg-muted
                         cursor-grab
                       "
                     >
@@ -165,7 +165,7 @@ return (
                     {/* Title */}
                     <div className="flex-1 min-w-0">
                       {editingLectureId !== lecture.id ? (
-                        <p className="text-sm font-medium text-slate-800 truncate">
+                        <p className="text-sm font-medium text-foreground truncate">
                           {lecture.title}
                         </p>
                       ) : (
@@ -238,13 +238,13 @@ return (
                         variant="ghost"
                         disabled={isLoading}
                       >
-                        <Trash className="h-4 w-4 text-red-500" />
+                        <Trash className="h-4 w-4 text-destructive" />
                       </Button>
                     </ConfirmModal>
                   </div>
 
                   {/* ===== Chapters Section ===== */}
-                  <div className="border-t bg-slate-50 px-4 py-3">
+                  <div className="border-t bg-paper px-4 py-3">
                     <ChaptersFormForLectures
                       initialData={{
                         ...initialData,

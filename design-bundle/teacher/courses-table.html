@@ -1,0 +1,52 @@
+<!-- @dsCard group="Teacher" title="Courses table" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Atelier — Teacher Courses Table</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{--cream:#fcfaf7;--ink:#272727;--grey:#4a4a4c;--clay:#9c6349;--sage:#839c49;--sage-pale:#f2f5ea;--beige:#ede8e4;--paper:#faf5f0}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--cream);color:var(--ink);font-family:Inter,sans-serif;padding:32px}
+  .wrap{max-width:960px;margin:0 auto}
+  .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
+  .top h1{font-family:"Playfair Display",serif;font-weight:600;font-size:28px;margin:0}
+  .btn{font-family:Inter;font-weight:600;font-size:13.5px;border:none;cursor:pointer;border-radius:999px;padding:10px 20px;background:var(--clay);color:#fff;display:inline-flex;gap:8px;align-items:center}
+  .search{background:#fff;border:1px solid var(--beige);border-radius:999px;padding:10px 18px;font-size:13.5px;color:var(--grey);max-width:320px;margin-bottom:16px;width:100%}
+  .panel{background:#fff;border:1px solid var(--beige);border-radius:16px;overflow:hidden}
+  table{width:100%;border-collapse:collapse}
+  th{text-align:left;font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--grey);font-weight:600;padding:14px 18px;background:var(--paper);border-bottom:1px solid var(--beige)}
+  td{padding:14px 18px;font-size:14px;border-bottom:1px solid var(--beige)}
+  tr:last-child td{border-bottom:none}
+  .title{font-weight:600}
+  .thumb{width:46px;height:30px;border-radius:6px;object-fit:cover;vertical-align:middle;margin-right:10px}
+  .pub{font-size:11px;font-weight:600;color:var(--sage);background:var(--sage-pale);padding:4px 11px;border-radius:999px}
+  .draft{font-size:11px;font-weight:600;color:var(--clay);background:#f4ece6;padding:4px 11px;border-radius:999px}
+  .price{font-weight:600}
+  .dots{color:var(--grey);cursor:pointer;font-weight:700}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <h1>Courses</h1>
+    <button class="btn">+ New course</button>
+  </div>
+  <input class="search" placeholder="Filter courses…" />
+  <div class="panel">
+    <table>
+      <thead><tr><th>Course</th><th>Category</th><th>Price</th><th>Status</th><th></th></tr></thead>
+      <tbody>
+        <tr><td class="title"><img class="thumb" src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=120&q=80"/>Portrait Drawing from Scratch</td><td>Drawing</td><td class="price">$49</td><td><span class="pub">Published</span></td><td class="dots">&#8942;</td></tr>
+        <tr><td class="title"><img class="thumb" src="https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=120&q=80"/>Loose Watercolor Landscapes</td><td>Watercolor</td><td class="price">$39</td><td><span class="pub">Published</span></td><td class="dots">&#8942;</td></tr>
+        <tr><td class="title"><img class="thumb" src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=120&q=80"/>Gesture &amp; Line Fundamentals</td><td>Sketching</td><td class="price">Free</td><td><span class="draft">Draft</span></td><td class="dots">&#8942;</td></tr>
+        <tr><td class="title"><img class="thumb" src="https://images.unsplash.com/photo-1607457561901-e6ec3a6d16cf?w=120&q=80"/>Pen &amp; Ink Mastery</td><td>Inking</td><td class="price">$59</td><td><span class="pub">Published</span></td><td class="dots">&#8942;</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</body>
+</html>

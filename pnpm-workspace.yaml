@@ -1,0 +1,9 @@
+# pnpm 11 build-script approvals. These deps run install scripts to fetch/build
+# their native binaries (needed on Linux after the OS switch from Windows).
+allowBuilds:
+  '@clerk/shared': true
+  '@prisma/client': true
+  '@prisma/engines': true
+  msgpackr-extract: true
+  prisma: true
+  sharp: true

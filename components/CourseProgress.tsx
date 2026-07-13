@@ -8,8 +8,8 @@ interface CourseProgressProps {
 }
 
 const colorByVariant = {
-    default: "text-red-700",
-    success: "text-yellow-700"
+    default: "text-grey",
+    success: "text-success"
 }
 
 const sizeByVariant = {
@@ -31,11 +31,11 @@ export const CourseProgress = ({
             />
 
             <p className={cn(
-                "font-medium mt-2 text-red-700",
+                "font-medium mt-2",
                 colorByVariant[variant || "default"],
                 sizeByVariant[size || "default"]
             )}>
-                {Math.round(value)}% Complete
+                {value === 100 ? "✓ Completed" : `${Math.round(value)}% Complete`}
             </p>
         </div>
     )

@@ -1,0 +1,50 @@
+<!-- @dsCard group="Components" title="Badges & chips" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Atelier — Badges</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{--cream:#fcfaf7;--ink:#272727;--grey:#4a4a4c;--clay:#9c6349;--sage:#839c49;--sage-pale:#f2f5ea;--beige:#ede8e4;--paper:#faf5f0;--tan:#b47a5f}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--cream);color:var(--ink);font-family:Inter,sans-serif;padding:48px}
+  h1{font-family:"Playfair Display",serif;font-weight:500;font-size:24px;margin:0 0 24px}
+  .label{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--grey);margin:24px 0 12px}
+  .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .badge{font-size:12px;font-weight:600;padding:5px 12px;border-radius:999px}
+  .b-free{background:var(--sage);color:var(--sage-pale)}
+  .b-new{background:#fff;color:var(--clay);border:1px solid var(--clay)}
+  .b-prem{background:var(--clay);color:#f4ece6}
+  .b-cat{background:var(--ink);color:var(--paper)}
+  .b-level{background:var(--grey);color:#fff}
+  /* filter pills (category nav) */
+  .pill{font-size:13px;font-weight:500;padding:8px 16px;border-radius:999px;background:var(--grey);color:#fff;cursor:pointer}
+  .pill.active{background:#fff;color:var(--clay);border:1px solid var(--clay)}
+</style>
+</head>
+<body>
+  <h1>Badges &amp; chips</h1>
+
+  <p class="label">Status badges</p>
+  <div class="row">
+    <span class="badge b-free">Free</span>
+    <span class="badge b-new">New</span>
+    <span class="badge b-prem">Premium</span>
+    <span class="badge b-cat">Digital Painting</span>
+    <span class="badge b-level">Beginner</span>
+  </div>
+
+  <p class="label">Category filter pills</p>
+  <div class="row">
+    <span class="pill active">All</span>
+    <span class="pill">Drawing</span>
+    <span class="pill">Painting</span>
+    <span class="pill">Watercolor</span>
+    <span class="pill">Digital Art</span>
+    <span class="pill">Calligraphy</span>
+  </div>
+</body>
+</html>

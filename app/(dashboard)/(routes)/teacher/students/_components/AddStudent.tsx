@@ -64,7 +64,7 @@ export default function CategoryForm({
   }
 
   return (
-    <div className='mt-6 border bg-slate-100 rounded-md p-4 md:w-[50%] w-[70%]'>
+    <div className='mt-6 border border-beige bg-card rounded-2xl p-4 md:w-[50%] w-[70%]'>
       <div className='font-medium flex items-center justify-between'>
         Category Name
         <Button
@@ -83,7 +83,7 @@ export default function CategoryForm({
       {!isEditing && (
                 <p className={cn(
                     "text-sm mt-2",
-                    !initialData.categoryName && "text-slate-500 italic"
+                    !initialData.categoryName && "text-muted-foreground italic"
                 )}>{initialData.categoryName ? initialData.categoryName : "No category name"}</p>
       )}
 

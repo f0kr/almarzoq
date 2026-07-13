@@ -16,16 +16,16 @@ export const InfoCard = ({
     label,
 }: InforCardProps) => {
     return (
-        <div className="border rounded-md flex items-center gap-x-2 p-3">
+        <div className="bg-card border border-beige rounded-2xl flex items-center gap-x-3.5 p-4">
           <IconBadge
           variant={variant}
           icon={Icon}
           />
           <div>
-            <p className="font-medium">
+            <p className="text-[13px] text-grey">
                 {label}
             </p>
-            <p className="text-gray-500 text-sm">
+            <p className="font-serif font-semibold text-xl">
                 {numberOfItems} {numberOfItems === 1 ? "Course" : "Courses"}
             </p>
           </div>

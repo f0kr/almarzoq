@@ -8,7 +8,6 @@ import { ChevronDown } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { usePathname } from "next/navigation"
 import { useEffect, useState } from "react"
-import { set } from "zod"
 
 interface CourseSidebarProps {
   course: Course & {
@@ -21,6 +20,7 @@ interface CourseSidebarProps {
   progressCount: number
   purchase: Purchase | null
   onChapterClick?: () => void
+  className?: string
 }
 
 export default function CourseSidebar({
@@ -28,6 +28,7 @@ export default function CourseSidebar({
   progressCount,
   purchase,
   onChapterClick,
+  className,
 }: CourseSidebarProps) {
 
   const pathname = usePathname()
@@ -46,63 +47,53 @@ export default function CourseSidebar({
   },[pathname])
 
   return (
-    <div className="h-full border-r flex flex-col overflow-y-auto shadow-sm">
-      <div className="p-8 flex flex-col border-b">
-        <h1 className="font-semibold text-lg">{course.title}</h1>
-        <div className="mt-6">
-          {purchase && course.price === 0 && (
-            <div className="mt-10">
-              <CourseProgress
-                variant='success'
-                value={progressCount}
-                />
-            </div>
-          )}
-          {!purchase && course.price === 0 && (
-            <div className="mt-10">
-              <CourseProgress
-                variant='success'
-                value={progressCount}
-                />
-            </div>
-          )}
-        </div>
+    <div className={cn("rounded-2xl border border-border bg-card overflow-hidden", className)}>
+      <div className="px-5 py-[22px] flex flex-col gap-3.5 border-b border-border">
+        <h1 className="font-serif font-semibold text-[19px] leading-tight">{course.title}</h1>
+        {course.price === 0 && (
+          <CourseProgress
+            variant='success'
+            size='sm'
+            value={progressCount}
+          />
+        )}
       </div>
 
-      <div className="flex flex-col w-full p-2">
+      <div className="flex flex-col w-full p-3">
         <Accordion.Root
           type="single"
           value={openLectureId || undefined}
           onValueChange={(value) => setOpenLectureId(value)}
           collapsible
-          className="w-full space-y-2"
+          className="w-full space-y-2.5"
         >
           {course.lectures.map((lecture) => (
             <Accordion.Item
               key={lecture.id}
 
               value={lecture.id}
-              className="border rounded-xl overflow-hidden"
+              className="border border-beige rounded-[14px] overflow-hidden bg-card"
             >
               <Accordion.Header>
                 <Accordion.Trigger
                   className={cn(
-                    "w-full flex justify-between items-center px-4 py-3 font-medium text-left bg-gray-50 hover:bg-gray-100 transition",
-                    "data-[state=open]:bg-gray-100"
+                    "w-full flex justify-between items-center gap-2 px-3.5 py-3 text-sm font-semibold text-left bg-paper hover:bg-paper transition",
+                    "data-[state=open]:bg-clay-tint data-[state=open]:text-clay",
+                    "[&[data-state=open]>svg]:rotate-180"
                   )}
                 >
                   <span>{lecture.title}</span>
                   <ChevronDown
-                    className="h-4 w-4 transition-transform duration-200 data-[state=open]:rotate-180"
+                    className="h-4 w-4 shrink-0 transition-transform duration-200"
                     aria-hidden
                   />
                 </Accordion.Trigger>
               </Accordion.Header>
 
               <Accordion.Content
-                className="px-4 py-2 data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp"
+                className="data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp"
               >
-                <div className="flex flex-col gap-1">
+                <div className="flex flex-col">
                   {lecture.chapters.length > 0 ? (
                     lecture.chapters.map((chapter) => (
                       <CourseSidebarItem

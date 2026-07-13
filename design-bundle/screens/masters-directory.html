@@ -1,0 +1,37 @@
+<!-- @dsCard group="Screens" title="Masters directory" -->
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Atelier — Masters</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{--cream:#fcfaf7;--ink:#272727;--grey:#4a4a4c;--clay:#9c6349;--tan:#b47a5f;--sage:#839c49;--sage-pale:#f2f5ea;--beige:#ede8e4;--paper:#faf5f0}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--cream);color:var(--ink);font-family:Inter,sans-serif;padding:34px}
+  .wrap{max-width:840px;margin:0 auto}
+  .ey{font-size:11px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--clay)}
+  h1{font-family:"Playfair Display",serif;font-weight:600;font-size:30px;margin:8px 0 8px}
+  .lede{font-size:14px;color:var(--grey);max-width:560px;margin:0 0 22px}
+  .search{display:flex;gap:10px;margin-bottom:24px}
+  .search input{flex:1;background:#fff;border:1px solid var(--beige);border-radius:999px;padding:12px 18px;font-size:14px}
+  .search .btn{background:var(--clay);color:#fff;border:none;border-radius:999px;padding:0 26px;font-weight:600;font-size:14px}
+  .row{display:flex;align-items:center;gap:18px;background:#fff;border:1px solid var(--beige);border-radius:16px;padding:16px 18px;margin-bottom:14px;position:relative;overflow:hidden}
+  .row::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(180deg,var(--tan),var(--clay))}
+  .av{width:64px;height:64px;border-radius:999px;flex:none;background:linear-gradient(135deg,var(--clay),var(--sage));border:3px solid #fff;box-shadow:0 4px 12px rgba(0,0,0,.1)}
+  .chip{display:inline-block;font-size:10.5px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--clay);background:#f4ece6;padding:3px 10px;border-radius:999px}
+  .nm{font-family:"Playfair Display",serif;font-weight:600;font-size:19px;margin:6px 0 4px}
+  .meta{display:flex;gap:8px;font-size:12px;color:var(--grey)}
+  .meta span{background:var(--paper);border:1px solid var(--beige);padding:3px 10px;border-radius:999px;display:flex;align-items:center;gap:5px}
+  .dot{width:7px;height:7px;border-radius:999px;background:var(--clay)}
+  .go{margin-left:auto;color:var(--clay);font-weight:600;font-size:18px}
+</style></head>
+<body><div class="wrap">
+  <p class="ey">Masters</p>
+  <h1>Meet the teachers shaping your craft</h1>
+  <p class="lede">Explore the mentors behind our courses. Each brings their own perspective — find the voices you resonate with.</p>
+  <div class="search"><input placeholder="Search masters by name, title, or bio" /><button class="btn">Search</button></div>
+
+  <div class="row"><span class="av"></span><div><span class="chip">Teacher</span><div class="nm">Layla Hassan</div><div class="meta"><span><span class="dot"></span>6 courses</span><span>1,240 students</span></div></div><span class="go">&rarr;</span></div>
+  <div class="row"><span class="av" style="background:linear-gradient(135deg,var(--sage),var(--tan))"></span><div><span class="chip">Teacher</span><div class="nm">Omar Farouk</div><div class="meta"><span><span class="dot"></span>3 courses</span><span>540 students</span></div></div><span class="go">&rarr;</span></div>
+  <div class="row"><span class="av" style="background:linear-gradient(135deg,var(--tan),var(--clay))"></span><div><span class="chip">Teacher</span><div class="nm">Mona Adel</div><div class="meta"><span><span class="dot"></span>4 courses</span><span>820 students</span></div></div><span class="go">&rarr;</span></div>
+</div></body></html>
