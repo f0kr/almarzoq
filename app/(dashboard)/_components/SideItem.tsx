@@ -36,13 +36,10 @@ const SideItem = ({
             type='button'
             className={cn(
                 'relative flex items-center gap-x-3 mx-3 px-3 py-2.5 rounded-lg text-muted-foreground text-sm font-medium transition-all hover:bg-paper',
-                isActive && 'bg-clay-tint text-primary font-semibold hover:bg-clay-tint'
+                isActive && 'bg-clay text-clay-tint font-semibold hover:bg-clay'
             )}
          >
-            <span
-              className={cn('absolute left-0 top-2 bottom-2 w-[3px] rounded-full bg-primary opacity-0 transition-opacity', isActive && 'opacity-100')}
-            />
-            <Icon size={20} className={cn("text-muted-foreground", isActive && "text-primary")} />
+            <Icon size={20} className={cn("text-muted-foreground", isActive && "text-clay-tint")} />
             {label}
         </button>
     );

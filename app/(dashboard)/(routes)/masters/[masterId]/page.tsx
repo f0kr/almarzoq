@@ -106,7 +106,7 @@ const master = await db.teacher.findUnique({
                 </div>
                 <div className="space-y-2">
                   <div className="flex flex-wrap items-center gap-2">
-                    <Badge variant="category" className="text-grey">
+                    <Badge variant="category">
                       Teacher
                     </Badge>
                     <Badge variant="clay">

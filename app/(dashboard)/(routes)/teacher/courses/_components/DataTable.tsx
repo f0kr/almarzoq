@@ -122,7 +122,7 @@ export function DataTable<TData, TValue>({
         <Button
           variant="ghost"
           size="sm"
-          className="rounded-lg border border-beige bg-card text-grey"
+          className="rounded-lg border border-beige bg-card text-grey hover:bg-paper hover:text-ink"
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
         >
@@ -131,7 +131,7 @@ export function DataTable<TData, TValue>({
         <Button
           variant="ghost"
           size="sm"
-          className="rounded-lg border border-beige bg-card text-grey"
+          className="rounded-lg border border-beige bg-card text-grey hover:bg-paper hover:text-ink"
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
         >

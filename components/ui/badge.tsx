@@ -10,19 +10,20 @@ const badgeVariants = cva(
     variants: {
       variant: {
         default:
-          "border-transparent bg-primary text-primary-foreground [a&]:hover:bg-primary/90",
+          "border-clay bg-card text-clay [a&]:hover:bg-paper",
         secondary:
           "border-transparent bg-secondary text-secondary-foreground [a&]:hover:bg-secondary/90",
         destructive:
           "border-transparent bg-destructive text-white [a&]:hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
         outline:
           "text-foreground [a&]:hover:bg-accent [a&]:hover:text-accent-foreground",
-        /* Atelier status pills (badges card): sage = Free/Published/active,
-           clay = Premium/Draft, category = chip on paper, level = neutral */
-        sage: "border-transparent bg-sage-pale text-sage",
-        clay: "border-transparent bg-clay-tint text-clay",
-        category: "border-beige bg-paper text-ink",
-        level: "border-beige bg-white text-grey",
+        /* Atelier status pills (badges card, reversed): sage =
+           Free/Published/active, clay = Premium/Draft, category = ink chip,
+           level = neutral grey */
+        sage: "border-transparent bg-sage text-sage-pale",
+        clay: "border-transparent bg-clay text-clay-tint",
+        category: "border-transparent bg-ink text-paper",
+        level: "border-transparent bg-grey text-white",
       },
     },
     defaultVariants: {

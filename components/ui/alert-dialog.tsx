@@ -139,7 +139,7 @@ function AlertDialogCancel({
     <AlertDialogPrimitive.Cancel
       className={cn(
         buttonVariants({ variant: "ghost" }),
-        "border border-beige text-grey",
+        "bg-transparent border border-beige text-grey hover:bg-beige hover:text-ink",
         className
       )}
       {...props}

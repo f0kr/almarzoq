@@ -55,8 +55,8 @@ const SearchInputInner = ()=> {
         onClick={() => setShowFree((prev) => !prev)}
         className={cn(
               "flex items-center gap-x-2 rounded-full border px-3 py-2 text-sm transition",
-              "bg-card border-beige text-grey font-medium hover:border-primary hover:bg-card",
-              showFree && "bg-primary border-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground",
+              "bg-grey border-transparent text-white font-medium hover:bg-ink",
+              showFree && "bg-card border-primary text-primary hover:bg-card hover:text-primary",
               isPending && "cursor-not-allowed opacity-50"
             )}
       >

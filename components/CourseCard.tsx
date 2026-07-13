@@ -80,7 +80,7 @@ export const CourseCard = ({
                       </p>
                       <div className="flex items-center justify-between">
                         {price === 0 ? (
-                          <span className="bg-sage-pale text-sage text-xs font-semibold px-3 py-1.5 rounded-full">
+                          <span className="bg-sage text-sage-pale text-xs font-semibold px-3 py-1.5 rounded-full">
                             Free
                           </span>
                         ) : (
