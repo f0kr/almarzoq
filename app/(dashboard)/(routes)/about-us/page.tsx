@@ -19,13 +19,6 @@ export default function AboutUsPage() {
       profileImage: '/team/hasanin.jpg',
     },
     {
-      name: 'Abu Alqasim Najah',
-      role: 'Graphic Designer',
-      instagram:'https://www.instagram.com/at.s_artworks/',
-      facebook: 'https://www.facebook.com/share/16sXroN6UT/?mibextid=wwXIfr',
-      profileImage: '/team/abu-alqasim.jpg',
-    },
-    {
       name: 'Mary',
       role: 'Student Registration Officer',
       instagram: null,
@@ -67,18 +60,21 @@ export default function AboutUsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       <div className="relative overflow-hidden">
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-8">
           {/* Main Content */}
-          <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12 lg:p-16">
+          <div className="bg-card border border-border rounded-2xl shadow-sm p-8 md:p-12 lg:p-16">
             <div className="max-w-4xl mx-auto">
               {/* Heading */}
-              <div className="mb-6">
-                <h2 className="text-3xl md:text-4xl font-bold text-red-900 mb-4">About Us</h2>
+              <div className="mb-8">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-primary mb-3">Almarzoq Academy</p>
+                <h2 className="font-serif text-4xl md:text-5xl font-semibold leading-[1.1] text-foreground">
+                  Teaching the <em className="italic text-primary">foundations</em> of fine art.
+                </h2>
               </div>
               {/* Content */}
-              <div className="space-y-5 text-gray-700 leading-relaxed pb-10 border-b-2">
+              <div className="space-y-5 text-foreground leading-relaxed pb-10 border-b border-border">
                 {/* Paragraph 1 */}
                 <div>
                   <ExpandableText
@@ -93,9 +89,9 @@ export default function AboutUsPage() {
                   <Image
                   src="/team/hasanin.jpg"
                   alt='hasanin almarzoq profile picture'
-                  className='float-left mr-2'
+                  className='float-left mr-4 mb-2 rounded-xl object-cover'
                   width={150}
-                  height={100}
+                  height={110}
                   />
                   <ExpandableText
                   previewLength={250}
@@ -115,29 +111,30 @@ export default function AboutUsPage() {
               {/* Team Credits Slider */}
               <div className="mb-12 mt-6">
                 <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-2xl font-black">Meet Our <br/> Amazing Team</h3>
-                  <div className="space-x-3">
-                    <button onClick={scrollPrev} aria-label="Previous" className="px-3 py-2 rounded-lg bg-gray-100 hover:bg-gray-200">‹</button>
-                    <button onClick={scrollNext} aria-label="Next" className="px-3 py-2 rounded-lg bg-gray-100 hover:bg-gray-200">›</button>
+                  <h3 className="font-serif text-2xl md:text-3xl font-semibold">Meet our amazing team</h3>
+                  <div className="flex gap-2">
+                    <button onClick={scrollPrev} aria-label="Previous" className="w-10 h-10 rounded-lg bg-paper border border-beige text-grey hover:text-primary transition flex items-center justify-center">‹</button>
+                    <button onClick={scrollNext} aria-label="Next" className="w-10 h-10 rounded-lg bg-paper border border-beige text-grey hover:text-primary transition flex items-center justify-center">›</button>
                   </div>
                 </div>
 
                 <div className="relative">
                   <div ref={carouselRef} className="flex gap-6 overflow-x-hidden no-scrollbar snap-x snap-mandatory scroll-smooth pb-4">
                     {teamMembers.map((m, idx) => (
-                      <article key={idx} className="snap-center flex-shrink-0 min-w-[260px] shadow-xs">
-                        <div className="flex flex-col justify-center items-center gap-4">
-                          <div className="flex items-center justify-center text-white font-bold text-lg">
+                      <article key={idx} className="snap-center flex-shrink-0 w-[200px]">
+                        <div className="flex flex-col justify-center items-center gap-3">
+                          <div className="h-[200px] w-[200px] overflow-hidden rounded-2xl border border-border bg-secondary">
                             <Image
                             src={m.profileImage}
                             alt={m.name}
-                            width={260}
-                            height={56}
+                            width={200}
+                            height={200}
+                            className="h-full w-full object-cover"
                             />
                           </div>
                           <div className='flex flex-col justify-center items-center'>
-                            <p className="font-bold tracking-tighter mb-2">{m.name}</p>
-                            <p className="text-sm bg-gray-50 border-1 max-w-fit rounded-xl text-black-600 font-normal px-2 py-1">{m.role}</p>
+                            <p className="font-semibold mb-2 text-center">{m.name}</p>
+                            <p className="text-xs bg-paper border border-beige max-w-fit rounded-full text-grey font-medium px-3 py-1">{m.role}</p>
                           </div>
                         </div>
 
@@ -145,15 +142,15 @@ export default function AboutUsPage() {
                           {
                             m.instagram && m.facebook ? (
                               <div className='flex mb-2 items-center justify-center gap-3'>
-                               <a href={m.instagram} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-pink-600 hover:opacity-90 border-1 rounded-full p-1">
-                                <FaInstagram color='red' />
+                               <a href={m.instagram} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-primary hover:opacity-90 border border-border rounded-full p-2">
+                                <FaInstagram />
                               </a>
-                              <a href={m.facebook} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-blue-600 hover:opacity-90 border-1 rounded-full p-1">
-                                <FaFacebookF color='gray' />
+                              <a href={m.facebook} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-primary hover:opacity-90 border border-border rounded-full p-2">
+                                <FaFacebookF />
                               </a>
                               </div>
                             ) : (
-                              <span className="text-sm text-gray-500">No public link</span>
+                              <span className="text-sm text-muted-foreground">No public link</span>
                             )
                           }
                         </div>
@@ -185,7 +182,7 @@ export default function AboutUsPage() {
                     href='https://www.instagram.com/almrzoq.academy?igsh=bWs5dHluMDJkYXNh'
                     target='_blank'
                     >
-                    <FaInstagram color='red' className='h-5 w-5'  />
+                    <FaInstagram className='h-5 w-5' />
                     </Link>
                     <Link
                     href='https://youtube.com/@almrzoq.academy?si=Nvb3uGQ40X09rT6I'
@@ -196,26 +193,26 @@ export default function AboutUsPage() {
                   </div>
                   <div className="flex items-center gap-4">
                     <div className="flex-shrink-0">
-                      <Mail className="h-6 w-6 text-black-800" />
+                      <Mail className="h-6 w-6 text-primary" />
                     </div>
                     <div>
                       <Link
                       href='mailto:almrzoq.academy@gmail.com'
                       >
-                      <p className="text-lg font-semibold text-gray-900">almrzoq.academy@gmail.com</p>
+                      <p className="text-lg font-semibold text-foreground">almrzoq.academy@gmail.com</p>
                       </Link>
                     </div>
                   </div>
 
                   <div className="flex gap-4 items-center">
                     <div className="flex-shrink-0">
-                      <Phone className="h-6 w-6 text-black-800" />
+                      <Phone className="h-6 w-6 text-primary" />
                     </div>
                     <div>
                       <Link
                       href='tel:+9647867559228'
                       >
-                      <p className="text-lg font-semibold text-gray-900">+964 786 755 9228</p>
+                      <p className="text-lg font-semibold text-foreground">+964 786 755 9228</p>
                       </Link>
                     </div>
                   </div>

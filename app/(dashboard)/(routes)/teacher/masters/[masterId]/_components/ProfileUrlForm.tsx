@@ -46,7 +46,7 @@ export default function ProfileUrlForm({ initialData, masterId }: ProfileUrlForm
     }
 
     return (
-        <div className="mt-6 border bg-slate-100 rounded-lg p-4">
+        <div className="mt-6 border bg-muted rounded-lg p-4">
             <div className="font-medium flex items-center justify-between">
                 Profile URL
                 <Button
@@ -72,8 +72,8 @@ export default function ProfileUrlForm({ initialData, masterId }: ProfileUrlForm
             </div>
             {!isEditing && (
                 !initialData.profileUrl ? (
-                    <div className='flex items-center rounded-md justify-center h-60 bg-slate-200 '>
-                        <ImageIcon className='h-10 w-10 text-slate-500 '/>
+                    <div className='flex items-center rounded-md justify-center h-60 bg-secondary '>
+                        <ImageIcon className='h-10 w-10 text-muted-foreground '/>
                     </div>
                 ) : (
                     <div className='relative aspect-video mt-2'>

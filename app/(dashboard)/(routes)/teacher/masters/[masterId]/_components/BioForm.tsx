@@ -57,7 +57,7 @@ export default function BioForm({ initialData, masterId }: BioFormProps) {
     }
 
     return (
-        <div className="mt-6 border bg-slate-100 rounded-lg p-4">
+        <div className="mt-6 border bg-muted rounded-lg p-4">
             <div className="font-medium flex items-center justify-between">
                 Master Bio
                 <Button
@@ -77,7 +77,7 @@ export default function BioForm({ initialData, masterId }: BioFormProps) {
             {!isEditing && (
                 <div className={cn(
                     "text-sm mt-2",
-                    !initialData.bio && "text-slate-500 italic"
+                    !initialData.bio && "text-muted-foreground italic"
                 )}>
                     {!initialData.bio ? "No bio" : (
                         <Preview value={initialData.bio} />

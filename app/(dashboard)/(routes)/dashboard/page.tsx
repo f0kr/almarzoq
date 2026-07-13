@@ -1,7 +1,7 @@
 import { getDashboardCourses } from "@/actions/getDashboardCourses"
 import { CoursesList } from "@/components/CoursesList"
 import { auth } from "@clerk/nextjs/server"
-import { CheckCircle, Clock } from "lucide-react"
+import { CheckCircle2, Clock } from "lucide-react"
 import { InfoCard } from "./_components/InfoCard"
 
 
@@ -16,6 +16,7 @@ const {
 
 return(
   <div className="p-6 space-y-4">
+    <h1 className="font-serif font-semibold text-2xl md:text-[28px]">My Learning</h1>
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
       <InfoCard
       icon={Clock}
@@ -23,7 +24,7 @@ return(
       numberOfItems={coursesInProgress.length}
       />
       <InfoCard
-      icon={CheckCircle}
+      icon={CheckCircle2}
       label='Completed'
       numberOfItems={completedCourses.length}
       variant="success"

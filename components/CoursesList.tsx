@@ -2,12 +2,13 @@ import { Category, Course } from "@prisma/client"
 import { CourseCard } from "./CourseCard"
 import { auth } from "@clerk/nextjs/server"
 import { SignInButton } from "@clerk/nextjs"
+import { EmptyState } from "./EmptyState"
 
 type CourseWithProgressWithCategory = Course & {
     category: Category | null
     chapters: {id: string}[]
     progress: number | null
-    teachers?: {id: string, name: string}[]
+    teachers?: {id: string, name: string, profileUrl?: string | null}[]
 }
 
 interface CoursesListProps {
@@ -33,25 +34,30 @@ items
                 price={item.price!}
                 progress={item.progress}
                 category={item?.category?.name! ? item.category.name : "Uncategorized"}
-                masters={(item.teachers ?? []).map((t)=> t.name).filter(Boolean)}
+                masters={(item.teachers ?? []).filter((t)=> t.name).map((t)=> ({ name: t.name, profileUrl: t.profileUrl }))}
                 />
             ))}
         </div>
         {items.length === 0 && userId && (
-            <div className="text-center text-sm text-muted-foreground mt-10">
-                No courses found
-            </div>
+            <EmptyState
+                className="mt-10"
+                title="No courses found"
+                description="When you enroll in a course it will show up here. Explore the catalog to find your first one."
+            />
         )}
         {items.length === 0 && !userId && (
-            <div className="text-center text-sm text-muted-foreground mt-10">
-                      Please{" "}
-      <SignInButton mode="modal">
-        <button className="font-bold underline hover:text-primary transition">
-          sign in
-        </button>
-      </SignInButton>{" "}
-      to track progress
-            </div>      
+            <EmptyState
+                className="mt-10"
+                title="Sign in to track progress"
+                description="Your enrolled courses and progress will show up here."
+                action={
+                    <SignInButton mode="modal">
+                        <button className="rounded-full bg-card px-6 py-2.5 text-sm font-semibold text-clay border border-clay transition hover:bg-paper">
+                            Sign in
+                        </button>
+                    </SignInButton>
+                }
+            />
         )}
        </div>
     )

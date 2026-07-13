@@ -85,7 +85,7 @@ export default function AttachmentsForm({
     }
 
     return(
-        <div className='mt-6 border bg-slate-100 rounded-md p-4'>
+        <div className='mt-6 border border-beige bg-card rounded-2xl p-4'>
             <div className='font-medium flex items-center justify-between'>
               Chapter Attachments
               <Button
@@ -105,7 +105,7 @@ export default function AttachmentsForm({
             {!isEditing && (
                     <>
                     {initialData.attachments.length === 0 && (
-                        <p className='text-sm text-slate-500 mt-2 italic'>  
+                        <p className='text-sm text-muted-foreground mt-2 italic'>  
                             No attachments added yet.
                         </p>
                     )}
@@ -114,17 +114,17 @@ export default function AttachmentsForm({
                             {initialData.attachments.map((attachment) => (
                                 <div key={attachment.id}   className="
                                     flex items-center
-                                    rounded-md border border-red-200
-                                    bg-red-50
+                                    rounded-md border border-primary/30
+                                    bg-primary/5
                                     px-3 py-2
-                                    text-red-800
+                                    text-primary
                                 ">
                                     <File className='h-4 w-4 mr-2 flex-shrink-0'/>
                                     <p className='text-xs line-clamp-1 mr-auto'>
                                         {attachment.name}
                                     </p>
                                     <div className="flex items-center gap-2 ml-auto">
-                                        <span className={cn('text-xs font-medium text-red-700', !attachment.isFree && 'text-xs font-medium text-red-700')}>{attachment.isFree? "Free" : "Paid"}</span>
+                                        <span className={cn('text-xs font-medium text-primary', !attachment.isFree && 'text-xs font-medium text-primary')}>{attachment.isFree? "Free" : "Paid"}</span>
                                         <Checkbox
                                           disabled={isUpdating}
                                           checked={attachment.isFree}

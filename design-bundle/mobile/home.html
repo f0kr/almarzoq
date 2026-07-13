@@ -1,0 +1,102 @@
+<!-- @dsCard group="Mobile" title="Mobile — catalog & nav" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Atelier — Mobile Catalog</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{--cream:#fcfaf7;--ink:#272727;--grey:#4a4a4c;--clay:#9c6349;--sage:#839c49;--sage-pale:#f2f5ea;--beige:#ede8e4;--paper:#faf5f0}
+  *{box-sizing:border-box}
+  body{margin:0;background:#efe9e3;font-family:Inter,sans-serif;padding:30px;display:flex;gap:40px;justify-content:center;flex-wrap:wrap}
+  .phone{width:380px;background:var(--cream);border-radius:38px;border:10px solid #1f1d1b;overflow:hidden;box-shadow:0 26px 60px rgba(31,29,27,.28);position:relative}
+  .screen{height:760px;overflow:hidden;display:flex;flex-direction:column}
+  .notch{position:absolute;top:14px;left:50%;transform:translateX(-50%);width:120px;height:26px;background:#1f1d1b;border-radius:0 0 16px 16px;z-index:5}
+  /* top bar */
+  .bar{display:flex;align-items:center;gap:12px;padding:22px 16px 12px;border-bottom:1px solid var(--beige);background:#fff}
+  .ham{width:22px;height:22px;color:var(--ink)}
+  .brand{font-family:"Playfair Display",serif;font-weight:600;font-size:20px}
+  .brand em{font-style:italic;color:var(--clay)}
+  .av{margin-left:auto;width:30px;height:30px;border-radius:999px;background:linear-gradient(135deg,var(--clay),var(--sage))}
+  .search{margin:12px 16px;background:var(--paper);border:1px solid var(--beige);border-radius:999px;padding:11px 16px;font-size:13.5px;color:var(--grey)}
+  .pills{display:flex;gap:8px;padding:0 16px 4px;overflow:auto}
+  .pill{flex:none;font-size:12.5px;font-weight:500;padding:7px 14px;border-radius:999px;border:1px solid var(--beige);background:#fff;color:var(--grey)}
+  .pill.active{background:var(--clay);color:#fff;border-color:var(--clay)}
+  .list{padding:14px 16px;display:flex;flex-direction:column;gap:16px;overflow:auto}
+  .card{background:#fff;border:1px solid var(--beige);border-radius:16px;padding:10px}
+  .thumb{aspect-ratio:16/9;border-radius:11px;overflow:hidden;position:relative}
+  .thumb img{width:100%;height:100%;object-fit:cover}
+  .chip{position:absolute;top:8px;left:8px;background:rgba(252,250,247,.92);font-size:10.5px;font-weight:600;padding:4px 9px;border-radius:999px}
+  .master{font-size:11.5px;color:var(--grey);margin:10px 2px 3px}
+  .ctitle{font-family:"Playfair Display",serif;font-weight:600;font-size:17px;margin:0 2px 8px}
+  .foot{display:flex;justify-content:space-between;align-items:center;padding:0 2px 4px}
+  .price{font-weight:600;font-size:15px}
+  .free{background:var(--sage-pale);color:var(--sage);font-size:11.5px;font-weight:600;padding:4px 11px;border-radius:999px}
+  .go{font-size:12px;font-weight:600;color:var(--clay)}
+  /* drawer phone */
+  .scrim{position:absolute;inset:0;background:rgba(31,29,27,.4)}
+  .drawer{position:absolute;top:0;bottom:0;left:0;width:78%;background:#fff;box-shadow:8px 0 30px rgba(0,0,0,.2);display:flex;flex-direction:column}
+  .d-brand{font-family:"Playfair Display",serif;font-weight:600;font-size:22px;padding:30px 20px 22px;border-bottom:1px solid var(--beige)}
+  .d-brand em{font-style:italic;color:var(--clay)}
+  .nav{padding:14px}
+  .nav a{display:flex;align-items:center;gap:12px;padding:13px 14px;border-radius:11px;color:var(--grey);font-size:15px;font-weight:500;text-decoration:none;margin-bottom:4px}
+  .nav a.active{background:#f4ece6;color:var(--clay);font-weight:600}
+  .nav .ic{width:19px;height:19px;border-radius:5px;background:currentColor;opacity:.5}
+  .cap{text-align:center;font-size:12px;color:var(--grey);width:100%;margin-top:6px}
+</style>
+</head>
+<body>
+  <!-- catalog -->
+  <div>
+  <div class="phone"><div class="notch"></div><div class="screen">
+    <div class="bar">
+      <svg class="ham" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      <span class="brand">Al<em>marzoq</em></span>
+      <span class="av"></span>
+    </div>
+    <div class="search">Search courses &amp; masters…</div>
+    <div class="pills"><span class="pill active">All</span><span class="pill">Drawing</span><span class="pill">Painting</span><span class="pill">Watercolor</span></div>
+    <div class="list">
+      <div class="card">
+        <div class="thumb"><span class="chip">Digital Painting</span><img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=600&q=80"/></div>
+        <div class="master">Layla Hassan</div>
+        <h3 class="ctitle">Portrait Drawing from Scratch</h3>
+        <div class="foot"><span class="price">$49</span><span class="go">View &rarr;</span></div>
+      </div>
+      <div class="card">
+        <div class="thumb"><span class="chip">Sketching</span><img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=600&q=80"/></div>
+        <div class="master">Omar Farouk</div>
+        <h3 class="ctitle">Gesture &amp; Line Fundamentals</h3>
+        <div class="foot"><span class="free">Free</span><span class="go">Start &rarr;</span></div>
+      </div>
+    </div>
+  </div></div>
+  <p class="cap">Catalog · hamburger + search</p>
+  </div>
+
+  <!-- nav drawer -->
+  <div>
+  <div class="phone"><div class="notch"></div><div class="screen" style="position:relative">
+    <div class="bar">
+      <svg class="ham" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      <span class="brand">Al<em>marzoq</em></span><span class="av"></span>
+    </div>
+    <div class="search">Search…</div>
+    <div class="scrim"></div>
+    <div class="drawer">
+      <div class="d-brand">Al<em>marzoq</em></div>
+      <nav class="nav">
+        <a class="active"><span class="ic"></span> Browse</a>
+        <a><span class="ic"></span> My Learning</a>
+        <a><span class="ic"></span> Masters</a>
+        <a><span class="ic"></span> Dashboard</a>
+        <a><span class="ic"></span> About</a>
+      </nav>
+    </div>
+  </div></div>
+  <p class="cap">Slide-over menu (Sheet)</p>
+  </div>
+</body>
+</html>

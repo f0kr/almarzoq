@@ -1,26 +1,20 @@
 "use client"
 
 import { cn } from "@/lib/utils"
-import { LucideIcon } from "lucide-react"
-import Image from "next/image"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import qs from "query-string"
 
 interface CategoryItemProps {
   label: string
   value?: string | null
-  iconUrl?: string | null
-  Icon?: LucideIcon
   isPending: boolean
   isActive: boolean
-  onSelect: (value: string, navigate: () => void) => void
+  onSelect: (value: string | null, navigate: () => void) => void
 }
 
 export default function CategoryItem({
   label,
   value,
-  iconUrl,
-  Icon,
   isPending,
   isActive,
   onSelect,
@@ -32,7 +26,8 @@ export default function CategoryItem({
   const currentCategoryId = searchParams.get("categoryId")
   const currentTitle = searchParams.get("title")
 
-  const isSelected = currentCategoryId === value
+  // "All" has no value → selected when nothing is filtered
+  const isSelected = value ? currentCategoryId === value : !currentCategoryId
 
   const navigate = () => {
     const url = qs.stringifyUrl(
@@ -53,28 +48,17 @@ return (
   <button
     type="button"
     disabled={isPending && !isActive}
-    onClick={() => onSelect(value!, navigate)}
+    onClick={() => onSelect(value ?? null, navigate)}
     className={cn(
-      "flex items-center gap-x-2 rounded-full border px-3 py-2 text-sm transition",
-      "border-slate-200 hover:border-red-700",
-      isSelected && "border-red-700 bg-red-200/20 text-red-800",
+      "flex items-center gap-x-2 rounded-full border px-4 py-2 text-sm font-medium transition",
+      "border-border bg-card text-muted-foreground hover:border-primary hover:text-foreground",
+      isSelected && "border-primary bg-primary text-primary-foreground hover:text-primary-foreground",
       isPending && !isActive && "cursor-not-allowed opacity-50"
     )}
   >
-    {/* ICON / SPINNER */}
-    {isPending && isActive ? (
-      <div className="h-4 w-4 animate-spin rounded-full border-2 border-red-600 border-t-transparent" />
-    ) : Icon ? (
-      <Icon className="h-5 w-5 text-slate-600 shrink-0" />
-    ) : iconUrl ? (
-      <img
-        src={iconUrl}
-        alt={label}
-        className="h-5 w-5 shrink-0"
-      />
-    ) : null}
-
-    {/* LABEL */}
+    {isPending && isActive && (
+      <div className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+    )}
     <span className="truncate">{label}</span>
   </button>
 )

@@ -82,10 +82,10 @@ export default function LecturesForm({
     }
 
     return(
-        <div className='relative mt-6 border bg-slate-100 rounded-md p-4'>
+        <div className='relative mt-6 border border-beige bg-card rounded-2xl p-4'>
             {isUpdating && (
-                <div className='absolute h-full w-full bg-slate-500/20 top-0 right-0 rounded-m flex items-center justify-center'>
-                    <Loader2 className='animate-spin h-6 w-6 text-red-700'/>
+                <div className='absolute h-full w-full bg-foreground/10 top-0 right-0 rounded-m flex items-center justify-center'>
+                    <Loader2 className='animate-spin h-6 w-6 text-primary'/>
                 </div>
             )}
             <div className='font-medium flex items-center justify-between'>
@@ -128,7 +128,7 @@ export default function LecturesForm({
             )}
 
             {!isCreating && (
-                <div className={cn("text-sm mt-2", !initialData.lectures.length && "text-slate-500 italic")}>
+                <div className={cn("text-sm mt-2", !initialData.lectures.length && "text-muted-foreground italic")}>
                     {!initialData.lectures.length && "No Lectures"}
                     <LecturesList
                     initialData={chaptersInitialData}

@@ -15,20 +15,20 @@ export default async function StudentPage({ params }: { params: Promise<{ studen
 
 
     return (
-        <div>
+        <div className="p-6">
             <Link
             href={`/teacher/students`}
-            className="flex items-center text-sm hover:opacity-75 transition mb-6 p-6"
+            className="flex items-center text-sm text-grey hover:text-foreground transition mb-4"
             >
             <ArrowLeft className="h-4 w-4 mr-2"/>
-            Back to student page
+            Back to Students
             </Link>
-            <div className="pb-3 pl-3">
-             Please choose a course for{" "}
-             <span className="font-semibold">
-              {student?.fullName || "Unknown student"}
-             </span>{" "}
-              to add to
+            <div className="flex items-center gap-4 bg-card border border-beige rounded-2xl px-5 py-4 mb-6">
+              <span className="h-14 w-14 shrink-0 rounded-full bg-gradient-to-br from-clay to-sage" aria-hidden />
+              <div>
+                <h1 className="text-xl font-semibold">{student?.fullName || "Unknown student"}</h1>
+                <p className="text-[13px] text-grey">Choose a course to add this student to</p>
+              </div>
             </div>
             <StudentCoursesList
             items={courses}

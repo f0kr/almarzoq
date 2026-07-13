@@ -23,7 +23,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
-import { cn } from "@/lib/utils"
 import { ColumnDef } from "@tanstack/react-table"
 import { ArrowUpDown, MoreHorizontal, Pencil, Trash, Users } from "lucide-react"
 
@@ -224,7 +223,7 @@ export const columns: ColumnDef<GroupRow>[] = [
       const count = Array.isArray(studentIds) ? studentIds.length : 0
 
       return (
-        <Badge className={cn("bg-slate-500", count > 0 && "bg-green-700")}>
+        <Badge variant={count > 0 ? "sage" : "level"}>
           {count}
         </Badge>
       )

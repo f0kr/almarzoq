@@ -1,0 +1,64 @@
+<!-- @dsCard group="Components" title="Sidebar & top nav" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Atelier — Navigation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{--cream:#fcfaf7;--ink:#272727;--grey:#4a4a4c;--clay:#9c6349;--sage:#839c49;--beige:#ede8e4;--paper:#faf5f0}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--cream);color:var(--ink);font-family:Inter,sans-serif;padding:32px}
+  .wrap{display:flex;border:1px solid var(--beige);border-radius:18px;overflow:hidden;background:#fff;max-width:880px}
+  /* sidebar */
+  .side{width:230px;background:var(--cream);border-right:1px solid var(--beige);padding:22px 16px}
+  .logo{font-family:"Playfair Display",serif;font-weight:600;font-size:22px;margin:0 0 28px;padding:0 8px}
+  .logo em{font-style:italic;color:var(--clay)}
+  .nav a{display:flex;align-items:center;gap:11px;padding:11px 12px;border-radius:10px;color:var(--grey);text-decoration:none;font-size:14px;font-weight:500;margin-bottom:4px;position:relative}
+  .nav a:hover{background:var(--paper)}
+  .nav a.active{background:var(--clay);color:#f6efe9;font-weight:600}
+  .nav a.active::after{content:"";position:absolute;right:12px;width:6px;height:6px;border-radius:999px;background:#f6efe9}
+  .ic{width:18px;height:18px;border-radius:5px;background:currentColor;opacity:.55}
+  /* main */
+  .main{flex:1}
+  .top{display:flex;align-items:center;justify-content:space-between;padding:16px 22px;border-bottom:1px solid var(--beige)}
+  .search{flex:1;max-width:320px;background:var(--paper);border:1px solid var(--beige);border-radius:999px;padding:9px 16px;font-size:13px;color:var(--grey)}
+  .actions{display:flex;align-items:center;gap:12px}
+  .btn{background:var(--clay);color:#fff;border:none;border-radius:999px;padding:9px 18px;font-size:13px;font-weight:600;font-family:Inter}
+  .avatar{width:32px;height:32px;border-radius:999px;background:linear-gradient(135deg,var(--clay),var(--sage))}
+  .stage{padding:26px 22px}
+  .stage h2{font-family:"Playfair Display",serif;font-weight:600;font-size:26px;margin:0 0 6px}
+  .stage h2 em{font-style:italic;color:var(--clay)}
+  .stage p{color:var(--grey);font-size:14px;margin:0}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <aside class="side">
+      <p class="logo">Al<em>marzoq</em></p>
+      <nav class="nav">
+        <a class="active"><span class="ic"></span> Browse</a>
+        <a><span class="ic"></span> My Learning</a>
+        <a><span class="ic"></span> Masters</a>
+        <a><span class="ic"></span> Dashboard</a>
+        <a><span class="ic"></span> About</a>
+      </nav>
+    </aside>
+    <div class="main">
+      <div class="top">
+        <div class="search">Search courses &amp; masters…</div>
+        <div class="actions">
+          <button class="btn">Become a Master</button>
+          <span class="avatar"></span>
+        </div>
+      </div>
+      <div class="stage">
+        <h2>Master the <em>Art</em> of Drawing</h2>
+        <p>Pick up where you left off, or explore something new.</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
