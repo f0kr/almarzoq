@@ -244,7 +244,7 @@ return (
                   </div>
 
                   {/* ===== Chapters Section ===== */}
-                  <div className="border-t bg-muted px-4 py-3">
+                  <div className="border-t bg-paper px-4 py-3">
                     <ChaptersFormForLectures
                       initialData={{
                         ...initialData,

@@ -36,25 +36,15 @@ export default function CourseSidebarItem({
         onClick={handleClick}
         type="button"
         className={cn(
-            "flex items-center gap-x-2 text-black text-sm font-[500] pl-6 transition-all",
+            /* Atelier chapter states (course-player card): incomplete grey,
+               completed sage, playing clay-tint on solid clay */
+            "w-full flex items-center gap-2.5 px-3.5 py-2.5 text-left text-[13.5px] text-grey transition hover:bg-paper",
+            isCompleted && "text-sage",
+            isActive && "bg-clay text-clay-tint font-semibold hover:bg-clay"
         )}
         >
-            <div className="flex items-center gap-x-2">
-                <Icon
-                size={22}
-                className={cn(
-                    "text-black/60",
-                    isActive && "text-black",
-                    isCompleted && "text-black"
-                )}
-                />
-                <span className="ml-2">{label}</span>
-            </div>
-            <div className={cn(
-                "ml-auto opacity-0 border-2 border-black/40 h-[40px] transition-all",
-                isActive && "opacity-100",
-                isCompleted && "border-black"
-            )}/>
+            <Icon size={17} className="shrink-0" />
+            <span className="truncate">{label}</span>
         </button>
     )
 }

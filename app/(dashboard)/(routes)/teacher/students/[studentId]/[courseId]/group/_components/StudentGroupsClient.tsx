@@ -24,7 +24,6 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { cn } from "@/lib/utils"
 
 type GroupRow = {
   id: string
@@ -163,7 +162,7 @@ export function StudentGroupsClient({
                   <TableCell className="font-medium">{g.name}</TableCell>
                   <TableCell className="max-w-[340px] truncate">{g.url}</TableCell>
                   <TableCell>
-                    <Badge className={cn("bg-muted-foreground", g.isMember && "bg-success")}>
+                    <Badge variant={g.isMember ? "sage" : "level"}>
                       {g.isMember ? "Member" : "Not added"}
                     </Badge>
                   </TableCell>

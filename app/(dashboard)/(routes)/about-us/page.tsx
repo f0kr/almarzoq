@@ -19,13 +19,6 @@ export default function AboutUsPage() {
       profileImage: '/team/hasanin.jpg',
     },
     {
-      name: 'Abu Alqasim Najah',
-      role: 'Graphic Designer',
-      instagram:'https://www.instagram.com/at.s_artworks/',
-      facebook: 'https://www.facebook.com/share/16sXroN6UT/?mibextid=wwXIfr',
-      profileImage: '/team/abu-alqasim.jpg',
-    },
-    {
       name: 'Mary',
       role: 'Student Registration Officer',
       instagram: null,
@@ -120,8 +113,8 @@ export default function AboutUsPage() {
                 <div className="flex items-center justify-between mb-6">
                   <h3 className="font-serif text-2xl md:text-3xl font-semibold">Meet our amazing team</h3>
                   <div className="flex gap-2">
-                    <button onClick={scrollPrev} aria-label="Previous" className="w-10 h-10 rounded-xl bg-secondary border border-border text-muted-foreground hover:bg-muted hover:text-primary transition flex items-center justify-center">‹</button>
-                    <button onClick={scrollNext} aria-label="Next" className="w-10 h-10 rounded-xl bg-secondary border border-border text-muted-foreground hover:bg-muted hover:text-primary transition flex items-center justify-center">›</button>
+                    <button onClick={scrollPrev} aria-label="Previous" className="w-10 h-10 rounded-lg bg-paper border border-beige text-grey hover:text-primary transition flex items-center justify-center">‹</button>
+                    <button onClick={scrollNext} aria-label="Next" className="w-10 h-10 rounded-lg bg-paper border border-beige text-grey hover:text-primary transition flex items-center justify-center">›</button>
                   </div>
                 </div>
 
@@ -141,7 +134,7 @@ export default function AboutUsPage() {
                           </div>
                           <div className='flex flex-col justify-center items-center'>
                             <p className="font-semibold mb-2 text-center">{m.name}</p>
-                            <p className="text-xs bg-secondary border border-border max-w-fit rounded-full text-muted-foreground font-medium px-3 py-1">{m.role}</p>
+                            <p className="text-xs bg-paper border border-beige max-w-fit rounded-full text-grey font-medium px-3 py-1">{m.role}</p>
                           </div>
                         </div>
 

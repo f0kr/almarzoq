@@ -84,7 +84,7 @@ export default function ChaptersFormForLectures({
     }
 
     return(
-        <div className='relative mt-6 border bg-muted rounded-md p-4'>
+        <div className='relative mt-6 border border-beige bg-card rounded-2xl p-4'>
             {isUpdating && (
                 <div className='absolute h-full w-full bg-foreground/10 top-0 right-0 rounded-m flex items-center justify-center'>
                     <Loader2 className='animate-spin h-6 w-6 text-primary'/>

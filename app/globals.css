@@ -18,9 +18,42 @@
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
   }
+
+  /* Atelier eyebrow label — small caps tracking used above headings */
+  .eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--grey);
+    font-family: var(--font-inter), sans-serif;
+  }
+
+  /* Atelier skeleton shimmer (states card) */
+  .skeleton-shimmer {
+    background: linear-gradient(90deg, var(--paper) 25%, #f3ece6 37%, var(--paper) 63%);
+    background-size: 400% 100%;
+    animation: atelier-shimmer 1.4s ease infinite;
+  }
+  @keyframes atelier-shimmer {
+    0% { background-position: 100% 0; }
+    100% { background-position: -100% 0; }
+  }
 }
 
 @theme inline {
+  /* Atelier named palette — use these (bg-clay, text-sage, border-beige…)
+     instead of hex values so the palette stays editable in one place. */
+  --color-cream: var(--cream);
+  --color-paper: var(--paper);
+  --color-beige: var(--beige);
+  --color-ink: var(--ink);
+  --color-grey: var(--grey);
+  --color-clay: var(--clay);
+  --color-clay-tint: var(--clay-tint);
+  --color-tan: var(--tan);
+  --color-sage: var(--sage);
+  --color-sage-pale: var(--sage-pale);
+  --color-sage-deep: var(--sage-deep);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-inter);
@@ -65,40 +98,51 @@
 
 :root {
   /* Atelier design system — cream / clay / sage */
+  --cream: #fcfaf7;
+  --paper: #faf5f0;
+  --beige: #ede8e4;
+  --ink: #272727;
+  --grey: #4a4a4c;
+  --clay: #9c6349;
+  --clay-tint: #f4ece6;   /* premium badge / selected option surface */
+  --tan: #b47a5f;
+  --sage: #839c49;
+  --sage-pale: #f2f5ea;
+  --sage-deep: #3f4a20;
   --radius: 0.875rem;
-  --background: #fcfaf7;        /* cream */
-  --foreground: #272727;        /* ink */
+  --background: var(--cream);
+  --foreground: var(--ink);
   --card: #ffffff;
-  --card-foreground: #272727;
+  --card-foreground: var(--ink);
   --popover: #ffffff;
-  --popover-foreground: #272727;
-  --primary: #9c6349;           /* clay terracotta */
-  --primary-foreground: #fcfaf7;
-  --success: #839c49;           /* sage — completion / free / active */
+  --popover-foreground: var(--ink);
+  --primary: var(--clay);
+  --primary-foreground: var(--cream);
+  --success: var(--sage);      /* completion / free / active */
   --success-foreground: #ffffff;
-  --secondary: #f1edea;         /* beige surface */
-  --secondary-foreground: #272727;
+  --secondary: #f1edea;        /* beige surface */
+  --secondary-foreground: var(--ink);
   --muted: #f1edea;
-  --muted-foreground: #4a4a4c;  /* grey */
-  --accent: #f2f5ea;            /* pale sage */
-  --accent-foreground: #3f4a20; /* deep sage */
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: #ede8e4;            /* beige border */
-  --input: #ede8e4;
-  --ring: #9c6349;              /* clay focus ring */
-  --chart-1: #9c6349;           /* clay */
-  --chart-2: #839c49;           /* sage */
-  --chart-3: #b47a5f;           /* tan */
+  --muted-foreground: var(--grey);
+  --accent: var(--sage-pale);
+  --accent-foreground: var(--sage-deep);
+  --destructive: var(--clay);  /* Atelier uses clay, not red, for danger */
+  --border: var(--beige);
+  --input: var(--beige);
+  --ring: var(--clay);
+  --chart-1: var(--clay);
+  --chart-2: var(--sage);
+  --chart-3: var(--tan);
   --chart-4: #c9a27f;
   --chart-5: #6f8a3f;
-  --sidebar: #faf5f0;           /* paper */
-  --sidebar-foreground: #272727;
-  --sidebar-primary: #9c6349;
-  --sidebar-primary-foreground: #fcfaf7;
-  --sidebar-accent: #f2f5ea;
-  --sidebar-accent-foreground: #3f4a20;
-  --sidebar-border: #ede8e4;
-  --sidebar-ring: #9c6349;
+  --sidebar: var(--paper);
+  --sidebar-foreground: var(--ink);
+  --sidebar-primary: var(--clay);
+  --sidebar-primary-foreground: var(--cream);
+  --sidebar-accent: var(--sage-pale);
+  --sidebar-accent-foreground: var(--sage-deep);
+  --sidebar-border: var(--beige);
+  --sidebar-ring: var(--clay);
 }
 
 .dark {

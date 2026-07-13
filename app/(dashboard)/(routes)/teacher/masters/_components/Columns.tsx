@@ -9,7 +9,6 @@ import { ArrowUpDown,Edit, MoreHorizontal } from "lucide-react"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
 import { MasterDelete } from "./MasterDelete"
-import { cn } from "@/lib/utils"
 
 
 export const columns: ColumnDef<Teacher>[] = [
@@ -97,10 +96,7 @@ export const columns: ColumnDef<Teacher>[] = [
         const isPublished = row.getValue("isPublished") || false
 
         return(
-            <Badge className={cn(
-                "bg-muted-foreground",
-                isPublished && "bg-primary"
-            )}>
+            <Badge variant={isPublished ? "sage" : "clay"}>
                 {isPublished? "Published" : "Draft"}
             </Badge>
         )

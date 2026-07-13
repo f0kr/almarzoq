@@ -11,7 +11,7 @@ chaptersLength: number
 price: number
 progress: number | null
 category: string
-masters: string[]
+masters: { name: string; profileUrl?: string | null }[]
 }
 
 
@@ -25,7 +25,7 @@ export const CourseCard = ({
     category,
     masters
 }: CourseCardProps)=>{
-    const masterLabel = masters.length ? masters.join(", ") : "Unknown master"
+    const masterLabel = masters.length ? masters.map((m) => m.name).join(", ") : "Unknown master"
     return(
         <Link href={`/courses/${id}`}>
             <div className="group h-full bg-card border border-border rounded-2xl p-3 transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_12px_30px_rgba(39,39,39,0.10)]">
@@ -42,7 +42,26 @@ export const CourseCard = ({
                 </div>
                 <div className="flex flex-col pt-3 px-1.5">
                   <div className="flex items-center gap-2 text-xs text-muted-foreground mb-1.5">
-                    <span className="w-5 h-5 rounded-full bg-gradient-to-br from-primary to-[#b47a5f] shrink-0" />
+                    {masters.length > 0 && (
+                      <div className="flex -space-x-2 shrink-0">
+                        {masters.map((m, i) =>
+                          m.profileUrl ? (
+                            <span key={i} className="relative w-5 h-5 rounded-full overflow-hidden ring-2 ring-card">
+                              <Image
+                                src={m.profileUrl}
+                                alt={m.name}
+                                fill
+                                sizes="20px"
+                                className="object-cover"
+                                unoptimized
+                              />
+                            </span>
+                          ) : (
+                            <span key={i} className="w-5 h-5 rounded-full bg-gradient-to-br from-clay to-tan ring-2 ring-card" />
+                          )
+                        )}
+                      </div>
+                    )}
                     <span className="line-clamp-1">{masterLabel}</span>
                   </div>
                   <h3 className="font-serif font-semibold text-lg leading-tight line-clamp-2 mb-2.5 transition-colors group-hover:text-primary">
@@ -61,7 +80,7 @@ export const CourseCard = ({
                       </p>
                       <div className="flex items-center justify-between">
                         {price === 0 ? (
-                          <span className="bg-success/15 text-success text-xs font-semibold px-3 py-1.5 rounded-full">
+                          <span className="bg-sage text-sage-pale text-xs font-semibold px-3 py-1.5 rounded-full">
                             Free
                           </span>
                         ) : (

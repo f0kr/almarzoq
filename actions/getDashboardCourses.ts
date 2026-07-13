@@ -6,6 +6,7 @@ type CourseWithProgressWithCategory = Course & {
     category: Category;
     chapters: Chapter[];
     progress: number | null
+    teachers: { id: string; name: string; profileUrl: string | null }[]
 }
 
 type DashboardCourses = {
@@ -27,6 +28,13 @@ Promise<DashboardCourses> => {
                     chapters: {
                         where: {
                             isPublished: true
+                        }
+                    },
+                    teachers: {
+                        select: {
+                            id: true,
+                            name: true,
+                            profileUrl: true
                         }
                     }
                 }

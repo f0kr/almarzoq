@@ -82,7 +82,7 @@ const master = await db.teacher.findUnique({
     "<p>This master hasn't added a bio yet.</p>"
 
   return (
-    <div className="relative min-h-[calc(100vh-80px)] bg-muted/80">
+    <div className="relative min-h-[calc(100vh-80px)]">
       <div className="relative mx-auto max-w-5xl px-4 py-10 space-y-8">
         <Link href="/masters" className="flex items-center text-sm text-muted-foreground hover:text-foreground">
           <ArrowLeft className="mr-2 h-4 w-4" />
@@ -90,7 +90,7 @@ const master = await db.teacher.findUnique({
         </Link>
 
         <Card className="overflow-hidden rounded-[20px] border-border bg-card shadow-sm">
-          <div className="relative h-32 bg-gradient-to-r from-[#b47a5f]/50 via-accent to-secondary" />
+          <div className="relative h-32 bg-gradient-to-r from-tan via-sage-pale to-paper" />
           <CardContent className="relative -mt-16 pb-8 md:pb-10">
             <div className="flex flex-col gap-4 rounded-2xl bg-card/90 p-4 shadow-sm ring-1 ring-border backdrop-blur md:flex-row md:items-end md:justify-between md:p-5">
               <div className="flex gap-4 md:gap-6">
@@ -106,13 +106,13 @@ const master = await db.teacher.findUnique({
                 </div>
                 <div className="space-y-2">
                   <div className="flex flex-wrap items-center gap-2">
-                    <Badge variant="secondary" className="bg-muted text-foreground">
+                    <Badge variant="category">
                       Teacher
                     </Badge>
-                    <Badge variant="outline" className="border-primary/30 text-primary">
+                    <Badge variant="clay">
                       {totalCourses} {totalCourses === 1 ? "Course" : "Courses"}
                     </Badge>
-                    <Badge variant="outline" className="border-success/40 text-success">
+                    <Badge variant="sage">
                       {totalStudents} {totalStudents === 1 ? "Student" : "Students"}
                     </Badge>
                   </div>
@@ -132,7 +132,7 @@ const master = await db.teacher.findUnique({
                       target="_blank"
                       >
                       <span
-                        className="flex items-center gap-2 rounded-full border border-border bg-muted px-3 py-1.5 text-xs font-semibold text-foreground"
+                        className="flex items-center gap-2 rounded-full border border-beige bg-paper px-3 py-1.5 text-xs font-semibold text-grey"
                       >
                         <Icon name={icon} className={cn("h-4 w-4", icon === "link" && "text-muted-foreground")} />
                         {label}
@@ -144,8 +144,8 @@ const master = await db.teacher.findUnique({
               )}
             </div>
 
-            <div className="mt-8 rounded-xl border border-border bg-muted p-5">
-              <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
+            <div className="mt-8 rounded-xl border border-border bg-paper p-5">
+              <div className="flex items-center gap-2 font-serif text-base font-semibold text-foreground">
                 <GraduationCap className="h-4 w-4 text-primary" />
                 About
               </div>
@@ -156,7 +156,7 @@ const master = await db.teacher.findUnique({
             </div>
 
             <div className="mt-8">
-              <div className="mb-4 flex items-center gap-2 text-lg font-semibold text-foreground">
+              <div className="mb-4 flex items-center gap-2 font-serif text-lg font-semibold text-foreground">
                 <BookOpen className="h-5 w-5 text-primary" />
                 Courses by {master.name || "this master"}
               </div>
