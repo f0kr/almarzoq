@@ -76,7 +76,7 @@ export default function GroupUrlsForm({ initialData, courseId }: Props) {
   };
 
   return (
-    <div className="mt-6 border bg-muted rounded-md p-4">
+    <div className="mt-6 border border-beige bg-card rounded-2xl p-4">
       <div className="flex items-center justify-between">
         <h3 className="font-semibold">Group URLs</h3>
 

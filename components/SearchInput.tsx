@@ -44,19 +44,19 @@ const SearchInputInner = ()=> {
         <Input
         onChange={(e) => setValue(e.target.value)}
         value={value}
-        className="w-full pl-9 rounded-full bg-secondary/50 border-border focus-visible:ring-primary/40"
+        className="w-full pl-9 rounded-full bg-paper border-beige"
         placeholder="Search courses & masters…"
         />
       </div>
       <Button
         disabled={isPending}
         size="sm"
-        variant={showFree ? "default" : "outline"}
+        variant="ghost"
         onClick={() => setShowFree((prev) => !prev)}
         className={cn(
-              "flex items-center gap-x-2 rounded-full border px-3 py-2 text-sm transition ",
-              "border-border hover:border-primary",
-              showFree && "border-primary bg-primary/20 text-primary",
+              "flex items-center gap-x-2 rounded-full border px-3 py-2 text-sm transition",
+              "bg-card border-beige text-grey font-medium hover:border-primary hover:bg-card",
+              showFree && "bg-primary border-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground",
               isPending && "cursor-not-allowed opacity-50"
             )}
       >

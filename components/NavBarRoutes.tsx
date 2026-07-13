@@ -33,7 +33,7 @@ export default function NavBarRoutes() {
             <div className={cn(`flex text-lg md:hidden lg:hidden font-serif`,
                             isCoursePage && 'hidden'
             )}>
-            <div className='text-center flex w-full'>Al<h1 className='text-success'>mrzoq </h1></div>
+            <div className='text-center flex w-full'>Al<h1 className='italic text-primary'>mrzoq </h1></div>
             <p>Academy</p>
             </div>
         <div className="flex gap-x-2 ml-auto justify-center items-center">
@@ -54,7 +54,7 @@ export default function NavBarRoutes() {
             {!isSignedIn? (
             <SignInButton>
 
-             <button className="px-4 py-1.5 bg-primary text-primary-foreground rounded-full text-sm font-medium shadow-sm hover:bg-primary/90 transition">
+             <button className="px-4 py-1.5 bg-primary text-primary-foreground rounded-full text-sm font-semibold shadow-sm hover:bg-tan transition">
                 Sign In
              </button>
             </SignInButton>

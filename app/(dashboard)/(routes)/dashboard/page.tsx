@@ -16,6 +16,7 @@ const {
 
 return(
   <div className="p-6 space-y-4">
+    <h1 className="font-serif font-semibold text-2xl md:text-[28px]">My Learning</h1>
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
       <InfoCard
       icon={Clock}

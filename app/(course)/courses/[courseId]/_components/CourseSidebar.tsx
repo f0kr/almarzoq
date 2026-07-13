@@ -8,7 +8,6 @@ import { ChevronDown } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { usePathname } from "next/navigation"
 import { useEffect, useState } from "react"
-import { set } from "zod"
 
 interface CourseSidebarProps {
   course: Course & {
@@ -46,30 +45,21 @@ export default function CourseSidebar({
   },[pathname])
 
   return (
-    <div className="h-full border-r flex flex-col overflow-y-auto shadow-sm">
-      <div className="p-8 flex flex-col border-b">
-        <h1 className="font-semibold text-lg">{course.title}</h1>
-        <div className="mt-6">
-          {purchase && course.price === 0 && (
-            <div className="mt-10">
-              <CourseProgress
-                variant='success'
-                value={progressCount}
-                />
-            </div>
-          )}
-          {!purchase && course.price === 0 && (
-            <div className="mt-10">
-              <CourseProgress
-                variant='success'
-                value={progressCount}
-                />
-            </div>
-          )}
+    <div className="rounded-2xl border border-border bg-card overflow-hidden">
+      <div className="p-5 flex flex-col gap-3 border-b border-border">
+        <div className="flex items-center justify-between gap-4">
+          <h2 className="font-serif font-semibold text-xl">Course content</h2>
+          <span className="text-xs text-muted-foreground line-clamp-1">{course.title}</span>
         </div>
+        {course.price === 0 && (
+          <CourseProgress
+            variant='success'
+            value={progressCount}
+          />
+        )}
       </div>
 
-      <div className="flex flex-col w-full p-2">
+      <div className="flex flex-col w-full p-3">
         <Accordion.Root
           type="single"
           value={openLectureId || undefined}

@@ -35,8 +35,8 @@ const SideItem = ({
             onClick={handleClick}
             type='button'
             className={cn(
-                'relative flex items-center gap-x-3 mx-3 px-3 py-2.5 rounded-lg text-muted-foreground text-sm font-medium transition-all hover:bg-secondary/60',
-                isActive && 'bg-primary/10 text-primary font-semibold hover:bg-primary/10'
+                'relative flex items-center gap-x-3 mx-3 px-3 py-2.5 rounded-lg text-muted-foreground text-sm font-medium transition-all hover:bg-paper',
+                isActive && 'bg-clay-tint text-primary font-semibold hover:bg-clay-tint'
             )}
          >
             <span

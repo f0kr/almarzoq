@@ -52,7 +52,7 @@ export default async function MastersPage({
   })
 
   return (
-    <div className="relative min-h-[calc(100vh-80px)] bg-muted/80">
+    <div className="relative min-h-[calc(100vh-80px)]">
       <div className="relative mx-auto max-w-5xl px-4 py-10 space-y-8">
         <div className="space-y-2">
           <p className="text-[11px] font-semibold uppercase tracking-[0.35em] text-primary">
@@ -111,7 +111,7 @@ export default async function MastersPage({
               return (
                 <Link key={master.id} href={`/masters/${master.id}`} className="group block">
                   <Card className="relative w-full overflow-hidden rounded-2xl border-border bg-card px-6 py-5 transition-all hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-lg">
-                    <div className="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-[#b47a5f] to-primary" aria-hidden />
+                    <div className="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-tan to-clay" aria-hidden />
                     <span className="absolute right-5 top-1/2 -translate-y-1/2 text-primary text-xl transition-transform group-hover:translate-x-1" aria-hidden>&rarr;</span>
                     <div className="absolute left-4 top-1/2 h-16 w-16 -translate-y-1/2 overflow-hidden rounded-full border-4 border-white shadow-lg ring-2 ring-primary/20 group-hover:ring-primary/30">
                       <Image
@@ -125,7 +125,7 @@ export default async function MastersPage({
                     </div>
                     <CardContent className="pl-24 pr-2 sm:pr-4">
                       <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
-                        <span className="rounded-full border border-primary/20 bg-primary/5 px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-primary">
+                        <span className="rounded-full bg-clay-tint px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-clay">
                           Teacher
                         </span>
                         <span className="text-xs font-medium text-muted-foreground line-clamp-1">
@@ -136,11 +136,11 @@ export default async function MastersPage({
                         {master.name}
                       </h3>
                       <div className="mt-1 flex flex-wrap gap-2 text-xs font-medium text-muted-foreground">
-                        <span className="flex items-center gap-1 rounded-full bg-muted px-2 py-1">
+                        <span className="flex items-center gap-1 rounded-full bg-paper border border-beige px-2.5 py-1">
                           <span className="h-2 w-2 rounded-full bg-primary" aria-hidden />
                           {courseCount} {courseCount === 1 ? "course" : "courses"}
                         </span>
-                        <span className="flex items-center gap-1 rounded-full bg-muted px-2 py-1">
+                        <span className="flex items-center gap-1 rounded-full bg-paper border border-beige px-2.5 py-1">
                           <span className="h-2 w-2 rounded-full bg-success" aria-hidden />
                           {studentCount} {studentCount === 1 ? "student" : "students"}
                         </span>
