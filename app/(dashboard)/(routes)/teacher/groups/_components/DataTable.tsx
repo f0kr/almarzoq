@@ -66,11 +66,11 @@ export function DataTable<TData, TValue>({
         onChange={(event) =>
         table.getColumn("name")?.setFilterValue(event.target.value)
         }
-        className="max-w-sm"
+        className="max-w-sm rounded-full"
         />
         {toolbarRight}
     </div>
-    <div className="rounded-md border">
+    <div className="rounded-2xl border border-beige bg-card overflow-hidden">
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -116,16 +116,18 @@ export function DataTable<TData, TValue>({
     </div>
      <div className="flex items-center justify-end space-x-2 py-4">
         <Button
-          variant="outline"
+          variant="ghost"
           size="sm"
+          className="rounded-lg border border-beige bg-card text-grey"
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
         >
           Previous
         </Button>
         <Button
-          variant="outline"
+          variant="ghost"
           size="sm"
+          className="rounded-lg border border-beige bg-card text-grey"
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
         >

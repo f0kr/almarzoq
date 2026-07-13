@@ -12,6 +12,13 @@ interface FileUploadProps {
 export default function FileUpload({onChange, endpoint}: FileUploadProps) {
     return (
         <UploadDropzone
+            appearance={{
+                container: "rounded-xl border-[1.5px] border-dashed border-beige bg-paper",
+                label: "text-ink text-sm font-semibold hover:text-clay",
+                allowedContent: "text-grey",
+                uploadIcon: "text-clay",
+                button: "rounded-full bg-primary text-sm font-semibold ut-uploading:bg-tan after:bg-tan",
+            }}
             endpoint={endpoint}
             onClientUploadComplete={(res) => {
               if (!res || res.length === 0) return;

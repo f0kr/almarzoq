@@ -3,12 +3,12 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const backgroundVariants = cva(
-    "rounded-full flex items-center justify-center",
+    "rounded-md flex items-center justify-center",
     {
         variants: {
             variant: {
-                default: "bg-primary/10",
-                success: "bg-success/15"
+                default: "bg-clay-tint",
+                success: "bg-sage-pale"
             },
             size: {
                 default: "p-2",

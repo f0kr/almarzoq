@@ -10,7 +10,7 @@ const Logo = () => {
                 height={70} 
             />
             <div className='flex flex-col text-lg'>
-            <div className='text-center flex  w-full'>Al<div className='text-success'>mrzoq </div></div>
+            <div className='text-center flex  w-full'>Al<div className='italic text-primary'>mrzoq </div></div>
             <p>Academy</p>
             </div>
         </div>

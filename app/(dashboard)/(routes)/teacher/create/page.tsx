@@ -50,8 +50,9 @@ export default function CreatePage() {
 
     return(
         <div className="max-w-5xl mx-auto flex md:items-center md:justify-center h-full p-6">
-            <div className='text-2xl'>Name Your Course</div>
-            <p className='text-sm text-muted-foreground'>What would you like to name your course? Don&apos;t worry, you can change this later.</p>
+          <div className="max-w-lg w-full">
+            <h1 className='text-3xl font-semibold'>Name your <em className='italic text-primary'>course</em></h1>
+            <p className='text-sm text-muted-foreground mt-2'>What would you like to name your course? Don&apos;t worry, you can change this later.</p>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8 mt-8'>
                   <FormField
@@ -88,11 +89,12 @@ export default function CreatePage() {
                     type='submit'
                     disabled={!isValid || isSubmitting}
                     >
-                        Continue
+                        Continue &rarr;
                     </Button>
                   </div>
                 </form>
             </Form>
+          </div>
         </div>
     )
 }

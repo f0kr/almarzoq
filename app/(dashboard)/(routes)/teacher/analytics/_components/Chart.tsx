@@ -11,18 +11,25 @@ interface ChartProps {
 
 export const Chart = ({ data }: ChartProps) => {
     return (
-       <Card>
+       <Card className="rounded-2xl border-beige p-5">
+         <h2 className="font-serif text-lg font-medium">Revenue by course</h2>
          <ResponsiveContainer width='100%' height={350}>
             <BarChart data={data}>
+              <defs>
+                <linearGradient id="atelierBar" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="var(--tan)" />
+                  <stop offset="100%" stopColor="var(--clay)" />
+                </linearGradient>
+              </defs>
               <XAxis
               dataKey="name"
-              stroke="#888888"
+              stroke="var(--grey)"
               fontSize={12}
               tickLine={false}
               axisLine={false}
               />
               <YAxis
-              stroke="#888888"
+              stroke="var(--grey)"
               fontSize={12}
               tickLine={false}
               axisLine={false}
@@ -30,8 +37,8 @@ export const Chart = ({ data }: ChartProps) => {
               />
               <Bar
               dataKey="total"
-              fill="#0369a1"
-              radius={[4, 4, 0, 0]}
+              fill="url(#atelierBar)"
+              radius={[8, 8, 0, 0]}
               />
             </BarChart>
          </ResponsiveContainer>

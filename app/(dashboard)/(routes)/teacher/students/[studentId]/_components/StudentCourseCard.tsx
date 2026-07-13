@@ -50,10 +50,10 @@ export const StudentCourseCard = ({
 
     return(
       <ConfirmModal onConfirm={onSubmit}>
-            <div className={`group hover:shadow-sm transition overflow-hidden border rounded-lg p-3 h-full cursor-pointer ${
+            <div className={`group h-full cursor-pointer bg-card border border-beige rounded-2xl p-2.5 transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_12px_30px_rgba(39,39,39,0.10)] ${
     isLoading ? "opacity-50 cursor-not-allowed" : ""
   }`}>
-                <div className="relative w-full aspect-video rounded-md overflow-hidden">
+                <div className="relative w-full aspect-video rounded-xl overflow-hidden">
                    <Image
                    fill
                    className="object-cover"
@@ -61,16 +61,16 @@ export const StudentCourseCard = ({
                    src={imageUrl || "https://via.placeholder.com/640x360.png?text=No+Image"}
                    />
                 </div>
-                <div className="flex flex-col pt-2">
-                  <div className="text-xs text-muted-foreground">
+                <div className="flex flex-col pt-2.5 px-1.5 pb-1">
+                  <div className="text-xs text-grey">
                     {masterLabel}
                   </div>
-                  <div className="text-lg md:text-base font-medium group-hover:text-primary transition line-clamp-2">
+                  <div className="font-serif font-semibold text-base group-hover:text-primary transition line-clamp-2 mt-0.5 mb-1.5">
                     {title}
                   </div>
                   {
                     price === 0 ? (
-                        <span className="inline-block px-2 py-0.5 text-xs font-semibold bg-primary/10 text-primary rounded-full">
+                        <span className="inline-block w-fit px-3 py-1 text-xs font-semibold bg-sage-pale text-sage rounded-full">
                             Free
                         </span>
                     ) : (
