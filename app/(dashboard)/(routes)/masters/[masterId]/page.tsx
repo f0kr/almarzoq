@@ -82,7 +82,7 @@ const master = await db.teacher.findUnique({
     "<p>This master hasn't added a bio yet.</p>"
 
   return (
-    <div className="relative min-h-[calc(100vh-80px)]">
+    <div className="relative min-h-[calc(100dvh-80px)]">
       <div className="relative mx-auto max-w-5xl px-4 py-10 space-y-8">
         <Link href="/masters" className="flex items-center text-sm text-muted-foreground hover:text-foreground">
           <ArrowLeft className="mr-2 h-4 w-4" />

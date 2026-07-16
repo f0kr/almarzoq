@@ -19,15 +19,18 @@ import { useState } from "react"
 import toast from "react-hot-toast"
 import { useRouter } from "next/navigation"
 import { cn } from "@/lib/utils"
+import FileUpload from "@/components/FileUpload"
 
 interface CategoryFormProps {
   initialData: {
     name: string
+    iconUrl: string
   }
 }
 
 const formSchema = z.object({
   categoryName: z.string().min(2, "Name must be at least 2 characters"),
+  iconUrl: z.string().url().nullable()
 })
 
 export default function CategoryForm({
@@ -42,6 +45,7 @@ export default function CategoryForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
       categoryName: initialData.name ?? "",
+      iconUrl: initialData.iconUrl ?? null
     }
   })
 
@@ -52,6 +56,7 @@ export default function CategoryForm({
       // send the full payload expected by your API
       await axios.post(`/api/categories/`, {
         categoryName: values.categoryName,
+        iconUrl: values.iconUrl
       })
       toast.success("Category added")
       toggleEditing()
@@ -111,6 +116,23 @@ export default function CategoryForm({
               </Button>
             </div>
           </form>
+
+          <div>
+            <FileUpload
+              endpoint="categoryIcon"
+              onChange={(url) => {
+                if (!url) return
+                // set the uploaded URL in the form but DO NOT auto-submit
+                form.setValue("iconUrl", url)
+                // open editor so user can enter name and click Save
+                setIsEditing(true)
+                // re-run validation for categoryName (in case it already has a valid value)
+                form.trigger("categoryName")
+                toast.success("Icon uploaded")
+              }}
+            />
+            <div className="text-xs text-muted-foreground mt-4">16:9 aspect ratio recommended</div>
+          </div>
         </Form>
       )}
     </div>

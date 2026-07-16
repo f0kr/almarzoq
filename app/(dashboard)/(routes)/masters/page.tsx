@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { db } from "@/lib/db"
+import Reveal from "@/components/Reveal"
 
 const formatBioSnippet = (bio?: string) => {
   if (!bio) return "This master is getting their story ready."
@@ -52,7 +53,7 @@ export default async function MastersPage({
   })
 
   return (
-    <div className="relative min-h-[calc(100vh-80px)]">
+    <div className="relative min-h-[calc(100dvh-80px)]">
       <div className="relative mx-auto max-w-5xl px-4 py-10 space-y-8">
         <div className="space-y-2">
           <p className="text-[11px] font-semibold uppercase tracking-[0.35em] text-primary">
@@ -104,12 +105,13 @@ export default async function MastersPage({
           </div>
         ) : (
           <div className="space-y-4">
-            {masters.map((master) => {
+            {masters.map((master, index) => {
               const courseCount = master.courses.length
               const studentCount = master.courses.reduce((total, course) => total + course.purchases.length, 0)
 
               return (
-                <Link key={master.id} href={`/masters/${master.id}`} className="group block">
+                <Reveal key={master.id} delay={(index % 3) * 80}>
+                <Link href={`/masters/${master.id}`} className="group block">
                   <Card className="relative w-full overflow-hidden rounded-2xl border-border bg-card px-6 py-5 transition-all hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-lg">
                     <div className="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-tan to-clay" aria-hidden />
                     <span className="absolute right-5 top-1/2 -translate-y-1/2 text-primary text-xl transition-transform group-hover:translate-x-1" aria-hidden>&rarr;</span>
@@ -151,6 +153,7 @@ export default async function MastersPage({
                     </CardContent>
                   </Card>
                 </Link>
+                </Reveal>
               )
             })}
           </div>
