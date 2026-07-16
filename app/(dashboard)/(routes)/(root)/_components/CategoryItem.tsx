@@ -1,12 +1,15 @@
 "use client"
 
 import { cn } from "@/lib/utils"
+import { LucideIcon } from "lucide-react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import qs from "query-string"
 
 interface CategoryItemProps {
   label: string
   value?: string | null
+  iconUrl?: string | null
+  Icon?: LucideIcon
   isPending: boolean
   isActive: boolean
   onSelect: (value: string | null, navigate: () => void) => void
@@ -15,6 +18,8 @@ interface CategoryItemProps {
 export default function CategoryItem({
   label,
   value,
+  iconUrl,
+  Icon,
   isPending,
   isActive,
   onSelect,
@@ -56,9 +61,15 @@ return (
       isPending && !isActive && "cursor-not-allowed opacity-50"
     )}
   >
-    {isPending && isActive && (
+    {/* ICON / SPINNER */}
+    {isPending && isActive ? (
       <div className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
-    )}
+    ) : Icon ? (
+      <Icon className="h-4 w-4 shrink-0" />
+    ) : iconUrl ? (
+      <img src={iconUrl} alt="" className="h-5 w-5 shrink-0 rounded-full object-cover" />
+    ) : null}
+
     <span className="truncate">{label}</span>
   </button>
 )
