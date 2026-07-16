@@ -16,6 +16,13 @@ export default async function CourseId({
         },
         include: {
             lectures: {
+                where: {
+                    chapters: {
+                        some: {
+                            isPublished: true
+                        }
+                    }
+                },
                 include: {
                     chapters: {
                         where: {
@@ -36,5 +43,9 @@ export default async function CourseId({
 
     if(!course) return redirect("/")
 
-    return redirect(`/courses/${course.id}/chapters/${course.lectures[0].chapters[0].id}`)
+    const firstChapter = course.lectures[0]?.chapters[0]
+
+    if(!firstChapter) return redirect("/")
+
+    return redirect(`/courses/${course.id}/chapters/${firstChapter.id}`)
 }
