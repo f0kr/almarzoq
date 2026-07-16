@@ -20,6 +20,13 @@ const CourseLayout = async ({
             },
             include: {
                 lectures: {
+                    where: {
+                        chapters: {
+                            some: {
+                                isPublished: true
+                            }
+                        }
+                    },
                     include: {
                         chapters: {
                     where: {
