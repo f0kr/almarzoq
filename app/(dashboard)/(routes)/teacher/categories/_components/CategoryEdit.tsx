@@ -1,32 +1,42 @@
 "use client"
 
+import FileUpload from "@/components/FileUpload"
 import { Button } from "@/components/ui/button"
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { PopoverClose } from "@radix-ui/react-popover"
 import axios from "axios"
-import { Pencil } from "lucide-react"
+import { ImageIcon, Pencil, PlusCircle } from "lucide-react"
+import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 import toast from "react-hot-toast"
 
 interface CategoryFormProps {
   name: string
+  oldIconUrl: string | null
   categoryId: string
 }
 
 
 export default function CategoryEdit({
   name,
+  oldIconUrl,
   categoryId
 }: CategoryFormProps)
 {
 
+      const [isEditing, setIsEditing] = useState(false)
       const [isLoading, setIsLoading] = useState(false)
       const [open, setOpen] = useState(false)
 
+      const toggleEditing = () => {
+        setIsEditing((prev) => !prev)
+      }
+
       const [categoryName, setCategoryName] = useState<string>(name)
+      const [iconUrl, setIconUrl] = useState<string | null>(oldIconUrl)
 
       const router = useRouter()
 
@@ -36,6 +46,7 @@ export default function CategoryEdit({
           setIsLoading(true)
           await axios.patch(`/api/categories/${categoryId}`, {
             name: categoryName,
+            iconUrl: iconUrl
           })
           toast.success("Category edited")
           router.refresh()
@@ -68,12 +79,67 @@ export default function CategoryEdit({
     </div>
 
     {/* Body */}
-    <div className="p-4">
+    <div className="p-4 space-y-4">
       <Input
         value={categoryName}
         onChange={(e) => setCategoryName(e.target.value)}
         placeholder="Category name"
       />
+
+      {/* Image section */}
+      <div className="space-y-2">
+        {!isEditing && (
+          !oldIconUrl ? (
+            <div className="flex items-center justify-center h-32 rounded-md bg-paper">
+              <ImageIcon className="h-8 w-8 text-grey" />
+            </div>
+          ) : (
+            <div className="relative aspect-video rounded-md overflow-hidden">
+              <Image
+                alt="Category icon"
+                fill
+                className="object-cover"
+                src={oldIconUrl}
+              />
+            </div>
+          )
+        )}
+
+        {isEditing && (
+          <div className="space-y-2">
+            <FileUpload
+              endpoint="categoryIcon"
+              onChange={(url) => {
+                if (url) setIconUrl(url)
+              }}
+            />
+            <p className="text-xs text-muted-foreground">
+              16:9 aspect ratio recommended
+            </p>
+          </div>
+        )}
+
+        <Button
+          variant="ghost"
+          size="sm"
+          className="w-full justify-start"
+          onClick={toggleEditing}
+        >
+          {!isEditing && !oldIconUrl && (
+            <>
+              <PlusCircle className="h-4 w-4 mr-2" />
+              Upload image
+            </>
+          )}
+          {!isEditing && oldIconUrl && (
+            <>
+              <Pencil className="h-4 w-4 mr-2" />
+              Edit image
+            </>
+          )}
+          {isEditing && "Cancel"}
+        </Button>
+      </div>
     </div>
 
     {/* Footer */}

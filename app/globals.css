@@ -38,6 +38,26 @@
     0% { background-position: 100% 0; }
     100% { background-position: -100% 0; }
   }
+
+  /* Scroll reveal (fade-up) — toggled by components/Reveal.tsx */
+  .reveal {
+    opacity: 0;
+    translate: 0 18px;
+    transition:
+      opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+      translate 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    translate: 0 0;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      opacity: 1;
+      translate: none;
+      transition: none;
+    }
+  }
 }
 
 @theme inline {

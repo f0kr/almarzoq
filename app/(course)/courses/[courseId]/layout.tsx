@@ -66,7 +66,9 @@ const CourseLayout = async ({
     
     return(
         <div className="h-full">
-            <div className="h-[80px] md:pl-80 fixed inset-y-0 w-full z-50">
+            {/* sticky (not fixed): in-app browsers (e.g. Telegram on iOS) misplace
+                fixed elements when their collapsing top bar resizes the viewport */}
+            <div className="md:pl-80 sticky top-0 w-full z-50 bg-sidebar pt-[env(safe-area-inset-top,0px)] h-[calc(80px+env(safe-area-inset-top,0px))]">
                 <CourseNavbar />
             </div>
             {/* Desktop: chapters in a fixed side rail */}
@@ -78,7 +80,7 @@ const CourseLayout = async ({
               className="h-full rounded-none border-0 border-r border-border bg-background overflow-y-auto shadow-sm"
               />
             </div>
-            <main className="pt-[80px] md:pl-80 h-full">
+            <main className="md:pl-80 h-full">
             {children}
             {/* Mobile: chapters below the course content */}
             <div className="max-w-4xl mx-auto px-4 pb-20 md:hidden">
