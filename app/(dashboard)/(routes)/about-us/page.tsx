@@ -60,7 +60,7 @@ export default function AboutUsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-dvh bg-background">
       <div className="relative overflow-hidden">
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-8">
           {/* Main Content */}
