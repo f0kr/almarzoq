@@ -123,6 +123,7 @@ model Teacher {
   title       String?
   bio         String?
   profileUrl  String?
+  coverUrl    String?
   socialLinks String[]
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt

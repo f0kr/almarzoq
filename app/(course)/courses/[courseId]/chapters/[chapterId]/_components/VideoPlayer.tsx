@@ -6,8 +6,9 @@ import MuxPlayer from "@mux/mux-player-react"
 import axios from "axios"
 import { Loader2, Lock } from "lucide-react"
 import { useRouter } from "next/navigation"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import toast from "react-hot-toast"
+import { useChapterLoading } from "./ChapterLoadingProvider"
 
 interface VideoPlayerProps{
     playbackId: string
@@ -34,6 +35,13 @@ export const VideoPlayer = ({
     const [isReady, setIsReady] = useState(false)
     const router = useRouter()
     const confetti = useConfettiStore()
+    const { markReady } = useChapterLoading()
+
+    // Locked chapters (or ones without a video) never fire onCanPlay, so
+    // release the page skeleton right away.
+    useEffect(() => {
+        if (isLocked || !playbackId) markReady()
+    }, [isLocked, playbackId, markReady])
 
     const onEnd = async () => {
         try{
@@ -79,7 +87,11 @@ export const VideoPlayer = ({
                 className={cn(
                     !isReady && "hidden"
                 )}
-                onCanPlay={()=> setIsReady(true)}
+                onCanPlay={()=> {
+                    setIsReady(true)
+                    markReady()
+                }}
+                onError={()=> markReady()}
                 onEnded={onEnd}
                 autoPlay
                 playbackId={playbackId}
