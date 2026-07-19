@@ -23,6 +23,9 @@ export const ourFileRouter = {
     profileUrl: f({ image: { maxFileSize: "8MB", maxFileCount: 1 } })
         .middleware(() => handleAuth())
         .onUploadComplete(() => {}),
+    masterCover: f({ image: { maxFileSize: "8MB", maxFileCount: 1 } })
+        .middleware(() => handleAuth())
+        .onUploadComplete(() => {}),
     courseAttachment: f({
         text: { maxFileSize: "16MB" },
         image: { maxFileSize: "16MB" },
