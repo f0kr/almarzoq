@@ -1,6 +1,6 @@
 import { IconBadge } from "@/components/IconBadge"
 import { db } from "@/lib/db"
-import { auth } from "@clerk/nextjs/server"
+import { auth } from "@/lib/auth"
 import { CircleDollarSign, LayoutDashboard, ListCheck } from "lucide-react"
 import { redirect } from "next/navigation"
 import TitleForm from "./_components/TitleForm"

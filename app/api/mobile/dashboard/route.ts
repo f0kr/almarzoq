@@ -1,4 +1,4 @@
-import { auth } from "@clerk/nextjs/server";
+import { auth } from "@/lib/auth";
 import { getProgress } from "@/actions/getProgress";
 import { db } from "@/lib/db";
 import { addCorsHeaders, handleCorsPreFlight } from "@/lib/cors";

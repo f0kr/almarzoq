@@ -1,6 +1,6 @@
 import { getDashboardCourses } from "@/actions/getDashboardCourses"
 import { CoursesList } from "@/components/CoursesList"
-import { auth } from "@clerk/nextjs/server"
+import { auth } from "@/lib/auth"
 import { CheckCircle2, Clock } from "lucide-react"
 import { InfoCard } from "./_components/InfoCard"
 import Reveal from "@/components/Reveal"

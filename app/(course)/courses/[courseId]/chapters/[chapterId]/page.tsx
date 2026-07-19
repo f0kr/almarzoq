@@ -1,6 +1,6 @@
 import { getChapter } from "@/actions/getChapter";
 import { Banner } from "@/components/Banner";
-import { auth } from "@clerk/nextjs/server";
+import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { VideoPlayer } from "./_components/VideoPlayer";
 import { Preview } from "@/components/Preview";
@@ -9,7 +9,7 @@ import { File } from "lucide-react";
 import { CourseProgressButton } from "./_components/CourseProgressButton";
 import { Button } from "@/components/ui/button";
 import { formatPrice } from "@/lib/format";
-import { SignInButton } from "@clerk/nextjs";
+import { SignInButton } from "@/components/auth/SignInButton";
 
 const TelegramIcon = () => (
   <svg
