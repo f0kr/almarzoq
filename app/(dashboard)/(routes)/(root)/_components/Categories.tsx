@@ -3,6 +3,7 @@
 import { Category } from "@prisma/client"
 import { useState, useTransition } from "react"
 import CategoryItem from "./CategoryItem"
+import { ListIcon } from "lucide-react"
 
 interface CategoriesProps {
   items: Category[]
@@ -27,6 +28,7 @@ export default function Categories({ items }: CategoriesProps) {
       {/* ALL */}
       <CategoryItem
         label="All"
+        Icon={ListIcon}
         isPending={isPending}
         isActive={activeValue === null}
         onSelect={onSelect}
@@ -36,6 +38,7 @@ export default function Categories({ items }: CategoriesProps) {
         <CategoryItem
           key={item.id}
           label={item.name}
+          iconUrl={item.iconUrl}
           value={item.id}
           isPending={isPending}
           isActive={activeValue === item.id}

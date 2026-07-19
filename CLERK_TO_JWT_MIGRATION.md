@@ -1,8 +1,37 @@
 # Migrating from Clerk to Custom JWT Auth
 
-> Status: **Planned, not started.** Captured 2026-06-18 for future work.
+> Status: **Code complete (2026-07-19), cutover pending.** All Clerk usage in
+> source has been replaced; `@clerk/nextjs` stays installed (unused) until
+> post-cutover cleanup. Google sign-in was added to the scope since the app
+> had Google social login through Clerk.
 > Decision made: keep existing user passwords working by importing Clerk's
 > password hashes (Option 1 below).
+
+## Cutover runbook (what's left)
+
+1. **Google OAuth client**: create OAuth credentials at
+   https://console.cloud.google.com/apis/credentials with authorized redirect
+   URI `<NEXT_PUBLIC_APP_URL>/api/auth/google/callback`; fill
+   `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` in `.env` (placeholders added).
+   `JWT_SECRET` was already generated and added.
+2. **DB backup**, then `npx prisma db push` to create the `User` table
+   (additive only — no existing tables change).
+3. `node scripts/export-clerk-users.mjs` → writes `scripts/data/clerk-users.json`
+   (ids, emails, names, google ids, password flags via Backend API).
+4. Download the dashboard user export CSV (Settings → User Exports) — it
+   contains the bcrypt `password_digest` column. Then:
+   `node scripts/import-users.mjs path/to/export.csv`
+   (maps `NEXT_PUBLIC_TEACHER_ID`/`ID2` to `role = TEACHER`).
+5. Deploy. Set `JWT_SECRET`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` in
+   production env.
+6. **Mobile app**: point sign-in at `POST /api/auth/sign-in` (returns
+   `{ token }` in the body) and send it as `Authorization: Bearer <token>`.
+7. After verifying logins (password + Google): remove `@clerk/nextjs` from
+   package.json and the `CLERK_*` / `NEXT_PUBLIC_CLERK_*` env vars.
+
+Sessions: 30-day HS256 JWT (`jose`), httpOnly `session` cookie for web,
+bearer token for mobile. Google users are matched by `googleId` first, then
+linked by verified email, so pre-migration accounts keep their data.
 
 ## Why this is non-trivial
 

@@ -1,6 +1,7 @@
+import type { Viewport } from "next";
 import { Inter, Playfair_Display, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { ClerkProvider } from "@clerk/nextjs";
+import { SessionProvider } from "@/components/providers/SessionProvider";
 import ToasterProvider from "@/components/providers/ToasterProvider";
 import { ConfettiProvider } from "@/components/providers/ConfettiProvider";
 
@@ -20,6 +21,16 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  // lets iOS/in-app browsers (Telegram) compute safe-area insets instead of
+  // shifting the layout viewport, which displaced the fixed/sticky navbar
+  viewportFit: "cover",
+  // --cream from globals.css; meta tags can't reference CSS vars
+  themeColor: "#fcfaf7",
+};
 
 export async function generateMetadata(){
   return{
@@ -79,9 +90,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider
-    afterSignOutUrl="/"
-    >
+    <SessionProvider>
     <html lang="en">
       <body
         className={`${inter.variable} ${playfair.variable} ${geistMono.variable}  antialiased`}
@@ -91,6 +100,6 @@ export default function RootLayout({
         {children}
       </body>
     </html>
-    </ClerkProvider>
+    </SessionProvider>
   );
 }
