@@ -1,6 +1,6 @@
 import { IconBadge } from "@/components/IconBadge"
 import { db } from "@/lib/db"
-import { auth } from "@clerk/nextjs/server"
+import { auth } from "@/lib/auth"
 import { ArrowLeft, LayoutDashboard } from "lucide-react"
 import { redirect } from "next/navigation"
 import Link from "next/link"

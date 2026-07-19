@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { columns } from "./_components/Columns"
 import { DataTable } from "./_components/DataTable"
-import { auth } from "@clerk/nextjs/server"
+import { auth } from "@/lib/auth"
 import { redirect } from "next/navigation"
 import { db } from "@/lib/db"
 import CategoryForm from "./_components/CategoryForm"
@@ -20,6 +20,7 @@ const CategoriesPage = async () => {
         <CategoryForm
         initialData= {{
           name: "",
+          iconUrl: ""
         }}
         />
         <DataTable

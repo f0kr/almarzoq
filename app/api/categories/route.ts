@@ -1,6 +1,6 @@
 import { db } from "@/lib/db";
 import { isTeacher } from "@/lib/teacher";
-import { auth } from "@clerk/nextjs/server";
+import { auth } from "@/lib/auth";
 import { NextResponse } from "next/server";
 
 export async function POST(
@@ -8,7 +8,7 @@ export async function POST(
 ) {
     try {
         const {userId} = await auth()
-        const {categoryName} = await req.json()
+        const {categoryName, iconUrl} = await req.json()
 
         if (!isTeacher(userId)) {
             return new NextResponse("Unauthorized", { status: 401 });
@@ -17,6 +17,7 @@ export async function POST(
         const attachments = await db.category.create({
             data: {
                 name: categoryName,
+                iconUrl: iconUrl,
             }
         })
 

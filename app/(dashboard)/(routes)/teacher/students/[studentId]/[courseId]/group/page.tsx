@@ -1,7 +1,7 @@
 ﻿import Link from "next/link"
 import { redirect } from "next/navigation"
 import { ArrowLeft } from "lucide-react"
-import { auth } from "@clerk/nextjs/server"
+import { auth } from "@/lib/auth"
 
 import { getStudents } from "@/actions/getStudents"
 import { isTeacher } from "@/lib/teacher"

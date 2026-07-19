@@ -26,7 +26,7 @@ export const columns: ColumnDef<Category>[] = [
   {
     id: "actions",
     cell: ({row})=> {
-        const {id, name} = row.original
+        const {id, name, iconUrl} = row.original
 
         return(
             <DropdownMenu>
@@ -39,6 +39,7 @@ export const columns: ColumnDef<Category>[] = [
                 <DropdownMenuContent align="center" className="flex justify-center space-x-2 p-2">
                     <CategoryEdit
                     name= {name}
+                    oldIconUrl= {iconUrl}
                     categoryId={id}
                     />
                     <CategoryDelete

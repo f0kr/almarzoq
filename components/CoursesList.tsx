@@ -1,8 +1,9 @@
 import { Category, Course } from "@prisma/client"
 import { CourseCard } from "./CourseCard"
-import { auth } from "@clerk/nextjs/server"
-import { SignInButton } from "@clerk/nextjs"
+import { auth } from "@/lib/auth"
+import { SignInButton } from "@/components/auth/SignInButton"
 import { EmptyState } from "./EmptyState"
+import Reveal from "./Reveal"
 
 type CourseWithProgressWithCategory = Course & {
     category: Category | null
@@ -24,9 +25,9 @@ items
     return(
       <div>
         <div className="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-4">
-            {items.map((item)=> (
+            {items.map((item, index)=> (
+                <Reveal key={item.id} delay={(index % 4) * 70} className="h-full">
                 <CourseCard
-                key={item.id}
                 id={item.id}
                 title={item.title}
                 imageUrl={item.imageUrl!}
@@ -36,6 +37,7 @@ items
                 category={item?.category?.name! ? item.category.name : "Uncategorized"}
                 masters={(item.teachers ?? []).filter((t)=> t.name).map((t)=> ({ name: t.name, profileUrl: t.profileUrl }))}
                 />
+                </Reveal>
             ))}
         </div>
         {items.length === 0 && userId && (

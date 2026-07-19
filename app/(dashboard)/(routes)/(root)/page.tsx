@@ -1,7 +1,7 @@
 import { db } from "@/lib/db";
 import Categories from "./_components/Categories";
 import { getCourses } from "@/actions/getCourses";
-import { auth } from "@clerk/nextjs/server";
+import { auth } from "@/lib/auth";
 import { CoursesList } from "@/components/CoursesList";
 import { SearchInput } from "@/components/SearchInput";
 import { Hero } from "@/components/Hero";
