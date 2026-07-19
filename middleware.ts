@@ -1,12 +1,72 @@
-import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
+import { NextRequest, NextResponse } from "next/server";
+import { jwtVerify } from "jose";
 
-const isPublicRoute = createRouteMatcher(['/sign-in(.*)', '/test(.*)', '/api/webhook', '/courses(.*)' , '/' , '/dashboard', '/about-us' , '/masters(.*)' , '/opengraph-image.jpg', '/api/mobile/home'])
+// Same public routes as the previous clerkMiddleware, plus the new
+// auth pages/endpoints.
+const publicRoutes = [
+  "/sign-in(.*)",
+  "/sign-up(.*)",
+  "/api/auth(.*)",
+  "/test(.*)",
+  "/api/webhook",
+  "/courses(.*)",
+  "/",
+  "/dashboard",
+  "/about-us",
+  "/masters(.*)",
+  "/opengraph-image.jpg",
+  "/api/mobile/home",
+];
 
-export default clerkMiddleware(async (auth, req) => {
-  if (!isPublicRoute(req)) {
-    await auth.protect()
+const publicMatchers = publicRoutes.map(
+  (pattern) => new RegExp(`^${pattern}$`)
+);
+
+const SESSION_COOKIE = "session";
+
+function isPublicRoute(pathname: string) {
+  return publicMatchers.some((matcher) => matcher.test(pathname));
+}
+
+async function getSessionToken(req: NextRequest) {
+  const cookieToken = req.cookies.get(SESSION_COOKIE)?.value;
+  if (cookieToken) return cookieToken;
+
+  const authorization = req.headers.get("authorization");
+  if (authorization?.startsWith("Bearer ")) {
+    return authorization.slice("Bearer ".length);
   }
-})
+  return null;
+}
+
+export default async function middleware(req: NextRequest) {
+  const { pathname } = req.nextUrl;
+
+  if (isPublicRoute(pathname)) {
+    return NextResponse.next();
+  }
+
+  const token = await getSessionToken(req);
+  if (token) {
+    try {
+      await jwtVerify(token, new TextEncoder().encode(process.env.JWT_SECRET));
+      return NextResponse.next();
+    } catch {
+      // fall through to unauthenticated handling
+    }
+  }
+
+  if (pathname.startsWith("/api")) {
+    return new NextResponse("Unauthorized", { status: 401 });
+  }
+
+  const signInUrl = new URL("/sign-in", req.url);
+  signInUrl.searchParams.set(
+    "redirect_url",
+    pathname + req.nextUrl.search
+  );
+  return NextResponse.redirect(signInUrl);
+}
 
 export const config = {
   matcher: [
