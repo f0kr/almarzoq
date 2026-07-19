@@ -1,7 +1,7 @@
 import type { Viewport } from "next";
 import { Inter, Playfair_Display, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { ClerkProvider } from "@clerk/nextjs";
+import { SessionProvider } from "@/components/providers/SessionProvider";
 import ToasterProvider from "@/components/providers/ToasterProvider";
 import { ConfettiProvider } from "@/components/providers/ConfettiProvider";
 
@@ -90,9 +90,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider
-    afterSignOutUrl="/"
-    >
+    <SessionProvider>
     <html lang="en">
       <body
         className={`${inter.variable} ${playfair.variable} ${geistMono.variable}  antialiased`}
@@ -102,6 +100,6 @@ export default function RootLayout({
         {children}
       </body>
     </html>
-    </ClerkProvider>
+    </SessionProvider>
   );
 }

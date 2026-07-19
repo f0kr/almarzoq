@@ -1,6 +1,8 @@
 "use client"
 
-import { SignInButton, useAuth, UserButton, useUser } from "@clerk/nextjs"
+import { useAuth, useUser } from "@/components/providers/SessionProvider"
+import { SignInButton } from "@/components/auth/SignInButton"
+import { UserButton } from "@/components/auth/UserButton"
 import { LogOut } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
