@@ -1,7 +1,7 @@
 import { Category, Course } from "@prisma/client"
 import { CourseCard } from "./CourseCard"
-import { auth } from "@clerk/nextjs/server"
-import { SignInButton } from "@clerk/nextjs"
+import { auth } from "@/lib/auth"
+import { SignInButton } from "@/components/auth/SignInButton"
 import { EmptyState } from "./EmptyState"
 import Reveal from "./Reveal"
 

@@ -1,6 +1,6 @@
 import { IconBadge } from "@/components/IconBadge";
 import { db } from "@/lib/db"
-import { auth } from "@clerk/nextjs/server"
+import { auth } from "@/lib/auth"
 import { ArrowLeft, Eye, File, LayoutDashboard, Video } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation"

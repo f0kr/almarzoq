@@ -1,6 +1,6 @@
 import { db } from "@/lib/db"
 import { isTeacher } from "@/lib/teacher"
-import { auth, clerkClient } from "@clerk/nextjs/server"
+import { auth } from "@/lib/auth"
 import { redirect } from "next/navigation"
 
 export async function getStudentCourses(studentId: string) {
