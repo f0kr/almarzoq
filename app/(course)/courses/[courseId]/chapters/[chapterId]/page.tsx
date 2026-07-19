@@ -3,6 +3,7 @@ import { Banner } from "@/components/Banner";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { VideoPlayer } from "./_components/VideoPlayer";
+import { ChapterLoadingProvider } from "./_components/ChapterLoadingProvider";
 import { Preview } from "@/components/Preview";
 import { Separator } from "@/components/ui/separator";
 import { File } from "lucide-react";
@@ -71,6 +72,8 @@ export default async function ChapterId({
   const completeOnEnd = !userProgress?.isCompleted;
 
   return (
+    // keyed so the loading state restarts when navigating between chapters
+    <ChapterLoadingProvider key={chapterId}>
     <div>
       {userProgress?.isCompleted && (
         <Banner
@@ -192,5 +195,6 @@ export default async function ChapterId({
         </div>
       </div>
     </div>
+    </ChapterLoadingProvider>
   );
 }
