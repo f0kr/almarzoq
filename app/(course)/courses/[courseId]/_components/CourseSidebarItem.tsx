@@ -10,6 +10,9 @@ interface CourseSidebarItemProps {
     isCompleted: boolean
     courseId: string
     isLocked: boolean
+    /** Free chapter in a course the viewer hasn't bought — worth advertising.
+        Once purchased everything is unlocked, so the badge is just noise. */
+    isFreePreview: boolean
     onClick?: () => void
 }
 
@@ -19,6 +22,7 @@ export default function CourseSidebarItem({
     isCompleted,
     courseId,
     isLocked,
+    isFreePreview,
     onClick
 }: CourseSidebarItemProps){
 
@@ -45,6 +49,11 @@ export default function CourseSidebarItem({
         >
             <Icon size={17} className="shrink-0" />
             <span className="truncate">{label}</span>
+            {isFreePreview && (
+                <span className="ml-auto shrink-0 rounded-full bg-clay-tint px-2 py-0.5 text-[11px] font-semibold text-clay">
+                    Free
+                </span>
+            )}
         </button>
     )
 }

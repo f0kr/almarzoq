@@ -6,6 +6,8 @@ import { jwtVerify } from "jose";
 const publicRoutes = [
   "/sign-in(.*)",
   "/sign-up(.*)",
+  "/forgot-password(.*)",
+  "/reset-password(.*)",
   "/api/auth(.*)",
   "/test(.*)",
   "/api/webhook",

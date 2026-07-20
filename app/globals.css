@@ -227,3 +227,29 @@
   font-size: 16px !important;
 }
 
+/* Mixed Arabic/English content: the page is dir="ltr", so without this
+   every paragraph is forced into an LTR block context — Arabic text stays
+   left-aligned and list markers/indents sit on the wrong side, which reads
+   as "broken" once an RTL paragraph sits next to an LTR one. `plaintext`
+   makes each block infer its own direction from its first strong
+   character instead of inheriting the page's. */
+.ql-editor p,
+.ql-editor li,
+.ql-editor h1,
+.ql-editor h2,
+.ql-editor h3,
+.ql-editor h4,
+.ql-editor h5,
+.ql-editor h6,
+.ql-editor blockquote {
+  unicode-bidi: plaintext;
+}
+
+/* Manual override (the toolbar's direction button) beats auto-detection —
+   otherwise a paragraph that's mostly Arabic but happens to start with a
+   Latin word would ignore the user's explicit choice. */
+.ql-editor .ql-direction-rtl,
+.ql-editor .ql-direction-ltr {
+  unicode-bidi: embed;
+}
+
