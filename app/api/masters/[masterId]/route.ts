@@ -32,10 +32,10 @@ export async function DELETE(
             }
         })
 
-        if (teacher.profileUrl) {
-            const key = extractKeyFromUploadThingUrl(teacher.profileUrl);
-            if (key) await utapi.deleteFiles(key);
-        }
+        const keysToDelete = [teacher.profileUrl, teacher.coverUrl]
+            .map((url) => (url ? extractKeyFromUploadThingUrl(url) : null))
+            .filter((key): key is string => Boolean(key));
+        if (keysToDelete.length) await utapi.deleteFiles(keysToDelete);
 
         return NextResponse.json(teacher, {
             status: 200
