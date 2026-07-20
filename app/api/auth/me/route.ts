@@ -8,7 +8,13 @@ export async function GET() {
       return NextResponse.json({ user: null });
     }
     return NextResponse.json({
-      user: { id: user.id, email: user.email, name: user.name, role: user.role },
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        role: user.role,
+        imageUrl: user.imageUrl,
+      },
     });
   } catch (error) {
     console.error("[AUTH_ME]", error);
