@@ -18,6 +18,8 @@ interface VideoPlayerProps{
     nextChapterId?: string
     isLocked: boolean
     completeOnEnd: boolean
+    /** Progress is per-account, so signed-out viewers have nothing to save. */
+    canTrackProgress: boolean
     title: string
 }
 
@@ -29,6 +31,7 @@ export const VideoPlayer = ({
     nextChapterId,
     isLocked,
     completeOnEnd,
+    canTrackProgress,
     title
 }: VideoPlayerProps)=>{
 
@@ -43,24 +46,35 @@ export const VideoPlayer = ({
         if (isLocked || !playbackId) markReady()
     }, [isLocked, playbackId, markReady])
 
+    const goToNextChapter = () => {
+        if(nextChapterId) {
+            router.push(`/courses/${courseId}/chapters/${nextChapterId}`)
+        }
+    }
+
     const onEnd = async () => {
+        if (!completeOnEnd) return
+
+        // Signed-out viewers can watch free chapters but have no account to
+        // record progress against — saving would 401, so just move them on.
+        if (!canTrackProgress) {
+            goToNextChapter()
+            return
+        }
+
         try{
-            if (completeOnEnd) {
-                await axios.put(`/api/courses/${courseId}/lectures/${lectureId}/chapters/${chapterId}/progress`, {
-                    isCompleted: true
-                })
+            await axios.put(`/api/courses/${courseId}/lectures/${lectureId}/chapters/${chapterId}/progress`, {
+                isCompleted: true
+            })
 
-                if(!nextChapterId) {
-                    confetti.onOpen()
-                }
-
-                toast.success("Progress updated")
-                router.refresh()
-
-                if(nextChapterId) {
-                    router.push(`/courses/${courseId}/chapters/${nextChapterId}`)
-                }
+            if(!nextChapterId) {
+                confetti.onOpen()
             }
+
+            toast.success("Progress updated")
+            router.refresh()
+
+            goToNextChapter()
         }catch {
             toast.error("Something went wrong")
         }
