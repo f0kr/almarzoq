@@ -2,17 +2,6 @@ import { Resend } from "resend";
 
 const FROM_ADDRESS = process.env.EMAIL_FROM || "onboarding@resend.dev";
 
-/**
- * Must be a publicly reachable absolute URL — a recipient's mail client
- * fetches it from their machine, so a localhost APP_URL renders a broken
- * image. Set EMAIL_LOGO_URL to the production asset when testing locally.
- */
-const LOGO_URL =
-  process.env.EMAIL_LOGO_URL ||
-  (process.env.NEXT_PUBLIC_APP_URL
-    ? `${process.env.NEXT_PUBLIC_APP_URL}/email-logo.png`
-    : "");
-
 function getClient() {
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) return null;
@@ -50,18 +39,9 @@ async function send(to: string, subject: string, html: string) {
 }
 
 function layout(title: string, bodyHtml: string) {
-  // width/height as attributes (not just CSS) so Outlook reserves the right
-  // box, and alt text carries the brand when images are blocked — which is
-  // the default in plenty of clients.
-  const logo = LOGO_URL
-    ? `<img src="${LOGO_URL}" alt="Almrzoq Academy" width="64" height="64"
-           style="display:block;width:64px;height:64px;border:0;outline:none;text-decoration:none;margin:0 0 20px;" />`
-    : "";
-
   return `
 <div style="font-family:-apple-system,Segoe UI,sans-serif;background:#fcfaf7;padding:32px 16px;">
   <div style="max-width:480px;margin:0 auto;background:#faf5f0;border-radius:16px;padding:32px;border:1px solid #ede8e4;">
-    ${logo}
     <h1 style="font-size:20px;color:#272727;margin:0 0 16px;">${title}</h1>
     ${bodyHtml}
     <p style="margin-top:32px;font-size:12px;color:#4a4a4c;">Almrzoq Academy</p>
