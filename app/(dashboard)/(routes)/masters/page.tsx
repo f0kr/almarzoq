@@ -44,7 +44,7 @@ export default async function MastersPage({
         select: {
           id: true,
           purchases: {
-            select: { id: true },
+            select: { userId: true },
           },
           isPublished: true,
         },
@@ -107,7 +107,11 @@ export default async function MastersPage({
           <div className="space-y-4">
             {masters.map((master, index) => {
               const courseCount = master.courses.length
-              const studentCount = master.courses.reduce((total, course) => total + course.purchases.length, 0)
+              const studentIds = new Set<string>()
+              master.courses.forEach((course) => {
+                course.purchases.forEach((p) => studentIds.add(p.userId))
+              })
+              const studentCount = studentIds.size
 
               return (
                 <Reveal key={master.id} delay={(index % 3) * 80}>
