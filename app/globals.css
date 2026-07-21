@@ -40,21 +40,31 @@
   }
 
   /* Scroll reveal (fade-up) — toggled by components/Reveal.tsx */
+  /* One-shot blur-up reveal: rises and sharpens into focus, with a slight
+     scale settle. Fires once per mount (see components/Reveal.tsx). */
   .reveal {
     opacity: 0;
-    translate: 0 18px;
+    translate: 0 28px;
+    scale: 0.96;
+    filter: blur(12px);
     transition:
-      opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
-      translate 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+      opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+      translate 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+      scale 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+      filter 0.7s cubic-bezier(0.22, 1, 0.36, 1);
   }
   .reveal.is-visible {
     opacity: 1;
     translate: 0 0;
+    scale: 1;
+    filter: blur(0);
   }
   @media (prefers-reduced-motion: reduce) {
     .reveal {
       opacity: 1;
       translate: none;
+      scale: none;
+      filter: none;
       transition: none;
     }
   }
@@ -215,5 +225,31 @@
 
 .ql-container{
   font-size: 16px !important;
+}
+
+/* Mixed Arabic/English content: the page is dir="ltr", so without this
+   every paragraph is forced into an LTR block context — Arabic text stays
+   left-aligned and list markers/indents sit on the wrong side, which reads
+   as "broken" once an RTL paragraph sits next to an LTR one. `plaintext`
+   makes each block infer its own direction from its first strong
+   character instead of inheriting the page's. */
+.ql-editor p,
+.ql-editor li,
+.ql-editor h1,
+.ql-editor h2,
+.ql-editor h3,
+.ql-editor h4,
+.ql-editor h5,
+.ql-editor h6,
+.ql-editor blockquote {
+  unicode-bidi: plaintext;
+}
+
+/* Manual override (the toolbar's direction button) beats auto-detection —
+   otherwise a paragraph that's mostly Arabic but happens to start with a
+   Latin word would ignore the user's explicit choice. */
+.ql-editor .ql-direction-rtl,
+.ql-editor .ql-direction-ltr {
+  unicode-bidi: embed;
 }
 

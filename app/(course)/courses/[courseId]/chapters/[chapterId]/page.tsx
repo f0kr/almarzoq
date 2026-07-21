@@ -1,11 +1,12 @@
 import { getChapter } from "@/actions/getChapter";
 import { Banner } from "@/components/Banner";
+import { IconBadge } from "@/components/IconBadge";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { VideoPlayer } from "./_components/VideoPlayer";
+import { ChapterLoadingProvider } from "./_components/ChapterLoadingProvider";
 import { Preview } from "@/components/Preview";
-import { Separator } from "@/components/ui/separator";
-import { File } from "lucide-react";
+import { Download, File, Users } from "lucide-react";
 import { CourseProgressButton } from "./_components/CourseProgressButton";
 import { Button } from "@/components/ui/button";
 import { formatPrice } from "@/lib/format";
@@ -14,8 +15,8 @@ import { SignInButton } from "@/components/auth/SignInButton";
 const TelegramIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="20"
-    height="20"
+    width="18"
+    height="18"
     fill="currentColor"
     viewBox="0 0 24 24"
   >
@@ -26,8 +27,8 @@ const TelegramIcon = () => (
 const WhatsAppIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="20"
-    height="20"
+    width="18"
+    height="18"
     fill="currentColor"
     viewBox="0 0 24 24"
   >
@@ -38,7 +39,7 @@ const WhatsAppIcon = () => (
 const getGroupIcon = (url: string) => {
   if (url.includes("t.me")) return <TelegramIcon />;
   if (url.includes("chat.whatsapp.com")) return <WhatsAppIcon />;
-  return null;
+  return <Users className="h-[18px] w-[18px]" />;
 };
 
 export default async function ChapterId({
@@ -70,7 +71,12 @@ export default async function ChapterId({
   const isLocked = !chapter.isFree && !purchase;
   const completeOnEnd = !userProgress?.isCompleted;
 
+  const group = course.groupUrls?.find((g) => g.studentIds.includes(userId!));
+  const showGroup = !!(course.groupUrls && purchase && group);
+
   return (
+    // keyed so the loading state restarts when navigating between chapters
+    <ChapterLoadingProvider key={chapterId}>
     <div>
       {userProgress?.isCompleted && (
         <Banner
@@ -84,8 +90,8 @@ export default async function ChapterId({
           label="You need to purchase this course to watch this chapter"
         />
       )}
-      <div className="flex flex-col max-w-4xl mx-auto pb-20">
-        <div className="p-4">
+      <div className="flex flex-col max-w-4xl mx-auto px-4 pb-20 gap-4">
+        <div className="pt-4">
           <VideoPlayer
             chapterId={chapterId}
             courseId={courseId}
@@ -95,11 +101,13 @@ export default async function ChapterId({
             playbackId={muxData?.playbackId!}
             isLocked={isLocked}
             completeOnEnd={completeOnEnd}
+            canTrackProgress={!!userId}
           />
         </div>
-        <div>
-          <div className="p-4 flex flex-col md:flex-row items-center justify-between">
-            <h2 className="text-2xl font-semibod mb-2">{chapter.title}</h2>
+
+        <div className="rounded-2xl border border-beige bg-card p-5">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
+            <h2 className="font-serif text-xl font-semibold">{chapter.title}</h2>
             {purchase && userId ? (
               <CourseProgressButton
                 chapterId={chapterId}
@@ -109,29 +117,29 @@ export default async function ChapterId({
                 isCompleted={!!userProgress?.isCompleted}
               />
             ) : !userId && !isCourseFree ? (
-              <p className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive">
+              <p className="text-sm text-grey">
                 Please{" "}
                 <SignInButton
                   forceRedirectUrl={`/courses/${courseId}/chapters/${chapterId}`}
                   mode="modal"
                 >
-                  <button className="font-bold underline hover:text-primary transition">
+                  <button className="font-semibold text-clay hover:underline">
                     sign in
                   </button>
                 </SignInButton>{" "}
                 to enroll for {formatPrice(course.price!)}
               </p>
             ) : !isCourseFree && userId ? (
-              <a target="_blank" href="https://t.me/AlmrzoqAcademy">
+              <a target="_blank" href="https://t.me/AlmrzoqAcademy" rel="noopener noreferrer">
                 <Button size="sm" className="w-full md:w-auto">
                   Contact Us and Enroll for {formatPrice(course.price!)}
                 </Button>
               </a>
             ) : isCourseFree && !userId ? (
-              <p className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive">
+              <p className="text-sm text-grey">
                 Please{" "}
                 <SignInButton mode="modal">
-                  <button className="font-bold underline hover:text-primary transition">
+                  <button className="font-semibold text-clay hover:underline">
                     sign in
                   </button>
                 </SignInButton>{" "}
@@ -147,50 +155,53 @@ export default async function ChapterId({
               />
             )}
           </div>
-          <Separator />
-          <div>
-            <Preview value={chapter.description!} />
-          </div>
-          {!!attachments.length && (
-            <>
-              <Separator />
-              <div className="p-4">
-                {attachments.map((attachment) => (
-                  <a
-                    key={attachment.id}
-                    target="_blanck"
-                    href={attachment.url}
-                    className="flex items-center p-3 w-full border rounded-md hover:underline bg-primary text-primary-foreground shadow-xs hover:bg-primary/90"
-                  >
-                    <File />
-                    <p className="line-clamp-1">{attachment.name}</p>
-                  </a>
-                ))}
-              </div>
-            </>
+
+          {chapter.description && (
+            <div className="mt-4 border-t border-beige pt-4 [&_.ql-editor]:p-0">
+              <Preview value={chapter.description} />
+            </div>
           )}
-          <Separator />
-          {(() => {
-            const group = course.groupUrls?.find((g) =>
-              g.studentIds.includes(userId!),
-            );
-            if (!course.groupUrls || !purchase || !group) return null;
-            return (
-              <div className="p-4 flex items-center">
+        </div>
+
+        {!!attachments.length && (
+          <div className="rounded-2xl border border-beige bg-card p-5">
+            <h3 className="mb-3 font-serif text-lg font-semibold">Attachments</h3>
+            <div className="space-y-2">
+              {attachments.map((attachment) => (
                 <a
-                  href={group.url}
+                  key={attachment.id}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-4 py-2 rounded-md transition-colors font-medium underline bg-primary text-primary-foreground shadow-xs hover:bg-primary/90 max-w-xs"
+                  href={attachment.url}
+                  className="flex items-center gap-3 rounded-xl border border-beige bg-paper px-3.5 py-2.5 transition hover:border-tan hover:bg-clay-tint"
                 >
-                  {getGroupIcon(group.url)}
-                  <span className="truncate">{group.name}</span>
+                  <IconBadge icon={File} size="sm" />
+                  <p className="line-clamp-1 flex-1 text-sm font-medium text-ink">
+                    {attachment.name}
+                  </p>
+                  <Download className="h-4 w-4 shrink-0 text-grey" />
                 </a>
-              </div>
-            );
-          })()}
-        </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {showGroup && (
+          <div className="rounded-2xl border border-beige bg-card p-5">
+            <h3 className="mb-3 font-serif text-lg font-semibold">Class group</h3>
+            <a
+              href={group!.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex max-w-full items-center gap-2 rounded-full border border-clay bg-card px-4 py-2 text-sm font-semibold text-clay shadow-sm transition hover:bg-paper"
+            >
+              {getGroupIcon(group!.url)}
+              <span className="truncate">{group!.name}</span>
+            </a>
+          </div>
+        )}
       </div>
     </div>
+    </ChapterLoadingProvider>
   );
 }
