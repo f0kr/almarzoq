@@ -2,17 +2,17 @@ import Image from 'next/image';
 
 const Logo = () => {
     return (
-        <div className={`flex justify-evenly gap-2 items-center border-b-2 pb-2 font-serif`}>
-            <Image 
-                src="/logo.png" 
-                alt="logo" 
-                width={70} 
-                height={70} 
+        <div className="flex justify-center items-center border-b-2 pb-3">
+            {/* The full logo already carries the "Almrzoq Academy" wordmark,
+                so the separate text label is dropped to avoid duplicating it. */}
+            <Image
+                src="/logo-full.png"
+                alt="Almrzoq Academy"
+                width={120}
+                height={163}
+                className="h-auto w-[120px]"
+                priority
             />
-            <div className='flex flex-col text-lg'>
-            <div className='text-center flex  w-full'>Al<div className='italic text-primary'>mrzoq </div></div>
-            <p>Academy</p>
-            </div>
         </div>
     );
 };
