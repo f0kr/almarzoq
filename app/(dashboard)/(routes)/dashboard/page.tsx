@@ -4,7 +4,13 @@ import { auth } from "@/lib/auth"
 import { CheckCircle2, Clock } from "lucide-react"
 import { InfoCard } from "./_components/InfoCard"
 import Reveal from "@/components/Reveal"
+import type { Metadata } from "next"
 
+// Personalised learner surface — no public content to index.
+export const metadata: Metadata = {
+  title: "My Learning",
+  robots: { index: false, follow: false },
+}
 
 export default async function Dashboard() {
 

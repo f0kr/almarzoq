@@ -1,3 +1,4 @@
+import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
 import { Search } from "lucide-react"
@@ -14,6 +15,20 @@ const formatBioSnippet = (bio?: string) => {
   if (!text) return "This master is getting their story ready."
 
   return text.length > 140 ? `${text.slice(0, 140).trim()}...` : text
+}
+
+export const metadata: Metadata = {
+  title: "Meet the Masters",
+  description:
+    "Meet the professional artists teaching at Almrzoq Academy. Browse instructor profiles in drawing, painting and digital art, and find the mentor whose voice resonates with you.",
+  alternates: { canonical: "/masters" },
+  openGraph: {
+    title: "Meet the Masters | Almrzoq Academy",
+    description:
+      "Meet the professional artists teaching at Almrzoq Academy. Browse instructor profiles and find the mentor whose voice resonates with you.",
+    url: "/masters",
+    type: "website",
+  },
 }
 
 export default async function MastersPage({
