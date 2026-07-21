@@ -1,3 +1,4 @@
+import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
 import { db } from "@/lib/db"
@@ -32,6 +33,56 @@ const Icon = ({ name, className }: { name: string; className?: string }) => {
       return <FaFacebook className={className} />
     default:
       return <FaLink className={className} />
+  }
+}
+
+const plainText = (html?: string | null) =>
+  (html ?? "").replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim()
+
+export async function generateMetadata({
+  params,
+}: Readonly<{
+  params: Promise<{ masterId: string }>
+}>): Promise<Metadata> {
+  const { masterId } = await params
+
+  const master = await db.teacher.findUnique({
+    where: { id: masterId },
+    select: { name: true, title: true, bio: true, profileUrl: true, isPublished: true },
+  })
+
+  if (!master) {
+    return { title: "Master not found", robots: { index: false, follow: false } }
+  }
+
+  const bio = plainText(master.bio)
+  const description = bio
+    ? bio.length > 155
+      ? `${bio.slice(0, 155).trim()}...`
+      : bio
+    : `${master.name}${master.title ? `, ${master.title}` : ""} teaches at Almrzoq Academy. Explore their courses in drawing, painting and digital art.`
+
+  const title = master.title ? `${master.name} — ${master.title}` : master.name
+
+  return {
+    title,
+    description,
+    alternates: { canonical: `/masters/${masterId}` },
+    // Unpublished profiles are still reachable by direct URL; keep them out of the index.
+    robots: master.isPublished ? undefined : { index: false, follow: false },
+    openGraph: {
+      title,
+      description,
+      url: `/masters/${masterId}`,
+      type: "profile",
+      images: master.profileUrl ? [{ url: master.profileUrl }] : undefined,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: master.profileUrl ? [master.profileUrl] : undefined,
+    },
   }
 }
 
@@ -81,8 +132,56 @@ const master = await db.teacher.findUnique({
     (master.bio && master.bio.trim()) ||
     "<p>This master hasn't added a bio yet.</p>"
 
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      name: master.name,
+      jobTitle: master.title || "Art Instructor",
+      description: plainText(master.bio) || undefined,
+      image: master.profileUrl || undefined,
+      url: `https://www.almrzoq.academy/masters/${master.id}`,
+      // socialLinks are stored as "label|url" pairs.
+      sameAs: master.socialLinks
+        .map((link) => link.split("|")[1])
+        .filter(Boolean),
+      worksFor: {
+        "@type": "EducationalOrganization",
+        name: "Almrzoq Academy",
+        url: "https://www.almrzoq.academy",
+      },
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.almrzoq.academy",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Masters",
+          item: "https://www.almrzoq.academy/masters",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: master.name,
+        },
+      ],
+    },
+  ]
+
   return (
     <div className="relative min-h-[calc(100dvh-80px)]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <div className="relative mx-auto max-w-5xl px-4 py-10 space-y-8">
         <Link href="/masters" className="flex items-center text-sm text-muted-foreground hover:text-foreground">
           <ArrowLeft className="mr-2 h-4 w-4" />
