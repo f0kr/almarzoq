@@ -189,7 +189,19 @@ const master = await db.teacher.findUnique({
         </Link>
 
         <Card className="overflow-hidden rounded-[20px] border-border bg-card shadow-sm">
-          <div className="relative h-32 bg-gradient-to-r from-tan via-sage-pale to-paper" />
+          <div className="relative h-32 md:h-48 bg-gradient-to-r from-tan via-sage-pale to-paper">
+            {master.coverUrl && (
+              <Image
+                src={master.coverUrl}
+                alt={`${master.name || "Master"} cover`}
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 1024px"
+                unoptimized
+                priority
+              />
+            )}
+          </div>
           <CardContent className="relative -mt-16 pb-8 md:pb-10">
             <div className="flex flex-col gap-4 rounded-2xl bg-card/90 p-4 shadow-sm ring-1 ring-border backdrop-blur md:flex-row md:items-end md:justify-between md:p-5">
               <div className="flex gap-4 md:gap-6">
