@@ -220,9 +220,9 @@ export default function AboutUsPage() {
                 {/* Logo */}
                 <div className='hidden mb-13 lg:flex'>
                   <Image
-                  src='/logo2.png'
+                  src='/logo-symbol.png'
                   width={200}
-                  height={200}
+                  height={225}
                   alt='Almarzoq academy logo'
                   />
                 </div>
