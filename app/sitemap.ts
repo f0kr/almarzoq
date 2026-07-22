@@ -31,11 +31,29 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ];
 
   try {
-    // Only published masters are publicly reachable, so only those belong here.
-    const masters = await db.teacher.findMany({
-      where: { isPublished: true },
-      select: { id: true, updatedAt: true },
-    });
+    const [masters, courses] = await Promise.all([
+      // Only published masters are publicly reachable, so only those belong here.
+      db.teacher.findMany({
+        where: { isPublished: true },
+        select: { id: true, updatedAt: true },
+      }),
+      // Published courses that have at least one published chapter get a
+      // landing page; their free chapters are the only indexable lessons.
+      db.course.findMany({
+        where: {
+          isPublished: true,
+          chapters: { some: { isPublished: true } },
+        },
+        select: {
+          id: true,
+          updatedAt: true,
+          chapters: {
+            where: { isPublished: true, isFree: true },
+            select: { id: true, updatedAt: true },
+          },
+        },
+      }),
+    ]);
 
     const masterRoutes: MetadataRoute.Sitemap = masters.map((master) => ({
       url: `${BASE_URL}/masters/${master.id}`,
@@ -44,11 +62,26 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.7,
     }));
 
-    return [...staticRoutes, ...masterRoutes];
+    const courseRoutes: MetadataRoute.Sitemap = courses.flatMap((course) => [
+      {
+        url: `${BASE_URL}/courses/${course.id}`,
+        lastModified: course.updatedAt,
+        changeFrequency: "weekly" as const,
+        priority: 0.9,
+      },
+      ...course.chapters.map((chapter) => ({
+        url: `${BASE_URL}/courses/${course.id}/chapters/${chapter.id}`,
+        lastModified: chapter.updatedAt,
+        changeFrequency: "monthly" as const,
+        priority: 0.5,
+      })),
+    ]);
+
+    return [...staticRoutes, ...masterRoutes, ...courseRoutes];
   } catch (error) {
     // Degrade to the static routes rather than throwing: a 500 here makes
     // Search Console reject the whole sitemap, which is worse than a partial one.
-    console.error("[sitemap] failed to load masters:", error);
+    console.error("[sitemap] failed to build dynamic routes:", error);
     return staticRoutes;
   }
 }

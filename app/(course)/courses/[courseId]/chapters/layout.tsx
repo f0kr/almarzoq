@@ -2,9 +2,9 @@ import { getProgress } from "@/actions/getProgress";
 import { db } from "@/lib/db";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import CourseSidebar from "./_components/CourseSidebar";
-import CourseNavbar from "./_components/CourseNavbar";
-import { MobileChaptersLoading } from "./_components/MobileChaptersLoading";
+import CourseSidebar from "../_components/CourseSidebar";
+import CourseNavbar from "../_components/CourseNavbar";
+import { MobileChaptersLoading } from "../_components/MobileChaptersLoading";
 
 const CourseLayout = async ({
     children,

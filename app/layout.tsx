@@ -95,6 +95,8 @@ const websiteJsonLd = {
   "@type": "WebSite",
   name: SITE_NAME,
   url: "https://www.almrzoq.academy",
+  // Courses are taught in Arabic; the site chrome is English.
+  inLanguage: ["ar", "en"],
   potentialAction: {
     "@type": "SearchAction",
     target: {

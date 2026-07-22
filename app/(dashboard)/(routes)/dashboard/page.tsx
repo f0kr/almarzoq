@@ -13,6 +13,13 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 }
 import MyCourses, { DashboardCourseItem } from "./_components/MyCourses"
+import type { Metadata } from "next"
+
+// Personalised learner surface — no public content to index.
+export const metadata: Metadata = {
+  title: "My Learning",
+  robots: { index: false, follow: false },
+}
 
 export default async function Dashboard() {
 

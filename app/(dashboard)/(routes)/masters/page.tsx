@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { db } from "@/lib/db"
 import Reveal from "@/components/Reveal"
+import { langAttrs } from "@/lib/lang"
 
 const formatBioSnippet = (bio?: string) => {
   if (!bio) return "This master is getting their story ready."
@@ -153,7 +154,7 @@ export default async function MastersPage({
                           {master.title || "Title coming soon"}
                         </span>
                       </div>
-                      <h3 className="mt-2 text-xl font-semibold text-foreground transition-colors group-hover:text-primary">
+                      <h3 {...langAttrs(master.name)} className="mt-2 text-xl font-semibold text-foreground transition-colors group-hover:text-primary">
                         {master.name}
                       </h3>
                       <div className="mt-1 flex flex-wrap gap-2 text-xs font-medium text-muted-foreground">
@@ -166,7 +167,7 @@ export default async function MastersPage({
                           {studentCount} {studentCount === 1 ? "student" : "students"}
                         </span>
                       </div>
-                      <p className="mt-1 text-xs md:text-sm leading-relaxed text-muted-foreground line-clamp-2">
+                      <p {...langAttrs(master.bio)} className="mt-1 text-xs md:text-sm leading-relaxed text-muted-foreground line-clamp-2">
                         {formatBioSnippet(master.bio!)}
                       </p>
                     </CardContent>
