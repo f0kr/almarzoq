@@ -4,6 +4,7 @@ import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import CourseSidebar from "../_components/CourseSidebar";
 import CourseNavbar from "../_components/CourseNavbar";
+import { MobileChaptersLoading } from "../_components/MobileChaptersLoading";
 
 const CourseLayout = async ({
     children,
@@ -82,13 +83,16 @@ const CourseLayout = async ({
             </div>
             <main className="md:pl-80 h-full">
             {children}
-            {/* Mobile: chapters below the course content */}
+            {/* Mobile: chapters below the course content; skeleton until the
+                chapter's video player is ready (desktop side rail is unaffected) */}
             <div className="max-w-4xl mx-auto px-4 pb-20 md:hidden">
-              <CourseSidebar
-              course={course}
-              progressCount={progressCount}
-              purchase={purchase}
-              />
+              <MobileChaptersLoading>
+                <CourseSidebar
+                course={course}
+                progressCount={progressCount}
+                purchase={purchase}
+                />
+              </MobileChaptersLoading>
             </div>
             </main>
 
