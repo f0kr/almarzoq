@@ -53,7 +53,9 @@ export const metadata: Metadata = {
     // The page URL, not the image — Next resolves opengraph-image.jpg itself.
     url: "/",
     siteName: SITE_NAME,
+    // Chrome and instructor bios are English; the course catalog is Arabic.
     locale: "en_US",
+    alternateLocale: ["ar_IQ"],
     type: "website",
   },
   twitter: {
@@ -95,6 +97,8 @@ const websiteJsonLd = {
   "@type": "WebSite",
   name: SITE_NAME,
   url: "https://www.almrzoq.academy",
+  // Courses are taught in Arabic; the site chrome is English.
+  inLanguage: ["ar", "en"],
   potentialAction: {
     "@type": "SearchAction",
     target: {
