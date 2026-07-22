@@ -53,9 +53,7 @@ export const metadata: Metadata = {
     // The page URL, not the image — Next resolves opengraph-image.jpg itself.
     url: "/",
     siteName: SITE_NAME,
-    // Chrome and instructor bios are English; the course catalog is Arabic.
     locale: "en_US",
-    alternateLocale: ["ar_IQ"],
     type: "website",
   },
   twitter: {
