@@ -2,16 +2,6 @@ import Link from "next/link"
 import { UserCog } from "lucide-react"
 import { getDashboardCourses } from "@/actions/getDashboardCourses"
 import { auth } from "@/lib/auth"
-import { CheckCircle2, Clock } from "lucide-react"
-import { InfoCard } from "./_components/InfoCard"
-import Reveal from "@/components/Reveal"
-import type { Metadata } from "next"
-
-// Personalised learner surface — no public content to index.
-export const metadata: Metadata = {
-  title: "My Learning",
-  robots: { index: false, follow: false },
-}
 import MyCourses, { DashboardCourseItem } from "./_components/MyCourses"
 import type { Metadata } from "next"
 
