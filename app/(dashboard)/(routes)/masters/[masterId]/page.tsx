@@ -8,6 +8,7 @@ import { FaTwitter, FaLinkedin, FaYoutube, FaInstagram, FaFacebook, FaLink } fro
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
+import { detectLang, langAttrs } from "@/lib/lang"
 
 const iconForLink = (url: string) => {
   const lower = url.toLowerCase()
@@ -215,8 +216,8 @@ const master = await db.teacher.findUnique({
                       {totalStudents} {totalStudents === 1 ? "Student" : "Students"}
                     </Badge>
                   </div>
-                  <h1 className="text-2xl font-semibold leading-tight text-foreground break-words">{master.name}</h1>
-                  <p className="text-sm text-muted-foreground">{master.title || "Title coming soon"}</p>
+                  <h1 {...langAttrs(master.name)} className="text-2xl font-semibold leading-tight text-foreground break-words">{master.name}</h1>
+                  <p {...langAttrs(master.title)} className="text-sm text-muted-foreground">{master.title || "Title coming soon"}</p>
                 </div>
               </div>
               {master.socialLinks.length > 0 && (
@@ -249,6 +250,7 @@ const master = await db.teacher.findUnique({
                 About
               </div>
               <div
+                lang={detectLang(bioHtml)}
                 className="prose prose-sm mt-3 max-w-none text-foreground prose-headings:text-foreground prose-a:text-primary"
                 dangerouslySetInnerHTML={{ __html: bioHtml }}
               />
@@ -282,7 +284,7 @@ const master = await db.teacher.findUnique({
                         )}
                       </div>
                       <div className="px-1 pt-2.5 pb-1">
-                        <h3 className="font-serif text-sm font-semibold leading-snug line-clamp-2 transition-colors group-hover:text-primary">
+                        <h3 {...langAttrs(course.title)} className="font-serif text-sm font-semibold leading-snug line-clamp-2 transition-colors group-hover:text-primary">
                           {course.title}
                         </h3>
                         <p className="mt-1 text-sm font-semibold text-primary">
