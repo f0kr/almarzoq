@@ -1,4 +1,6 @@
+import type { Metadata } from "next";
 import { getChapter } from "@/actions/getChapter";
+import { db } from "@/lib/db";
 import { Banner } from "@/components/Banner";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
@@ -40,6 +42,36 @@ const getGroupIcon = (url: string) => {
   if (url.includes("chat.whatsapp.com")) return <WhatsAppIcon />;
   return null;
 };
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ courseId: string; chapterId: string }>;
+}): Promise<Metadata> {
+  const { courseId, chapterId } = await params;
+
+  const chapter = await db.chapter.findFirst({
+    where: { id: chapterId, courseId, isPublished: true },
+    select: { title: true, isFree: true, course: { select: { title: true } } },
+  });
+
+  if (!chapter) {
+    return { title: "Lesson not found", robots: { index: false, follow: false } };
+  }
+
+  // Locked lessons are gated video with no public content — keep them out of
+  // the index and point their canonical at the course landing page instead.
+  // Crawlers are unauthenticated, so "locked" means simply "not free".
+  return {
+    title: `${chapter.title} — ${chapter.course.title}`,
+    robots: chapter.isFree ? undefined : { index: false, follow: false },
+    alternates: {
+      canonical: chapter.isFree
+        ? `/courses/${courseId}/chapters/${chapterId}`
+        : `/courses/${courseId}`,
+    },
+  };
+}
 
 export default async function ChapterId({
   params,
