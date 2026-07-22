@@ -67,7 +67,14 @@ export default function CourseSidebar({
           collapsible
           className="w-full space-y-2.5"
         >
-          {course.lectures.map((lecture) => (
+          {course.lectures.map((lecture) => {
+            // Surfaced on the collapsed header so free chapters are findable
+            // without opening every lecture in turn.
+            const freeCount = purchase
+              ? 0
+              : lecture.chapters.filter((chapter) => chapter.isFree).length
+
+            return (
             <Accordion.Item
               key={lecture.id}
 
@@ -82,7 +89,14 @@ export default function CourseSidebar({
                     "[&[data-state=open]>svg]:rotate-180"
                   )}
                 >
-                  <span>{lecture.title}</span>
+                  <span className="flex items-center gap-2">
+                    <span>{lecture.title}</span>
+                    {freeCount > 0 && (
+                      <span className="shrink-0 rounded-full bg-clay px-2 py-0.5 text-[11px] font-semibold text-cream">
+                        {freeCount} free
+                      </span>
+                    )}
+                  </span>
                   <ChevronDown
                     className="h-4 w-4 shrink-0 transition-transform duration-200"
                     aria-hidden
@@ -103,6 +117,7 @@ export default function CourseSidebar({
                         isCompleted={!!chapter.userProgress[0]?.isCompleted}
                         courseId={course.id}
                         isLocked={!chapter.isFree && !purchase}
+                        isFreePreview={chapter.isFree && !purchase}
                         onClick={onChapterClick}
                       />
                     ))
@@ -114,7 +129,8 @@ export default function CourseSidebar({
                 </div>
               </Accordion.Content>
             </Accordion.Item>
-          ))}
+            )
+          })}
         </Accordion.Root>
       </div>
     </div>

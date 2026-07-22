@@ -5,13 +5,14 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
+import { MailCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { PasswordInput } from "@/components/ui/password-input";
 import { AuthCard } from "@/components/auth/AuthCard";
 import { GoogleButton } from "@/components/auth/GoogleButton";
-import { useSession } from "@/components/providers/SessionProvider";
 
 const formSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -20,10 +21,9 @@ const formSchema = z.object({
 });
 
 function SignUpForm() {
-  const router = useRouter();
   const searchParams = useSearchParams();
-  const { refresh } = useSession();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [sentTo, setSentTo] = useState<string | null>(null);
 
   const redirectUrl = searchParams.get("redirect_url") ?? "/";
 
@@ -45,15 +45,34 @@ function SignUpForm() {
         toast.error(data.error ?? "Something went wrong");
         return;
       }
-      await refresh();
-      router.push(redirectUrl.startsWith("/") ? redirectUrl : "/");
-      router.refresh();
+      setSentTo(data.email ?? values.email);
     } catch {
       toast.error("Something went wrong");
     } finally {
       setIsSubmitting(false);
     }
   };
+
+  if (sentTo) {
+    return (
+      <AuthCard title="Check your email" subtitle="One more step to activate your account">
+        <div className="flex flex-col items-center gap-4 text-center">
+          <MailCheck className="h-10 w-10 text-clay" />
+          <p className="text-sm text-muted-foreground">
+            We sent a confirmation link to{" "}
+            <span className="font-semibold text-ink">{sentTo}</span>. Click it
+            to activate your account, then sign in.
+          </p>
+          <Link
+            href={`/sign-in?redirect_url=${encodeURIComponent(redirectUrl)}`}
+            className="text-sm font-semibold text-clay hover:underline"
+          >
+            Back to sign in
+          </Link>
+        </div>
+      </AuthCard>
+    );
+  }
 
   return (
     <AuthCard title="Create your account" subtitle="Start learning with Almrzoq Academy">
@@ -94,8 +113,7 @@ function SignUpForm() {
           )}
         </div>
         <div>
-          <Input
-            type="password"
+          <PasswordInput
             placeholder="Password (8+ characters)"
             autoComplete="new-password"
             disabled={isSubmitting}
