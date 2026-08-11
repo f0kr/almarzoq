@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 import { z } from "zod";
 import { db } from "@/lib/db";
 import {
@@ -7,13 +8,19 @@ import {
   sessionCookieOptions,
   SESSION_COOKIE,
 } from "@/lib/auth";
+import { addCorsHeaders, handleCorsPreFlight } from "@/lib/cors";
 
 const signInSchema = z.object({
   email: z.string().trim().toLowerCase().email("Invalid email"),
   password: z.string().min(1, "Password is required"),
 });
 
-export async function POST(req: Request) {
+export async function OPTIONS(req: NextRequest) {
+  return handleCorsPreFlight(req.headers.get("origin") || undefined);
+}
+
+export async function POST(req: NextRequest) {
+  const respond = async (): Promise<NextResponse> => {
   try {
     const body = await req.json();
     const parsed = signInSchema.safeParse(body);
@@ -72,4 +79,7 @@ export async function POST(req: Request) {
     console.error("[AUTH_SIGN_IN]", error);
     return new NextResponse("Internal Server Error", { status: 500 });
   }
+  };
+
+  return addCorsHeaders(await respond(), req);
 }

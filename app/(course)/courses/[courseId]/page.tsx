@@ -2,8 +2,9 @@ import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { ArrowLeft, BookOpen, GraduationCap, Lock, Play, Layers } from "lucide-react"
+import { ArrowLeft, BookOpen, GraduationCap, Lock, Play, Layers, Clock } from "lucide-react"
 import { getCourseLanding } from "@/actions/getCourseLanding"
+import { getCourseDuration } from "@/actions/getCourseDuration"
 import { auth } from "@/lib/auth"
 import { formatPrice } from "@/lib/format"
 import { detectLang, langAttrs } from "@/lib/lang"
@@ -69,6 +70,7 @@ export default async function CourseLandingPage({
   if (!data) notFound()
 
   const { course, purchase, firstChapter, chapterCount, lectureCount, freeChapterCount } = data
+  const duration = await getCourseDuration(course.id)
   const isFreeCourse = !course.price || course.price === 0
   const hasAccess = Boolean(purchase) || isFreeCourse
 
@@ -190,6 +192,12 @@ export default async function CourseLandingPage({
                 <BookOpen className="mr-1 h-3.5 w-3.5" />
                 {chapterCount} {chapterCount === 1 ? "lesson" : "lessons"}
               </Badge>
+              {duration && (
+                <Badge variant="clay">
+                  <Clock className="mr-1 h-3.5 w-3.5" />
+                  {duration}
+                </Badge>
+              )}
               {freeChapterCount > 0 && (
                 <Badge variant="sage">
                   <Play className="mr-1 h-3.5 w-3.5" />

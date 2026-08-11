@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <script src="_ds/almarzoq-atelier-design-system-62ba8867-aa42-40fc-9263-0125c5a7a351/_ds_bundle.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body{margin:0;background:#efe9e3;font-family:Inter,system-ui,sans-serif;color:#272727}
+    a{color:#9c6349;text-decoration:none} a:hover{color:#b47a5f}
+    input::placeholder{color:#a09a93}
+    @keyframes toastup{from{opacity:0;transform:translate(-50%,10px)}to{opacity:1;transform:translate(-50%,0)}}
+    @keyframes fadein{from{opacity:0}to{opacity:1}}
+  </style>
+</helmet>
+<div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:34px 20px;background:#efe9e3">
+  <div style="display:flex;align-items:center;gap:14px">
+    <div style="display:flex;background:#ffffff;border:1px solid #e3dcd4;border-radius:999px;padding:4px;gap:4px;box-shadow:0 2px 10px rgba(31,29,27,.06)">
+      <button onClick="{{ setIos }}" style="border:none;border-radius:999px;padding:8px 24px;font-size:13px;font-weight:600;cursor:pointer;font-family:Inter,sans-serif;background:{{ segIosBg }};color:{{ segIosColor }}">iOS</button>
+      <button onClick="{{ setAndroid }}" style="border:none;border-radius:999px;padding:8px 24px;font-size:13px;font-weight:600;cursor:pointer;font-family:Inter,sans-serif;background:{{ segAndBg }};color:{{ segAndColor }}">Android</button>
+    </div>
+  </div>
+
+  <div style="width:390px;height:812px;background:#fcfaf7;border-radius:{{ frameRadius }};border:12px solid #1f1d1b;overflow:hidden;position:relative;box-shadow:0 30px 70px rgba(31,29,27,.32);flex:none">
+
+    <!-- status layer -->
+    <div style="position:absolute;top:0;left:0;right:0;height:50px;z-index:40;display:flex;align-items:center;justify-content:space-between;padding:0 26px;pointer-events:none;color:{{ statusColor }}">
+      <span style="font-size:14px;font-weight:600;letter-spacing:.2px">9:41</span>
+      <sc-if value="{{ isIOS }}" hint-placeholder-val="{{ true }}">
+        <span style="position:absolute;top:11px;left:50%;transform:translateX(-50%);width:112px;height:30px;background:#1f1d1b;border-radius:999px"></span>
+      </sc-if>
+      <sc-if value="{{ isAndroid }}">
+        <span style="position:absolute;top:16px;left:50%;transform:translateX(-50%);width:13px;height:13px;background:#1f1d1b;border-radius:999px"></span>
+      </sc-if>
+      <span style="display:flex;align-items:center;gap:6px">
+        <svg width="17" height="12" viewBox="0 0 17 12" fill="currentColor"><rect x="0" y="7" width="3" height="5" rx="1"></rect><rect x="4.5" y="4.5" width="3" height="7.5" rx="1"></rect><rect x="9" y="2" width="3" height="10" rx="1"></rect><rect x="13.5" y="0" width="3" height="12" rx="1" opacity="0.35"></rect></svg>
+        <svg width="16" height="12" viewBox="0 0 16 12" fill="currentColor"><path d="M8 9.5a1.6 1.6 0 1 1 0 3.2 1.6 1.6 0 0 1 0-3.2Z"></path><path d="M4.8 7.6a4.8 4.8 0 0 1 6.4 0l-1.2 1.3a3 3 0 0 0-4 0Z"></path><path d="M2.2 5a8.4 8.4 0 0 1 11.6 0l-1.2 1.3a6.6 6.6 0 0 0-9.2 0Z" opacity="0.5"></path></svg>
+        <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3" stroke="currentColor" opacity="0.4"></rect><rect x="2" y="2" width="14" height="8" rx="1.6" fill="currentColor"></rect><path d="M23 4v4a2 2 0 0 0 0-4Z" fill="currentColor" opacity="0.4"></path></svg>
+      </span>
+    </div>
+
+    <!-- AUTH -->
+    <sc-if value="{{ sAuth }}">
+      <div style="position:absolute;inset:0;background:#fcfaf7;display:flex;flex-direction:column;padding:110px 28px 40px;z-index:5;animation:fadein .25s ease">
+        <div style="font-family:'Playfair Display',serif;font-weight:600;font-size:34px">Al<em style="font-style:italic;color:#9c6349">marzoq</em></div>
+        <p style="margin:6px 0 38px;font-size:14px;color:#4a4a4c">The art academy, in your pocket.</p>
+        <h2 style="font-family:'Playfair Display',serif;font-weight:600;font-size:22px;margin:0 0 18px">{{ authTitle }}</h2>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <sc-if value="{{ isSignup }}">
+            <input placeholder="Full name" style="background:#ffffff;border:1px solid #ede8e4;border-radius:14px;padding:14px 16px;font-size:14px;font-family:Inter,sans-serif;color:#272727;outline:none" style-focus="border-color:#9c6349">
+          </sc-if>
+          <input placeholder="Email" style="background:#ffffff;border:1px solid #ede8e4;border-radius:14px;padding:14px 16px;font-size:14px;font-family:Inter,sans-serif;color:#272727;outline:none" style-focus="border-color:#9c6349">
+          <input placeholder="Password" type="password" style="background:#ffffff;border:1px solid #ede8e4;border-radius:14px;padding:14px 16px;font-size:14px;font-family:Inter,sans-serif;color:#272727;outline:none" style-focus="border-color:#9c6349">
+        </div>
+        <button onClick="{{ signIn }}" style="margin-top:20px;background:#9c6349;color:#ffffff;border:none;border-radius:999px;padding:15px;font-size:15px;font-weight:600;font-family:Inter,sans-serif;cursor:pointer" style-hover="background:#b47a5f">{{ authCta }}</button>
+        <div style="display:flex;align-items:center;gap:12px;margin:22px 0;color:#a09a93;font-size:12px">
+          <span style="flex:1;height:1px;background:#ede8e4"></span>or<span style="flex:1;height:1px;background:#ede8e4"></span>
+        </div>
+        <button onClick="{{ signIn }}" style="background:#ffffff;border:1px solid #ede8e4;border-radius:999px;padding:13px;font-size:14px;font-weight:600;font-family:Inter,sans-serif;color:#272727;cursor:pointer">{{ socialCta }}</button>
+        <div style="margin-top:auto;text-align:center;font-size:13.5px;color:#4a4a4c">{{ authSwitchLabel }} <span onClick="{{ toggleAuth }}" style="color:#9c6349;font-weight:600;cursor:pointer">{{ authSwitchAction }}</span></div>
+      </div>
+    </sc-if>
+
+    <!-- DISCOVER -->
+    <sc-if value="{{ sDiscover }}" hint-placeholder-val="{{ true }}">
+      <div style="position:absolute;inset:0;display:flex;flex-direction:column;padding-top:54px;background:#fcfaf7">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:11px;padding:8px 20px 12px">
+          <span style="font-family:'Playfair Display',serif;font-weight:600;font-size:21px">Al<em style="font-style:italic;color:#9c6349">marzoq</em></span>
+          <span onClick="{{ openProfile }}" style="width:38px;height:38px;border-radius:999px;background:linear-gradient(135deg,#9c6349,#839c49);border:2px solid #ffffff;box-shadow:0 2px 8px rgba(31,29,27,.16);cursor:pointer;flex:none"></span>
+        </div>
+        <div style="flex:1;overflow:auto;padding:4px 20px 110px">
+          <div style="display:flex;gap:8px;margin-bottom:12px">
+            <div style="flex:1;min-width:0;display:flex;align-items:center;gap:9px;background:#ffffff;border:1px solid #ede8e4;border-radius:999px;padding:11px 16px;color:#4a4a4c">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.35-4.35"></path></svg>
+              <input value="{{ query }}" onChange="{{ onSearch }}" placeholder="Search courses &amp; masters…" style="border:none;outline:none;background:transparent;font-size:13.5px;font-family:Inter,sans-serif;color:#272727;flex:1;min-width:0">
+            </div>
+            <span onClick="{{ toggleFree }}" style="flex:none;display:flex;align-items:center;font-size:12.5px;font-weight:600;padding:0 16px;border-radius:999px;cursor:pointer;border:1px solid {{ freeBorder }};background:{{ freeBg }};color:{{ freeColor }}">Free</span>
+          </div>
+          <div style="display:flex;gap:8px;overflow:auto;margin-bottom:18px;padding-bottom:2px">
+            <sc-for list="{{ pills }}" as="pill" hint-placeholder-count="4">
+              <span onClick="{{ pill.onTap }}" style="flex:none;font-size:12.5px;font-weight:500;padding:8px 15px;border-radius:999px;border:1px solid {{ pill.border }};background:{{ pill.bg }};color:{{ pill.color }};cursor:pointer">{{ pill.label }}</span>
+            </sc-for>
+          </div>
+          <sc-if value="{{ showFeatured }}" hint-placeholder-val="{{ true }}">
+            <div onClick="{{ openFeatured }}" style="border-radius:20px;overflow:hidden;position:relative;height:175px;margin-bottom:20px;cursor:pointer">
+              <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=800&amp;q=80" alt="Portrait drawing" style="width:100%;height:100%;object-fit:cover">
+              <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,rgba(31,29,27,.82));display:flex;flex-direction:column;justify-content:flex-end;padding:16px;color:#ffffff">
+                <span style="align-self:flex-start;background:rgba(252,250,247,.92);color:#9c6349;font-size:10.5px;font-weight:600;padding:4px 11px;border-radius:999px;margin-bottom:8px">Featured</span>
+                <h3 style="font-family:'Playfair Display',serif;font-weight:600;font-size:19px;margin:0 0 3px">Portrait Drawing from Scratch</h3>
+                <span style="font-size:12px;opacity:.9">Layla Hassan · 4 chapters · $49</span>
+              </div>
+            </div>
+          </sc-if>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+            <h2 style="font-family:'Playfair Display',serif;font-weight:600;font-size:18px;margin:0">{{ resultsLabel }}</h2>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <sc-for list="{{ discoverCards }}" as="c" hint-placeholder-count="3">
+              <div onClick="{{ c.onTap }}" style="background:#ffffff;border:1px solid #ede8e4;border-radius:18px;padding:12px;cursor:pointer;transition:box-shadow .2s" style-hover="box-shadow:0 12px 30px rgba(39,39,39,.10)">
+                <span style="display:block;position:relative;aspect-ratio:16/10;border-radius:12px;overflow:hidden">
+                  <span style="position:absolute;top:10px;left:10px;background:rgba(252,250,247,.92);color:#272727;font-size:11px;font-weight:600;padding:5px 10px;border-radius:999px;z-index:2">{{ c.cat }}</span>
+                  <img src="{{ c.img }}" alt="{{ c.title }}" style="width:100%;height:100%;object-fit:cover;display:block">
+                </span>
+                <span style="display:block;padding:12px 6px 6px">
+                  <span style="display:flex;align-items:center;gap:8px;font-size:12px;color:#4a4a4c;margin-bottom:6px"><span style="width:22px;height:22px;border-radius:999px;background:{{ c.grad }};display:inline-block"></span>{{ c.master }}</span>
+                  <span style="display:block;font-family:'Playfair Display',serif;font-weight:600;font-size:19px;line-height:1.25;margin-bottom:10px">{{ c.title }}</span>
+                  <span style="display:block;font-size:12px;color:#4a4a4c;margin-bottom:14px">{{ c.meta }}</span>
+                  <span style="display:flex;align-items:center;justify-content:space-between">
+                    <sc-if value="{{ c.isFree }}"><span style="background:#f2f5ea;color:#839c49;font-size:12px;font-weight:600;padding:5px 12px;border-radius:999px">Free</span></sc-if>
+                    <sc-if value="{{ c.isPriced }}"><span style="font-weight:600;font-size:16px">{{ c.priceLabel }}</span></sc-if>
+                    <span style="font-size:13px;font-weight:600;color:#9c6349">{{ c.ctaText }} &rarr;</span>
+                  </span>
+                </span>
+              </div>
+            </sc-for>
+            <sc-if value="{{ noResults }}">
+              <div style="border:1px dashed #d8cfc5;border-radius:16px;padding:24px;text-align:center;font-size:13px;color:#4a4a4c">No courses match — try clearing filters</div>
+            </sc-if>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- MASTERS TAB -->
+    <sc-if value="{{ sMasters }}">
+      <div style="position:absolute;inset:0;display:flex;flex-direction:column;padding-top:54px;background:#fcfaf7">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:11px;padding:8px 20px 12px">
+          <span style="font-family:'Playfair Display',serif;font-weight:600;font-size:21px">Al<em style="font-style:italic;color:#9c6349">marzoq</em></span>
+          <span onClick="{{ openProfile }}" style="width:38px;height:38px;border-radius:999px;background:linear-gradient(135deg,#9c6349,#839c49);border:2px solid #ffffff;box-shadow:0 2px 8px rgba(31,29,27,.16);cursor:pointer;flex:none"></span>
+        </div>
+        <div style="flex:1;overflow:auto;padding:4px 20px 110px">
+          <h1 style="font-family:'Playfair Display',serif;font-weight:600;font-size:25px;margin:2px 0 4px">Meet the <em style="font-style:italic;color:#9c6349">masters</em></h1>
+          <p style="margin:0 0 16px;font-size:13px;color:#4a4a4c">Practicing artists who teach what they do.</p>
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <sc-for list="{{ mastersList }}" as="m" hint-placeholder-count="3">
+              <div onClick="{{ m.onTap }}" style="background:#ffffff;border:1px solid #ede8e4;border-radius:18px;padding:16px;cursor:pointer;transition:box-shadow .2s" style-hover="box-shadow:0 12px 30px rgba(39,39,39,.10)">
+                <span style="display:flex;align-items:center;gap:14px">
+                  <span style="width:56px;height:56px;border-radius:16px;background:{{ m.grad }};flex:none"></span>
+                  <span style="flex:1;min-width:0">
+                    <span style="display:block;font-family:'Playfair Display',serif;font-weight:600;font-size:17px">{{ m.name }}</span>
+                    <span style="display:block;font-size:12.5px;color:#4a4a4c;margin-top:2px">{{ m.spec }}</span>
+                  </span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a09a93" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"></path></svg>
+                </span>
+                <span style="display:flex;gap:8px;margin-top:12px">
+                  <span style="font-size:11px;font-weight:600;padding:4px 11px;border-radius:999px;background:#f4ece6;color:#9c6349">{{ m.courseCount }} courses</span>
+                  <span style="font-size:11px;font-weight:600;padding:4px 11px;border-radius:999px;background:#f2f5ea;color:#839c49">{{ m.students }} students</span>
+                </span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- LEARNING -->
+    <sc-if value="{{ sLearning }}">
+      <div style="position:absolute;inset:0;display:flex;flex-direction:column;padding-top:54px;background:#fcfaf7">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:11px;padding:8px 20px 12px">
+          <span style="font-family:'Playfair Display',serif;font-weight:600;font-size:21px">Al<em style="font-style:italic;color:#9c6349">marzoq</em></span>
+          <span onClick="{{ openProfile }}" style="width:38px;height:38px;border-radius:999px;background:linear-gradient(135deg,#9c6349,#839c49);border:2px solid #ffffff;box-shadow:0 2px 8px rgba(31,29,27,.16);cursor:pointer;flex:none"></span>
+        </div>
+        <div style="flex:1;overflow:auto;padding:4px 20px 110px">
+          <h1 style="font-family:'Playfair Display',serif;font-weight:600;font-size:25px;margin:2px 0 16px">My <em style="font-style:italic;color:#9c6349">Learning</em></h1>
+          <h2 style="font-family:'Playfair Display',serif;font-weight:600;font-size:17px;margin:0 0 12px">In progress</h2>
+          <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:24px">
+            <sc-for list="{{ learningActive }}" as="c" hint-placeholder-count="2">
+              <div onClick="{{ c.onResume }}" style="display:flex;gap:12px;background:#ffffff;border:1px solid #ede8e4;border-radius:16px;padding:9px;cursor:pointer" style-hover="border-color:#d8cfc5">
+                <span style="width:88px;height:88px;border-radius:11px;overflow:hidden;flex:none"><img src="{{ c.img }}" alt="{{ c.title }}" style="width:100%;height:100%;object-fit:cover"></span>
+                <span style="flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:5px">
+                  <span style="font-size:11px;color:#9c6349;font-weight:600">{{ c.cat }}</span>
+                  <span style="font-weight:600;font-size:14px">{{ c.title }}</span>
+                  <span style="height:6px;border-radius:999px;background:#ede8e4;overflow:hidden;display:block"><span style="display:block;height:100%;background:#9c6349;width:{{ c.pctW }}"></span></span>
+                  <span style="font-size:11.5px;color:#4a4a4c">{{ c.pctLabel }}</span>
+                </span>
+              </div>
+            </sc-for>
+            <sc-if value="{{ noActive }}">
+              <div style="border:1px dashed #d8cfc5;border-radius:16px;padding:22px;text-align:center;font-size:13px;color:#4a4a4c">Nothing in progress yet — <span onClick="{{ goDiscoverTab }}" style="color:#9c6349;font-weight:600;cursor:pointer">discover courses</span></div>
+            </sc-if>
+          </div>
+          <h2 style="font-family:'Playfair Display',serif;font-weight:600;font-size:17px;margin:0 0 12px">Completed</h2>
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <sc-for list="{{ learningDone }}" as="c" hint-placeholder-count="1">
+              <div onClick="{{ c.onResume }}" style="display:flex;gap:12px;background:#ffffff;border:1px solid #ede8e4;border-radius:16px;padding:9px;cursor:pointer">
+                <span style="width:88px;height:88px;border-radius:11px;overflow:hidden;flex:none"><img src="{{ c.img }}" alt="{{ c.title }}" style="width:100%;height:100%;object-fit:cover"></span>
+                <span style="flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:5px">
+                  <span style="font-size:11px;color:#9c6349;font-weight:600">{{ c.cat }}</span>
+                  <span style="font-weight:600;font-size:14px">{{ c.title }}</span>
+                  <span style="height:6px;border-radius:999px;background:#ede8e4;overflow:hidden;display:block"><span style="display:block;height:100%;background:#839c49;width:100%"></span></span>
+                  <span style="font-size:11.5px;color:#839c49;font-weight:600">✓ Completed · Certificate ready</span>
+                </span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- PROFILE (pushed) -->
+    <sc-if value="{{ sProfile }}">
+      <div style="position:absolute;inset:0;display:flex;flex-direction:column;padding-top:50px;background:#fcfaf7;animation:fadein .25s ease;z-index:5">
+        <div style="display:flex;align-items:center;gap:12px;padding:10px 18px 14px">
+          <span onClick="{{ back }}" style="width:34px;height:34px;border-radius:999px;background:#ffffff;border:1px solid #ede8e4;display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#272727" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="{{ backGlyph }}"></path></svg></span>
+          <span style="font-family:'Playfair Display',serif;font-weight:600;font-size:18px">Profile</span>
+        </div>
+        <div style="flex:1;overflow:auto;padding:0 20px 40px">
+          <div style="display:flex;align-items:center;gap:15px;background:#ffffff;border:1px solid #ede8e4;border-radius:18px;padding:16px;margin-bottom:18px">
+            <span style="width:58px;height:58px;border-radius:999px;background:linear-gradient(135deg,#9c6349,#839c49);flex:none"></span>
+            <span style="flex:1">
+              <span style="display:block;font-family:'Playfair Display',serif;font-weight:600;font-size:18px">Sara Almarzoq</span>
+              <span style="display:block;font-size:12.5px;color:#4a4a4c">Student since 2025</span>
+            </span>
+          </div>
+          <div style="display:flex;gap:12px;margin-bottom:18px">
+            <span style="flex:1;background:#ffffff;border:1px solid #ede8e4;border-radius:16px;padding:14px;text-align:center"><span style="display:block;font-weight:700;font-size:18px">{{ statCourses }}</span><span style="display:block;font-size:11.5px;color:#4a4a4c">Courses</span></span>
+            <span style="flex:1;background:#ffffff;border:1px solid #ede8e4;border-radius:16px;padding:14px;text-align:center"><span style="display:block;font-weight:700;font-size:18px">{{ statDone }}</span><span style="display:block;font-size:11.5px;color:#4a4a4c">Completed</span></span>
+            <span style="flex:1;background:#f2f5ea;border:1px solid #e2ead0;border-radius:16px;padding:14px;text-align:center"><span style="display:block;font-weight:700;font-size:18px;color:#839c49">1</span><span style="display:block;font-size:11.5px;color:#839c49">Certificate</span></span>
+          </div>
+          <div style="background:#ffffff;border:1px solid #ede8e4;border-radius:18px;overflow:hidden;margin-bottom:18px">
+            <div onClick="{{ toggleNotif }}" style="display:flex;align-items:center;gap:12px;padding:15px 16px;border-bottom:1px solid #ede8e4;cursor:pointer">
+              <span style="font-size:14px;font-weight:500;flex:1">Notifications</span>
+              <span style="width:44px;height:26px;border-radius:999px;background:{{ notifBg }};position:relative;transition:background .2s;flex:none"><span style="position:absolute;top:3px;left:{{ notifKnob }};width:20px;height:20px;border-radius:999px;background:#ffffff;box-shadow:0 1px 4px rgba(0,0,0,.2);transition:left .2s"></span></span>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:15px 16px;border-bottom:1px solid #ede8e4;cursor:pointer;color:#272727"><span style="font-size:14px;font-weight:500;flex:1">Downloads</span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#a09a93" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"></path></svg></div>
+            <div style="display:flex;align-items:center;gap:12px;padding:15px 16px;border-bottom:1px solid #ede8e4;cursor:pointer;color:#272727"><span style="font-size:14px;font-weight:500;flex:1">Payment methods</span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#a09a93" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"></path></svg></div>
+            <div style="display:flex;align-items:center;gap:12px;padding:15px 16px;cursor:pointer;color:#272727"><span style="font-size:14px;font-weight:500;flex:1">Help &amp; support</span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#a09a93" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"></path></svg></div>
+          </div>
+          <button onClick="{{ signOut }}" style="width:100%;background:#ffffff;border:1px solid #ede8e4;border-radius:999px;padding:13px;font-size:14px;font-weight:600;font-family:Inter,sans-serif;color:#9c6349;cursor:pointer" style-hover="border-color:#9c6349">Sign out</button>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- COURSE DETAIL -->
+    <sc-if value="{{ sDetail }}">
+      <div style="position:absolute;inset:0;display:flex;flex-direction:column;background:#fcfaf7;animation:fadein .25s ease">
+        <div style="flex:1;overflow:auto;padding-bottom:104px">
+          <div style="position:relative;height:290px">
+            <img src="{{ course.img }}" alt="{{ course.title }}" style="width:100%;height:100%;object-fit:cover">
+            <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(31,29,27,.42),rgba(31,29,27,0) 45%,#fcfaf7)"></div>
+            <span onClick="{{ back }}" style="position:absolute;top:58px;left:16px;z-index:5;width:38px;height:38px;border-radius:999px;background:rgba(252,250,247,.92);display:flex;align-items:center;justify-content:center;color:#272727;cursor:pointer">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="{{ backGlyph }}"></path></svg>
+            </span>
+            <span onClick="{{ toggleLike }}" style="position:absolute;top:58px;right:16px;z-index:5;width:38px;height:38px;border-radius:999px;background:rgba(252,250,247,.92);display:flex;align-items:center;justify-content:center;cursor:pointer;color:{{ likeColor }}">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="{{ likeFill }}" stroke="currentColor" stroke-width="2"><path d="M12 21s-7.5-4.7-9.7-9A5.4 5.4 0 0 1 12 6.6 5.4 5.4 0 0 1 21.7 12c-2.2 4.3-9.7 9-9.7 9Z"></path></svg>
+            </span>
+          </div>
+          <div style="padding:0 20px;margin-top:-10px;position:relative">
+            <span style="display:inline-block;background:#f4ece6;color:#9c6349;font-size:11.5px;font-weight:600;padding:5px 12px;border-radius:999px;margin-bottom:10px">{{ course.cat }}</span>
+            <h1 style="font-family:'Playfair Display',serif;font-weight:600;font-size:25px;line-height:1.15;margin:0 0 12px">{{ course.title }}</h1>
+            <div style="display:flex;align-items:center;gap:9px;margin-bottom:16px;cursor:pointer" onClick="{{ openCourseMaster }}">
+              <span style="width:30px;height:30px;border-radius:999px;background:{{ course.grad }}"></span>
+              <span style="font-size:13px;color:#4a4a4c">By <b style="color:#272727">{{ course.master }}</b></span>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#a09a93" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"></path></svg>
+            </div>
+            <div style="display:flex;gap:22px;padding:14px 0;border-top:1px solid #ede8e4;border-bottom:1px solid #ede8e4;margin-bottom:16px">
+              <span><span style="display:block;font-weight:700;font-size:15px">{{ course.chapterCount }}</span><span style="display:block;font-size:11px;color:#4a4a4c">Chapters</span></span>
+              <span><span style="display:block;font-weight:700;font-size:15px">{{ course.duration }}</span><span style="display:block;font-size:11px;color:#4a4a4c">Duration</span></span>
+              <span><span style="display:block;font-weight:700;font-size:15px">{{ course.level }}</span><span style="display:block;font-size:11px;color:#4a4a4c">Level</span></span>
+            </div>
+            <p style="font-size:13.5px;color:#4a4a4c;line-height:1.6;margin:0 0 20px">{{ course.desc }}</p>
+            <h3 style="font-family:'Playfair Display',serif;font-weight:600;font-size:18px;margin:0 0 12px">Chapters</h3>
+            <div style="display:flex;flex-direction:column;gap:9px">
+              <sc-for list="{{ detailChapters }}" as="ch" hint-placeholder-count="4">
+                <div onClick="{{ ch.onTap }}" style="display:flex;align-items:center;gap:12px;background:#ffffff;border:1px solid #ede8e4;border-radius:13px;padding:13px 14px;cursor:pointer" style-hover="border-color:#d8cfc5">
+                  <span style="width:26px;height:26px;border-radius:999px;background:#faf5f0;color:#9c6349;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex:none">{{ ch.num }}</span>
+                  <span style="font-size:13.5px;font-weight:500;flex:1;color:{{ ch.titleColor }}">{{ ch.title }}</span>
+                  <sc-if value="{{ ch.showFree }}"><span style="font-size:10.5px;font-weight:600;color:#839c49;background:#f2f5ea;padding:3px 9px;border-radius:999px">Free</span></sc-if>
+                  <sc-if value="{{ ch.showLock }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a09a93" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg></sc-if>
+                  <sc-if value="{{ ch.showDone }}"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#839c49" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="m8 12 3 3 5-6"></path></svg></sc-if>
+                  <sc-if value="{{ ch.showPlay }}"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9c6349" stroke-width="2"><circle cx="12" cy="12" r="9"></circle><path d="M10 8l6 4-6 4z" fill="#9c6349"></path></svg></sc-if>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+        <div style="position:absolute;left:0;right:0;bottom:0;background:#ffffff;border-top:1px solid #ede8e4;padding:14px 20px 30px;display:flex;align-items:center;gap:14px;z-index:20">
+          <span style="font-family:'Playfair Display',serif;font-weight:600;font-size:22px">{{ course.priceBig }}<span style="display:block;font-family:Inter,sans-serif;font-size:11px;color:#4a4a4c;font-weight:500">{{ course.priceSub }}</span></span>
+          <button onClick="{{ ctaTap }}" style="margin-left:auto;background:{{ ctaBg }};color:#ffffff;border:none;border-radius:999px;padding:14px 28px;font-size:15px;font-weight:600;font-family:Inter,sans-serif;cursor:pointer">{{ ctaLabel }}</button>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- CHECKOUT -->
+    <sc-if value="{{ sCheckout }}">
+      <div style="position:absolute;inset:0;display:flex;flex-direction:column;padding-top:50px;background:#fcfaf7;animation:fadein .25s ease">
+        <div style="display:flex;align-items:center;gap:12px;padding:10px 18px 14px;border-bottom:1px solid #ede8e4">
+          <span onClick="{{ back }}" style="width:34px;height:34px;border-radius:999px;background:#ffffff;border:1px solid #ede8e4;display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#272727" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="{{ backGlyph }}"></path></svg></span>
+          <span style="font-family:'Playfair Display',serif;font-weight:600;font-size:18px">Checkout</span>
+        </div>
+        <div style="flex:1;overflow:auto;padding:18px 20px 120px">
+          <div style="display:flex;gap:12px;background:#ffffff;border:1px solid #ede8e4;border-radius:16px;padding:10px;margin-bottom:20px">
+            <span style="width:64px;height:64px;border-radius:10px;overflow:hidden;flex:none"><img src="{{ course.img }}" alt="{{ course.title }}" style="width:100%;height:100%;object-fit:cover"></span>
+            <span style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:2px">
+              <span style="font-weight:600;font-size:14px">{{ course.title }}</span>
+              <span style="font-size:12px;color:#4a4a4c">{{ course.master }} · lifetime access</span>
+            </span>
+            <span style="align-self:center;font-family:'Playfair Display',serif;font-weight:600;font-size:18px">{{ course.priceBig }}</span>
+          </div>
+          <h3 style="font-family:'Playfair Display',serif;font-weight:600;font-size:16px;margin:0 0 10px">Payment method</h3>
+          <div style="display:flex;flex-direction:column;gap:9px;margin-bottom:20px">
+            <div onClick="{{ pickCard }}" style="display:flex;align-items:center;gap:12px;background:#ffffff;border:1.5px solid {{ cardBorder }};border-radius:14px;padding:14px 15px;cursor:pointer">
+              <span style="width:18px;height:18px;border-radius:999px;border:2px solid {{ cardDot }};display:flex;align-items:center;justify-content:center"><sc-if value="{{ pmCard }}"><span style="width:9px;height:9px;border-radius:999px;background:#9c6349"></span></sc-if></span>
+              <span style="font-size:13.5px;font-weight:600;flex:1">Credit / debit card</span>
+              <svg width="24" height="16" viewBox="0 0 24 16" fill="none"><rect x="0.5" y="0.5" width="23" height="15" rx="2.5" stroke="#d8cfc5"></rect><rect x="3" y="4" width="6" height="4" rx="1" fill="#cf9d6f"></rect><rect x="3" y="10" width="10" height="2" rx="1" fill="#ede8e4"></rect></svg>
+            </div>
+            <div onClick="{{ pickNative }}" style="display:flex;align-items:center;gap:12px;background:#ffffff;border:1.5px solid {{ nativeBorder }};border-radius:14px;padding:14px 15px;cursor:pointer">
+              <span style="width:18px;height:18px;border-radius:999px;border:2px solid {{ nativeDot }};display:flex;align-items:center;justify-content:center"><sc-if value="{{ pmNative }}"><span style="width:9px;height:9px;border-radius:999px;background:#9c6349"></span></sc-if></span>
+              <span style="font-size:13.5px;font-weight:600;flex:1">{{ nativePayLabel }}</span>
+              <span style="font-size:15px;font-weight:700;color:#272727">{{ nativePayGlyph }}</span>
+            </div>
+          </div>
+          <sc-if value="{{ pmCard }}">
+            <div style="display:flex;flex-direction:column;gap:11px">
+              <input placeholder="Name on card" style="background:#ffffff;border:1px solid #ede8e4;border-radius:13px;padding:13px 15px;font-size:13.5px;font-family:Inter,sans-serif;color:#272727;outline:none" style-focus="border-color:#9c6349">
+              <input placeholder="Card number" style="background:#ffffff;border:1px solid #ede8e4;border-radius:13px;padding:13px 15px;font-size:13.5px;font-family:Inter,sans-serif;color:#272727;outline:none" style-focus="border-color:#9c6349">
+              <div style="display:flex;gap:11px">
+                <input placeholder="MM / YY" style="flex:1;min-width:0;background:#ffffff;border:1px solid #ede8e4;border-radius:13px;padding:13px 15px;font-size:13.5px;font-family:Inter,sans-serif;color:#272727;outline:none" style-focus="border-color:#9c6349">
+                <input placeholder="CVC" style="flex:1;min-width:0;background:#ffffff;border:1px solid #ede8e4;border-radius:13px;padding:13px 15px;font-size:13.5px;font-family:Inter,sans-serif;color:#272727;outline:none" style-focus="border-color:#9c6349">
+              </div>
+            </div>
+          </sc-if>
+        </div>
+        <div style="position:absolute;left:0;right:0;bottom:0;background:#ffffff;border-top:1px solid #ede8e4;padding:14px 20px 30px;z-index:20">
+          <button onClick="{{ pay }}" style="width:100%;background:#272727;color:#ffffff;border:none;border-radius:999px;padding:15px;font-size:15px;font-weight:600;font-family:Inter,sans-serif;cursor:pointer">{{ payLabel }}</button>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- SUCCESS -->
+    <sc-if value="{{ sSuccess }}">
+      <div style="position:absolute;inset:0;background:#fcfaf7;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 34px;z-index:5;animation:fadein .3s ease;text-align:center">
+        <span style="width:84px;height:84px;border-radius:999px;background:#f2f5ea;display:flex;align-items:center;justify-content:center;margin-bottom:22px"><svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#839c49" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4 10-11"></path></svg></span>
+        <h1 style="font-family:'Playfair Display',serif;font-weight:600;font-size:26px;margin:0 0 8px">You're <em style="font-style:italic;color:#9c6349">enrolled</em></h1>
+        <p style="font-size:14px;color:#4a4a4c;line-height:1.6;margin:0 0 30px">{{ course.title }} is now in My Learning, with lifetime access and a certificate on completion.</p>
+        <button onClick="{{ startLearning }}" style="width:100%;background:#9c6349;color:#ffffff;border:none;border-radius:999px;padding:15px;font-size:15px;font-weight:600;font-family:Inter,sans-serif;cursor:pointer" style-hover="background:#b47a5f">Start learning</button>
+        <span onClick="{{ goLearningTab }}" style="margin-top:16px;font-size:13.5px;color:#9c6349;font-weight:600;cursor:pointer">Go to My Learning</span>
+      </div>
+    </sc-if>
+
+    <!-- PLAYER -->
+    <sc-if value="{{ sPlayer }}">
+      <div style="position:absolute;inset:0;display:flex;flex-direction:column;padding-top:50px;background:#fcfaf7;animation:fadein .25s ease">
+        <div style="display:flex;align-items:center;gap:12px;padding:10px 18px 12px;background:#fcfaf7">
+          <span onClick="{{ back }}" style="width:34px;height:34px;border-radius:999px;background:#ffffff;border:1px solid #ede8e4;display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#272727" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="{{ backGlyph }}"></path></svg></span>
+          <span style="font-family:'Playfair Display',serif;font-weight:600;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ course.title }}</span>
+        </div>
+        <div style="flex:1;overflow:auto;padding-bottom:40px">
+          <div onClick="{{ togglePlay }}" style="aspect-ratio:16/9;position:relative;background:#26231f;cursor:pointer">
+            <img src="{{ course.img }}" alt="" style="width:100%;height:100%;object-fit:cover;opacity:{{ videoOpacity }}">
+            <span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center"><span style="width:58px;height:58px;border-radius:999px;background:rgba(252,250,247,.92);display:flex;align-items:center;justify-content:center;color:#9c6349;font-size:20px">{{ playGlyph }}</span></span>
+            <span style="position:absolute;left:14px;right:14px;bottom:12px;display:flex;align-items:center;gap:10px;color:#ffffff;font-size:10.5px"><span>4:12</span><span style="flex:1;height:4px;border-radius:999px;background:rgba(255,255,255,.3);overflow:hidden"><span style="display:block;height:100%;width:38%;background:#cf9d6f"></span></span><span>{{ chapterLen }}</span></span>
+          </div>
+          <div style="padding:16px 20px">
+            <h2 style="font-family:'Playfair Display',serif;font-weight:600;font-size:21px;margin:0 0 5px">{{ chapterTitle }}</h2>
+            <p style="font-size:12.5px;color:#4a4a4c;margin:0 0 14px">{{ chapterMeta }}</p>
+            <button onClick="{{ markDone }}" style="width:100%;background:{{ markBg }};color:{{ markColor }};border:1px solid {{ markBorder }};border-radius:999px;padding:13px;font-size:14px;font-weight:600;font-family:Inter,sans-serif;cursor:pointer;margin-bottom:16px">{{ markLabel }}</button>
+            <div style="height:7px;border-radius:999px;background:#ede8e4;overflow:hidden"><span style="display:block;height:100%;background:#9c6349;width:{{ coursePctW }};transition:width .3s"></span></div>
+            <p style="font-size:12px;color:#4a4a4c;margin:7px 0 20px">Course progress · {{ coursePct }}</p>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+              <h3 style="font-family:'Playfair Display',serif;font-weight:600;font-size:17px;margin:0">Up next</h3>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <sc-for list="{{ playerChapters }}" as="ch" hint-placeholder-count="4">
+                <div onClick="{{ ch.onTap }}" style="display:flex;align-items:center;gap:11px;border:1px solid {{ ch.border }};background:{{ ch.bg }};color:{{ ch.color }};border-radius:12px;padding:11px 13px;font-size:13px;font-weight:{{ ch.weight }};cursor:pointer">
+                  <sc-if value="{{ ch.showDone }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="m8 12 3 3 5-6"></path></svg></sc-if>
+                  <sc-if value="{{ ch.showPlay }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"></circle><path d="M10 8l6 4-6 4z" fill="currentColor"></path></svg></sc-if>
+                  <sc-if value="{{ ch.showLock }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg></sc-if>
+                  <span style="flex:1">{{ ch.title }}</span>
+                  <span style="font-size:11px;opacity:.75">{{ ch.len }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- MASTER PROFILE -->
+    <sc-if value="{{ sMaster }}">
+      <div style="position:absolute;inset:0;display:flex;flex-direction:column;background:#fcfaf7;animation:fadein .25s ease">
+        <div style="flex:1;overflow:auto;padding-bottom:40px">
+          <div style="position:relative;height:150px;background:linear-gradient(110deg,#b47a5f,#f2f5ea 70%,#faf5f0)">
+            <span onClick="{{ back }}" style="position:absolute;top:58px;left:16px;width:38px;height:38px;border-radius:999px;background:rgba(252,250,247,.92);display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#272727" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="{{ backGlyph }}"></path></svg></span>
+          </div>
+          <div style="padding:0 20px;margin-top:-42px">
+            <span style="display:block;width:88px;height:88px;border-radius:22px;background:{{ master.grad }};border:4px solid #ffffff;box-shadow:0 6px 18px rgba(0,0,0,.12);margin-bottom:12px"></span>
+            <div style="display:flex;gap:8px;margin-bottom:10px">
+              <span style="font-size:11px;font-weight:600;padding:4px 11px;border-radius:999px;background:#faf5f0;color:#4a4a4c;border:1px solid #ede8e4">Master</span>
+              <span style="font-size:11px;font-weight:600;padding:4px 11px;border-radius:999px;background:#f4ece6;color:#9c6349">{{ master.courseCount }} courses</span>
+              <span style="font-size:11px;font-weight:600;padding:4px 11px;border-radius:999px;background:#f2f5ea;color:#839c49">{{ master.students }} students</span>
+            </div>
+            <h1 style="font-family:'Playfair Display',serif;font-weight:600;font-size:24px;margin:0 0 3px">{{ master.name }}</h1>
+            <p style="font-size:13px;color:#4a4a4c;margin:0 0 18px">{{ master.spec }}</p>
+            <h2 style="font-family:'Playfair Display',serif;font-weight:600;font-size:17px;margin:0 0 8px">About</h2>
+            <p style="font-size:13.5px;color:#4a4a4c;line-height:1.6;margin:0 0 22px">{{ master.bio }}</p>
+            <h2 style="font-family:'Playfair Display',serif;font-weight:600;font-size:17px;margin:0 0 12px">Courses by {{ master.first }}</h2>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+              <sc-for list="{{ masterCourses }}" as="c" hint-placeholder-count="2">
+                <div onClick="{{ c.onTap }}" style="background:#ffffff;border:1px solid #ede8e4;border-radius:14px;padding:8px;cursor:pointer" style-hover="border-color:#d8cfc5">
+                  <span style="display:block;aspect-ratio:16/10;border-radius:9px;overflow:hidden"><img src="{{ c.img }}" alt="{{ c.title }}" style="width:100%;height:100%;object-fit:cover"></span>
+                  <span style="display:block;font-weight:600;font-size:13px;margin:8px 3px 3px">{{ c.title }}</span>
+                  <span style="display:block;font-size:12.5px;font-weight:600;margin:0 3px 4px;color:{{ c.priceColor }}">{{ c.priceLabel }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- TAB BAR -->
+    <sc-if value="{{ showTabs }}" hint-placeholder-val="{{ true }}">
+      <div style="position:absolute;left:0;right:0;bottom:0;background:#ffffff;border-top:1px solid #ede8e4;display:flex;justify-content:space-around;padding:9px 8px 24px;z-index:25">
+        <sc-for list="{{ tabs }}" as="tab" hint-placeholder-count="3">
+          <div onClick="{{ tab.onTap }}" style="display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10.5px;font-weight:600;cursor:pointer;color:{{ tab.color }};min-width:72px">
+            <span style="display:flex;align-items:center;justify-content:center;width:56px;height:29px;border-radius:999px;background:{{ tab.pillBg }};transition:background .2s">
+              <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="{{ tab.icon }}"></path></svg>
+            </span>
+            {{ tab.label }}
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+
+    <!-- TOAST -->
+    <sc-if value="{{ hasToast }}">
+      <div style="position:absolute;bottom:104px;left:50%;transform:translateX(-50%);background:#272727;color:#fcfaf7;font-size:12.5px;font-weight:500;padding:10px 18px;border-radius:999px;z-index:60;white-space:nowrap;animation:toastup .25s ease;box-shadow:0 8px 24px rgba(0,0,0,.25)">{{ toast }}</div>
+    </sc-if>
+
+    <!-- gesture bar -->
+    <sc-if value="{{ isIOS }}" hint-placeholder-val="{{ true }}">
+      <span style="position:absolute;bottom:7px;left:50%;transform:translateX(-50%);width:132px;height:5px;border-radius:999px;background:#1f1d1b;opacity:.32;z-index:50;pointer-events:none"></span>
+    </sc-if>
+    <sc-if value="{{ isAndroid }}">
+      <span style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:88px;height:4px;border-radius:999px;background:#1f1d1b;opacity:.32;z-index:50;pointer-events:none"></span>
+    </sc-if>
+  </div>
+  <p style="margin:0;font-size:12.5px;color:#4a4a4c">{{ platformCaption }} · tap through — every screen is wired</p>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 520, &quot;height&quot;: 960}, &quot;platform&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;ios&quot;, &quot;android&quot;], &quot;default&quot;: &quot;ios&quot;, &quot;tsType&quot;: &quot;'ios' | 'android'&quot;, &quot;section&quot;: &quot;Prototype&quot;}, &quot;startSignedIn&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: false, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Prototype&quot;}}">
+const IMG = {
+  portrait: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=800&q=80',
+  gesture: 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=600&q=80',
+  watercolor: 'https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=600&q=80',
+  penink: 'https://images.unsplash.com/photo-1607457561901-e6ec3a6d16cf?w=600&q=80'
+};
+const COURSES = {
+  portrait: { id: 'portrait', title: 'Portrait Drawing from Scratch', master: 'Layla Hassan', masterId: 'layla', cat: 'Drawing', price: 49, img: IMG.portrait, duration: '1h 50m', level: 'Beginner', grad: 'linear-gradient(135deg,#9c6349,#839c49)',
+    desc: 'Learn to draw lifelike portraits step by step — from construction and proportion to shading and likeness. Includes downloadable reference sheets.',
+    chapters: [ {t:'Proportions of the head', free:true, len:'12 min'}, {t:'Placing the features', free:true, len:'14 min'}, {t:'Shading the form', len:'18 min'}, {t:'Building likeness', len:'16 min'} ] },
+  gesture: { id: 'gesture', title: 'Gesture & Line Fundamentals', master: 'Omar Farouk', masterId: 'omar', cat: 'Sketching', price: 0, img: IMG.gesture, duration: '1h 10m', level: 'Beginner', grad: 'linear-gradient(135deg,#839c49,#b47a5f)',
+    desc: 'Loosen up your hand and learn to capture energy and movement with confident, economical lines.',
+    chapters: [ {t:'Warming up the hand', free:true, len:'10 min'}, {t:'Gesture in 60 seconds', free:true, len:'15 min'}, {t:'Line weight & rhythm', free:true, len:'14 min'} ] },
+  watercolor: { id: 'watercolor', title: 'Loose Watercolor Landscapes', master: 'Noura Al-Sayed', masterId: 'noura', cat: 'Watercolor', price: 39, img: IMG.watercolor, duration: '1h 30m', level: 'Intermediate', grad: 'linear-gradient(135deg,#b47a5f,#9c6349)',
+    desc: 'Paint atmospheric landscapes with a loose, expressive touch — washes, edges, and knowing when to stop.',
+    chapters: [ {t:'Materials & washes', free:true, len:'11 min'}, {t:'Skies & atmosphere', len:'16 min'}, {t:'A complete landscape', len:'22 min'} ] },
+  penink: { id: 'penink', title: 'Pen & Ink Mastery', master: 'Omar Farouk', masterId: 'omar', cat: 'Inking', price: 29, img: IMG.penink, duration: '55m', level: 'Intermediate', grad: 'linear-gradient(135deg,#839c49,#b47a5f)',
+    desc: 'Hatching, cross-hatching and stippling — build value and texture with nothing but ink.',
+    chapters: [ {t:'Hatching systems', free:true, len:'14 min'}, {t:'Texture & stippling', len:'18 min'} ] }
+};
+const MASTERS = {
+  layla: { id:'layla', name:'Layla Hassan', first:'Layla', spec:'Portrait & figure drawing specialist', students:'1,240', grad:'linear-gradient(135deg,#9c6349,#839c49)',
+    bio:'Layla has taught classical drawing for over a decade, blending academic rigour with a warm, encouraging studio approach. Her courses focus on seeing accurately and drawing with confidence.' },
+  omar: { id:'omar', name:'Omar Farouk', first:'Omar', spec:'Gesture, sketching & ink', students:'860', grad:'linear-gradient(135deg,#839c49,#b47a5f)',
+    bio:'Omar is an illustrator and urban sketcher who believes drawing should feel like play. He teaches economy of line — saying more with fewer strokes.' },
+  noura: { id:'noura', name:'Noura Al-Sayed', first:'Noura', spec:'Loose watercolor landscapes', students:'540', grad:'linear-gradient(135deg,#b47a5f,#9c6349)',
+    bio:'Noura paints en plein air across the Gulf coast. Her teaching is about embracing the unpredictability of water and pigment.' }
+};
+const CATS = ['All', 'Drawing', 'Sketching', 'Watercolor', 'Inking'];
+const TAB_ICONS = {
+  masters: 'M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2M10 3a4 4 0 1 0 0 8 4 4 0 0 0 0-8zM21 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75',
+  discover: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM15.5 8.5l-2 5-5 2 2-5z',
+  learning: 'M4 19.5A2.5 2.5 0 0 1 6.5 17H20M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z'
+};
+
+class Component extends DCLogic {
+  state = { screen:'', platform:'', authMode:'signin', cat:'All', query:'', freeOnly:false, courseId:'portrait', masterId:'layla', chIdx:0,
+    enrolled:{watercolor:true, penink:true}, done:{watercolor:[0], penink:[0,1]}, stack:[], toast:'', notif:true, playing:false, liked:{}, pm:'card' };
+
+  cur() { return this.state.screen || (this.props.startSignedIn ? 'discover' : 'auth'); }
+  isTab(s) { return ['masters','discover','learning'].includes(s); }
+  go(s) { this.setState(st => ({ screen:s, stack:[...st.stack, this.cur()] })); }
+  back = () => { this.setState(st => {
+    const stack = [...st.stack];
+    const prev = stack.pop() || 'discover';
+    return { screen: prev, stack };
+  }); };
+  setTab(t) { this.setState({ screen:t, stack:[] }); }
+  showToast(msg) {
+    clearTimeout(this._tt);
+    this.setState({ toast: msg });
+    this._tt = setTimeout(() => this.setState({ toast:'' }), 1900);
+  }
+  openCourse(id) { this.setState({ courseId:id }); this.go('detail'); }
+  openMaster(id) { this.setState({ masterId:id }); this.go('master'); }
+  openChapter(i) {
+    const c = COURSES[this.state.courseId];
+    const ch = c.chapters[i];
+    if (!ch.free && !this.state.enrolled[c.id]) { this.showToast('Enroll to unlock this chapter'); return; }
+    this.setState({ chIdx:i, playing:false });
+    if (this.cur() !== 'player') this.go('player');
+  }
+  enroll = () => {
+    const c = COURSES[this.state.courseId];
+    if (this.state.enrolled[c.id]) { this.setState({ chIdx: this.nextChapter(c.id), playing:false }); this.go('player'); return; }
+    if (c.price > 0) { this.go('checkout'); return; }
+    this.setState(st => ({ enrolled:{...st.enrolled, [c.id]:true} }));
+    this.showToast('Enrolled — it\u2019s free');
+  };
+  nextChapter(id) {
+    const done = this.state.done[id] || [];
+    const chs = COURSES[id].chapters;
+    for (let i = 0; i < chs.length; i++) if (!done.includes(i)) return i;
+    return 0;
+  }
+  pct(id) {
+    const done = (this.state.done[id] || []).length;
+    return Math.round(done / COURSES[id].chapters.length * 100);
+  }
+
+  renderVals() {
+    const st = this.state;
+    const screen = this.cur();
+    const platform = st.platform || this.props.platform || 'ios';
+    const isIOS = platform === 'ios';
+    const course = COURSES[st.courseId];
+    const master = MASTERS[st.masterId];
+    const enrolled = !!st.enrolled[course.id];
+    const doneArr = st.done[course.id] || [];
+    const chDone = doneArr.includes(st.chIdx);
+    const q = st.query.trim().toLowerCase();
+
+    const decorate = c => ({ ...c,
+      priceLabel: c.price ? '$' + c.price : 'Free',
+      priceColor: c.price ? '#272727' : '#839c49',
+      isFree: !c.price, isPriced: !!c.price,
+      meta: c.chapters.length + ' chapters · ' + c.duration,
+      ctaText: st.enrolled[c.id] ? 'Continue' : (c.price ? 'View course' : 'Start now'),
+      onTap: () => this.openCourse(c.id) });
+    const allCourses = Object.values(COURSES).map(decorate);
+    let filtered = st.cat === 'All' ? allCourses : allCourses.filter(c => c.cat === st.cat);
+    if (st.freeOnly) filtered = filtered.filter(c => !c.price);
+    if (q) filtered = filtered.filter(c => c.title.toLowerCase().includes(q) || c.master.toLowerCase().includes(q));
+    const filtering = q || st.freeOnly || st.cat !== 'All';
+
+    const flags = {};
+    ['auth','discover','masters','learning','profile','detail','checkout','success','player','master'].forEach(s => {
+      flags['s' + s[0].toUpperCase() + s.slice(1)] = screen === s;
+    });
+
+    return {
+      ...flags,
+      isIOS, isAndroid: !isIOS,
+      setIos: () => this.setState({ platform:'ios' }),
+      setAndroid: () => this.setState({ platform:'android' }),
+      segIosBg: isIOS ? '#272727' : 'transparent', segIosColor: isIOS ? '#fcfaf7' : '#4a4a4c',
+      segAndBg: isIOS ? 'transparent' : '#272727', segAndColor: isIOS ? '#4a4a4c' : '#fcfaf7',
+      frameRadius: isIOS ? '52px' : '38px',
+      statusColor: screen === 'detail' || screen === 'master' ? '#ffffff' : '#272727',
+      backGlyph: isIOS ? 'M14.5 5.5 8 12l6.5 6.5' : 'M19 12H5M11 18l-6-6 6-6',
+      platformCaption: isIOS ? 'iOS · Dynamic Island, chevron back' : 'Android · punch-hole, Material back arrow',
+
+      authTitle: st.authMode === 'signin' ? 'Welcome back' : 'Create your account',
+      authCta: st.authMode === 'signin' ? 'Sign in' : 'Create account',
+      socialCta: isIOS ? 'Continue with Apple' : 'Continue with Google',
+      isSignup: st.authMode === 'signup',
+      authSwitchLabel: st.authMode === 'signin' ? 'New to Almarzoq?' : 'Already have an account?',
+      authSwitchAction: st.authMode === 'signin' ? 'Create account' : 'Sign in',
+      toggleAuth: () => this.setState({ authMode: st.authMode === 'signin' ? 'signup' : 'signin' }),
+      signIn: () => this.setState({ screen:'discover', stack:[] }),
+      signOut: () => this.setState({ screen:'auth', stack:[], authMode:'signin' }),
+
+      openProfile: () => this.go('profile'),
+
+      pills: CATS.map(cat => ({ label: cat,
+        bg: st.cat === cat ? '#9c6349' : '#ffffff', color: st.cat === cat ? '#ffffff' : '#4a4a4c',
+        border: st.cat === cat ? '#9c6349' : '#ede8e4', onTap: () => this.setState({ cat }) })),
+      toggleFree: () => this.setState({ freeOnly: !st.freeOnly }),
+      freeBg: st.freeOnly ? '#f2f5ea' : '#ffffff',
+      freeColor: st.freeOnly ? '#839c49' : '#4a4a4c',
+      freeBorder: st.freeOnly ? '#839c49' : '#ede8e4',
+      discoverCards: filtered,
+      noResults: filtered.length === 0,
+      showFeatured: !filtering,
+      resultsLabel: filtering ? (filtered.length + ' course' + (filtered.length === 1 ? '' : 's')) : 'Popular now',
+      openFeatured: () => this.openCourse('portrait'),
+      goDiscoverTab: () => this.setTab('discover'),
+      goLearningTab: () => this.setTab('learning'),
+
+      query: st.query,
+      onSearch: e => this.setState({ query: e.target.value }),
+      mastersList: Object.values(MASTERS).map(m => ({ ...m,
+        courseCount: Object.values(COURSES).filter(c => c.masterId === m.id).length,
+        onTap: () => this.openMaster(m.id) })),
+
+      learningActive: Object.keys(st.enrolled).filter(id => st.enrolled[id] && this.pct(id) < 100).map(id => {
+        const c = decorate(COURSES[id]);
+        const p = this.pct(id);
+        return { ...c, pctW: p + '%', pctLabel: p + '% · Chapter ' + (this.nextChapter(id) + 1) + ' of ' + COURSES[id].chapters.length,
+          onResume: () => { this.setState({ courseId:id, chIdx:this.nextChapter(id), playing:false }); this.go('player'); } };
+      }),
+      learningDone: Object.keys(st.enrolled).filter(id => st.enrolled[id] && this.pct(id) === 100).map(id => {
+        const c = decorate(COURSES[id]);
+        return { ...c, onResume: () => { this.setState({ courseId:id, chIdx:0, playing:false }); this.go('player'); } };
+      }),
+      noActive: Object.keys(st.enrolled).filter(id => st.enrolled[id] && this.pct(id) < 100).length === 0,
+
+      statCourses: Object.keys(st.enrolled).filter(id => st.enrolled[id]).length,
+      statDone: Object.keys(st.enrolled).filter(id => st.enrolled[id] && this.pct(id) === 100).length,
+      toggleNotif: () => this.setState({ notif: !st.notif }),
+      notifBg: st.notif ? '#839c49' : '#d8cfc5',
+      notifKnob: st.notif ? '21px' : '3px',
+
+      course: { ...course,
+        chapterCount: course.chapters.length,
+        priceBig: course.price ? '$' + course.price : 'Free',
+        priceSub: course.price ? 'one-time' : 'no payment needed' },
+      openCourseMaster: () => this.openMaster(course.masterId),
+      toggleLike: () => this.setState(s => ({ liked: { ...s.liked, [course.id]: !s.liked[course.id] } })),
+      likeColor: st.liked[course.id] ? '#9c6349' : '#272727',
+      likeFill: st.liked[course.id] ? '#9c6349' : 'none',
+      detailChapters: course.chapters.map((ch, i) => {
+        const locked = !ch.free && !enrolled;
+        const isDone = doneArr.includes(i);
+        return { num: i + 1, title: ch.t, titleColor: locked ? '#a09a93' : '#272727',
+          showFree: ch.free && !enrolled, showLock: locked, showDone: isDone && !locked,
+          showPlay: !locked && !isDone && !(ch.free && !enrolled),
+          onTap: () => this.openChapter(i) };
+      }),
+      ctaLabel: enrolled ? 'Continue learning' : (course.price ? 'Enroll now' : 'Enroll — free'),
+      ctaBg: enrolled ? '#839c49' : '#9c6349',
+      ctaTap: this.enroll,
+      back: this.back,
+
+      pmCard: st.pm === 'card', pmNative: st.pm === 'native',
+      pickCard: () => this.setState({ pm:'card' }),
+      pickNative: () => this.setState({ pm:'native' }),
+      cardBorder: st.pm === 'card' ? '#9c6349' : '#ede8e4',
+      cardDot: st.pm === 'card' ? '#9c6349' : '#d8cfc5',
+      nativeBorder: st.pm === 'native' ? '#9c6349' : '#ede8e4',
+      nativeDot: st.pm === 'native' ? '#9c6349' : '#d8cfc5',
+      nativePayLabel: isIOS ? 'Apple Pay' : 'Google Pay',
+      nativePayGlyph: isIOS ? '\uF8FF Pay' : 'G Pay',
+      payLabel: (st.pm === 'native' ? (isIOS ? 'Pay with Apple Pay' : 'Pay with Google Pay') : 'Pay') + ' · $' + course.price,
+      pay: () => {
+        this.setState(s => ({ enrolled: { ...s.enrolled, [course.id]: true }, screen:'success', stack:['discover','detail'] }));
+      },
+      startLearning: () => { this.setState({ chIdx: this.nextChapter(course.id), playing:false }); this.go('player'); },
+
+      chapterTitle: course.chapters[st.chIdx].t,
+      chapterMeta: 'Chapter ' + (st.chIdx + 1) + ' of ' + course.chapters.length + ' · ' + course.chapters[st.chIdx].len,
+      chapterLen: course.chapters[st.chIdx].len.replace(' min', ':00'),
+      togglePlay: () => this.setState({ playing: !st.playing }),
+      playGlyph: st.playing ? '\u275A\u275A' : '\u25B6',
+      videoOpacity: st.playing ? '0.95' : '0.7',
+      markDone: () => this.setState(s => {
+        const cur = s.done[course.id] || [];
+        const done = chDone ? cur.filter(x => x !== s.chIdx) : [...cur, s.chIdx];
+        return { done: { ...s.done, [course.id]: done } };
+      }),
+      markLabel: chDone ? 'Completed \u2713' : 'Mark as complete',
+      markBg: chDone ? '#839c49' : '#ffffff', markColor: chDone ? '#ffffff' : '#272727',
+      markBorder: chDone ? '#839c49' : '#d8cfc5',
+      coursePct: this.pct(course.id) + '%', coursePctW: this.pct(course.id) + '%',
+      playerChapters: course.chapters.map((ch, i) => {
+        const locked = !ch.free && !enrolled;
+        const isDone = doneArr.includes(i);
+        const active = i === st.chIdx;
+        return { title: ch.t, len: ch.len,
+          bg: active ? '#9c6349' : '#ffffff',
+          color: active ? '#ffffff' : (locked ? '#a09a93' : (isDone ? '#839c49' : '#4a4a4c')),
+          border: active ? '#9c6349' : '#ede8e4',
+          weight: active ? '600' : '500',
+          showDone: isDone && !active, showLock: locked && !active, showPlay: active || (!isDone && !locked),
+          onTap: () => this.openChapter(i) };
+      }),
+
+      master: { ...master, courseCount: Object.values(COURSES).filter(c => c.masterId === master.id).length },
+      masterCourses: Object.values(COURSES).filter(c => c.masterId === master.id).map(decorate),
+
+      showTabs: this.isTab(screen),
+      tabs: [ ['masters','Masters'], ['discover','Discover'], ['learning','My Learning'] ].map(([id, label]) => ({
+        label, icon: TAB_ICONS[id],
+        color: screen === id ? '#9c6349' : '#4a4a4c',
+        pillBg: screen === id && !isIOS ? '#f4ece6' : 'transparent',
+        onTap: () => this.setTab(id) })),
+
+      toast: st.toast, hasToast: !!st.toast
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,9 +1,11 @@
 import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 import { z } from "zod";
 import { db } from "@/lib/db";
 import { hashPassword } from "@/lib/auth";
 import { createVerificationToken } from "@/lib/tokens";
 import { sendVerificationEmail } from "@/lib/email";
+import { addCorsHeaders, handleCorsPreFlight } from "@/lib/cors";
 
 const signUpSchema = z.object({
   name: z.string().trim().min(1, "Name is required").max(100),
@@ -11,7 +13,12 @@ const signUpSchema = z.object({
   password: z.string().min(8, "Password must be at least 8 characters"),
 });
 
-export async function POST(req: Request) {
+export async function OPTIONS(req: NextRequest) {
+  return handleCorsPreFlight(req.headers.get("origin") || undefined);
+}
+
+export async function POST(req: NextRequest) {
+  const respond = async (): Promise<NextResponse> => {
   try {
     const body = await req.json();
     const parsed = signUpSchema.safeParse(body);
@@ -50,4 +57,7 @@ export async function POST(req: Request) {
     console.error("[AUTH_SIGN_UP]", error);
     return new NextResponse("Internal Server Error", { status: 500 });
   }
+  };
+
+  return addCorsHeaders(await respond(), req);
 }

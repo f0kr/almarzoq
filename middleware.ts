@@ -18,6 +18,9 @@ const publicRoutes = [
   "/masters(.*)",
   "/opengraph-image.jpg",
   "/api/mobile/home",
+  "/api/mobile/categories(.*)",
+  "/api/mobile/masters(.*)",
+  "/api/mobile/courses(.*)",
 ];
 
 const publicMatchers = publicRoutes.map(
