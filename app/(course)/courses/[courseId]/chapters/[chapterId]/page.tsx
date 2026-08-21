@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getChapter } from "@/actions/getChapter";
 import { db } from "@/lib/db";
+import { chapterOgImageUrl, plainText, truncate } from "@/lib/og";
 import { Banner } from "@/components/Banner";
 import { IconBadge } from "@/components/IconBadge";
 import { auth } from "@/lib/auth";
@@ -53,23 +54,61 @@ export async function generateMetadata({
 
   const chapter = await db.chapter.findFirst({
     where: { id: chapterId, courseId, isPublished: true },
-    select: { title: true, isFree: true, course: { select: { title: true } } },
+    select: {
+      title: true,
+      description: true,
+      isFree: true,
+      updatedAt: true,
+      course: { select: { title: true } },
+    },
   });
 
   if (!chapter) {
     return { title: "Lesson not found", robots: { index: false, follow: false } };
   }
 
+  const title = `${chapter.title.trim()} — ${chapter.course.title.trim()}`;
+  const summary = plainText(chapter.description);
+  const description = summary
+    ? truncate(summary, 155)
+    : `${chapter.title} — a lesson from ${chapter.course.title} at Almrzoq Academy.`;
+
+  // Indexing and sharing are separate concerns: a locked lesson stays out of
+  // the index (below), but a link pasted into a chat still deserves a proper
+  // card, and a single frame of a paid lesson is a preview, not a leak.
+  const images = [
+    {
+      url: chapterOgImageUrl(chapterId, chapter.updatedAt),
+      width: 1200,
+      height: 630,
+      alt: title,
+    },
+  ];
+
   // Locked lessons are gated video with no public content — keep them out of
   // the index and point their canonical at the course landing page instead.
   // Crawlers are unauthenticated, so "locked" means simply "not free".
   return {
-    title: `${chapter.title} — ${chapter.course.title}`,
+    title,
+    description,
     robots: chapter.isFree ? undefined : { index: false, follow: false },
     alternates: {
       canonical: chapter.isFree
         ? `/courses/${courseId}/chapters/${chapterId}`
         : `/courses/${courseId}`,
+    },
+    openGraph: {
+      title,
+      description,
+      url: `/courses/${courseId}/chapters/${chapterId}`,
+      type: "website",
+      images,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images,
     },
   };
 }
@@ -162,7 +201,7 @@ export default async function ChapterId({
                 to enroll for {formatPrice(course.price!)}
               </p>
             ) : !isCourseFree && userId ? (
-              <a target="_blank" href="https://t.me/AlmrzoqAcademy" rel="noopener noreferrer">
+              <a target="_blank" href="https://ig.me/m/almrzoq.academy" rel="noopener noreferrer">
                 <Button size="sm" className="w-full md:w-auto">
                   Contact Us and Enroll for {formatPrice(course.price!)}
                 </Button>

@@ -17,6 +17,9 @@ const publicRoutes = [
   "/about-us",
   "/masters(.*)",
   "/opengraph-image.jpg",
+  // Generated share cards. Scrapers are unauthenticated, so a gated card would
+  // render as a broken preview in every chat client.
+  "/api/og(.*)",
   "/api/mobile/home",
 ];
 

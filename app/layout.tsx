@@ -80,7 +80,7 @@ const organizationJsonLd = {
   "@context": "https://schema.org",
   "@type": "EducationalOrganization",
   name: SITE_NAME,
-  alternateName: "Almarzoq Academy",
+  alternateName: "Almrzoq Academy",
   url: "https://www.almrzoq.academy",
   logo: "https://www.almrzoq.academy/logo-full.png",
   description: SITE_DESCRIPTION,

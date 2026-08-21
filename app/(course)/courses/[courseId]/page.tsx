@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 
 const BASE_URL = "https://www.almrzoq.academy"
-const ENROLL_CONTACT = "https://t.me/AlmrzoqAcademy"
+const ENROLL_CONTACT = "https://ig.me/m/almrzoq.academy"
 
 const plainText = (html?: string | null) =>
   (html ?? "").replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim()
@@ -140,7 +140,7 @@ export default async function CourseLandingPage({
         <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
           <Link href="/" className="flex items-center gap-2">
             <Image src="/logo-symbol.png" alt="Almrzoq Academy" width={32} height={32} className="h-8 w-8" />
-            <span className="font-serif text-sm font-semibold text-foreground">Almrzoq Academy</span>
+            <span className="font-serif text-sm font-semibold text-foreground">Al<span className="text-[#9c6349]">mrzoq</span> Academy</span>
           </Link>
           <Button asChild variant="ghost" size="sm">
             <Link href="/">

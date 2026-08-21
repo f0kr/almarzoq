@@ -11,7 +11,7 @@ export function Hero({ stats }: HeroProps) {
   return (
     <section className="mx-auto max-w-4xl px-6 py-10 md:py-14 text-center md:text-left">
       <span className="inline-block rounded-full bg-clay-tint px-3.5 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] text-clay mb-5">
-        Almarzoq Academy
+        Almrzoq Academy
       </span>
       <h1 className="font-serif font-semibold text-4xl md:text-5xl leading-[1.05] mb-4">
         Master the <em className="italic text-primary">Art</em> of Drawing,
