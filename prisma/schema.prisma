@@ -165,6 +165,9 @@ model MuxData {
   id         String  @id @default(uuid())
   assetId    String
   playbackId String?
+  // Runtime in seconds, cached from the Mux API on first read. Mux only knows
+  // it once the asset finishes processing, so it fills in lazily.
+  duration   Float?
   chapterId  String  @unique
   chapter    Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
 }
