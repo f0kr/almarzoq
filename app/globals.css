@@ -253,3 +253,23 @@
   unicode-bidi: embed;
 }
 
+
+/* Course descriptions are typed into a plain textarea and rendered outside
+   Quill, so the `.ql-editor` rule above never reaches them. Same idea: with
+   `white-space: pre-line` every preserved newline starts a new bidi
+   paragraph, and `plaintext` lets each one take its direction from its own
+   first strong character. Without it the whole blob inherits the page's LTR
+   base, which left-aligns the Arabic and strands the Latin terms embedded in
+   it ("...التظليل Shading، وغيرها") on the wrong side. */
+.bidi-plaintext,
+.bidi-plaintext p,
+.bidi-plaintext li,
+.bidi-plaintext h1,
+.bidi-plaintext h2,
+.bidi-plaintext h3,
+.bidi-plaintext h4,
+.bidi-plaintext h5,
+.bidi-plaintext h6,
+.bidi-plaintext blockquote {
+  unicode-bidi: plaintext;
+}

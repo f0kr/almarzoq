@@ -74,9 +74,13 @@ export default async function CourseLandingPage({
   const isFreeCourse = !course.price || course.price === 0
   const hasAccess = Boolean(purchase) || isFreeCourse
 
-  const descriptionHtml =
-    (course.description && course.description.trim()) ||
-    "<p>Full course details are on their way.</p>"
+  // Descriptions are typed into a plain textarea, so their newlines are the
+  // only paragraph markers. They're rendered as text (not injected as HTML)
+  // with `whitespace-pre-line`, which keeps those breaks and — together with
+  // `bidi-plaintext` — lets each line take its own direction, so an Arabic
+  // line and an English one can sit in the same description.
+  const description =
+    course.description?.trim() || "Full course details are on their way."
 
   // Course structured data for rich results. Free preview chapters are the
   // only publicly viewable syllabus items, so they carry a URL.
@@ -250,17 +254,18 @@ export default async function CourseLandingPage({
           </Card>
         </div>
 
-        {/* Description — server-rendered HTML so search engines can read it. */}
+        {/* Description — server-rendered so search engines can read it. */}
         <section className="mt-10">
           <h2 className="mb-3 flex items-center gap-2 font-serif text-lg font-semibold text-foreground">
             <GraduationCap className="h-5 w-5 text-primary" />
             About this course
           </h2>
           <div
-            lang={detectLang(descriptionHtml)}
-            className="prose prose-sm max-w-none rounded-xl border border-border bg-paper p-5 text-foreground prose-headings:text-foreground prose-a:text-primary"
-            dangerouslySetInnerHTML={{ __html: descriptionHtml }}
-          />
+            lang={detectLang(description)}
+            className="bidi-plaintext prose prose-sm max-w-none whitespace-pre-line rounded-xl border border-border bg-paper p-5 text-foreground prose-headings:text-foreground prose-a:text-primary"
+          >
+            {description}
+          </div>
         </section>
 
         {/* Curriculum */}
