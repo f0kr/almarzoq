@@ -51,3 +51,14 @@ todo.txt
 
 
 /lib/generated/prisma
+
+# user data exports / PII — never commit (see history purge 2026-08-31)
+*.csv
+scripts/data/
+ins_*.csv
+clerk-users.json
+
+# local artifacts, traces and logs
+trace.out
+*.log
+*.rpm
