@@ -11,6 +11,12 @@ const publicRoutes = [
   "/api/auth(.*)",
   "/test(.*)",
   "/api/webhook",
+  // FIB's post-3DS landing. Must be public: the Expo app's in-app browser
+  // carries no session cookie (mobile auth is a bearer token), so a gated
+  // return page would bounce every card payment to /sign-in.
+  "/payment/return",
+  // FIB's server-to-server payment notification — no session, by definition.
+  "/api/payments/fib/callback",
   "/courses(.*)",
   "/",
   "/dashboard",

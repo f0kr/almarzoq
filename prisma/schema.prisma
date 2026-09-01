@@ -71,6 +71,7 @@ model Course {
   groupUrls   GroupUrl[]
   lectures    Lecture[]
   purchases   Purchase[]
+  fibPayments FibPayment[]
   teachers    Teacher[]  @relation("CourseToTeacher")
 
   @@index([categoryId])
@@ -203,4 +204,37 @@ model StripeCustomer {
   stripeCustomerId String   @unique
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
+}
+
+enum FibPaymentStatus {
+  PENDING
+  SUCCESS
+  FAILED
+}
+
+/// One FIB card-gateway checkout attempt. `orderId` is unique because FIB
+/// rejects a reused one with `403 Order id already processed`.
+model FibPayment {
+  id                String           @id @default(uuid())
+  orderId           String           @unique
+  paymentId         String?          @unique
+  userId            String
+  courseId          String
+  /// Whole IQD, as charged — FIB has no minor unit here.
+  amount            Int
+  currency          String           @default("IQD")
+  status            FibPaymentStatus @default(PENDING)
+  /// "web" | "native" — decides how the return page hands control back.
+  platform          String           @default("web")
+  reference         String?
+  authorizationCode String?
+  failureReason     String?
+  paidAt            DateTime?
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+  course            Course           @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([courseId])
+  @@index([userId, courseId])
 }

@@ -14,6 +14,8 @@ import { CourseProgressButton } from "./_components/CourseProgressButton";
 import { Button } from "@/components/ui/button";
 import { formatPrice } from "@/lib/format";
 import { SignInButton } from "@/components/auth/SignInButton";
+import { FibEnrollButton } from "@/components/FibEnrollButton"
+import { usdToIqd } from "@/lib/fib-payments"
 
 const TelegramIcon = () => (
   <svg
@@ -201,11 +203,13 @@ export default async function ChapterId({
                 to enroll for {formatPrice(course.price!)}
               </p>
             ) : !isCourseFree && userId ? (
-              <a target="_blank" href="https://ig.me/m/almrzoq.academy" rel="noopener noreferrer">
-                <Button size="sm" className="w-full md:w-auto">
-                  Contact Us and Enroll for {formatPrice(course.price!)}
-                </Button>
-              </a>
+              <FibEnrollButton
+                courseId={courseId}
+                price={course.price!}
+                priceIqd={usdToIqd(course.price!)}
+                size="sm"
+                className="w-full md:w-auto"
+              />
             ) : isCourseFree && !userId ? (
               <p className="text-sm text-grey">
                 Please{" "}

@@ -11,9 +11,10 @@ import { detectLang, langAttrs } from "@/lib/lang"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
+import { FibEnrollButton } from "@/components/FibEnrollButton"
+import { usdToIqd } from "@/lib/fib-payments"
 
 const BASE_URL = "https://www.almrzoq.academy"
-const ENROLL_CONTACT = "https://ig.me/m/almrzoq.academy"
 
 const plainText = (html?: string | null) =>
   (html ?? "").replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim()
@@ -237,11 +238,25 @@ export default async function CourseLandingPage({
                     {purchase ? "Continue learning" : "Start free course"}
                   </Link>
                 </Button>
+              ) : isFreeCourse ? (
+                <Button size="lg" className="w-full" disabled>
+                  No lessons published yet
+                </Button>
+              ) : userId ? (
+                <FibEnrollButton
+                  courseId={course.id}
+                  price={course.price!}
+                  priceIqd={usdToIqd(course.price!)}
+                />
               ) : (
                 <Button asChild size="lg" className="w-full">
-                  <a href={ENROLL_CONTACT} target="_blank" rel="noopener noreferrer">
-                    Enroll for {formatPrice(course.price!)}
-                  </a>
+                  <Link
+                    href={`/sign-in?redirect_url=${encodeURIComponent(
+                      `/courses/${course.id}`
+                    )}`}
+                  >
+                    Sign in to enroll for {formatPrice(course.price!)}
+                  </Link>
                 </Button>
               )}
 
