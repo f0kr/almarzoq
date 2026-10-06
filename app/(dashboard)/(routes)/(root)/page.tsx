@@ -38,7 +38,7 @@ export default async function SearchPage({
       ) : (
         <div className="px-6 pt-8 pb-2">
           <h1 className="font-serif font-semibold text-2xl md:text-3xl mb-1">
-            Master the <em className="italic text-primary">Art</em> of Drawing
+           <em className="text-primary">Learn</em> the rules, then break them.
           </h1>
           <p className="text-sm text-grey">
             Pick up where you left off, or explore something new.

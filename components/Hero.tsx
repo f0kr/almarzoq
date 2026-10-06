@@ -14,13 +14,11 @@ export function Hero({ stats }: HeroProps) {
         Almarzoq Academy
       </span>
       <h1 className="font-serif font-semibold text-4xl md:text-5xl leading-[1.05] mb-4">
-        Master the <em className="italic text-primary">Art</em> of Drawing,
-        with real <em className="italic text-primary">masters</em>.
+       <em className="text-primary">Learn</em> the rules like a pro, So you can break them 
+        <em className="text-primary"> like an artist</em>.
       </h1>
       <p className="mx-auto md:mx-0 max-w-md text-base md:text-[17px] leading-normal text-grey mb-7">
-        Structured courses in drawing, painting and digital art — taught by
-        working professionals. Learn at your pace, build a portfolio you are
-        proud of.
+        An educational platform targeting those interested in fine arts. Drawing, painting, architecture and more ...
       </p>
       <div className="flex flex-wrap items-center justify-center md:justify-start gap-3.5">
         <Button size="lg" asChild>
