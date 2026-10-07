@@ -1,6 +1,8 @@
 "use client";
 
-import { LogOut } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { LogOut, UserCog } from "lucide-react";
 import { useSession } from "@/components/providers/SessionProvider";
 import {
   DropdownMenu,
@@ -23,23 +25,54 @@ export function UserButton() {
       <DropdownMenuTrigger asChild>
         <button
           aria-label="Account menu"
-          className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground text-sm font-semibold shadow-sm transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          className="relative flex h-8 w-8 items-center justify-center overflow-hidden rounded-full bg-primary text-primary-foreground text-sm font-semibold shadow-sm transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
-          {initial}
+          {user.imageUrl ? (
+            <Image
+              alt=""
+              src={user.imageUrl}
+              fill
+              sizes="32px"
+              className="object-cover"
+            />
+          ) : (
+            initial
+          )}
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56">
         <DropdownMenuLabel className="font-normal">
-          <div className="flex flex-col gap-0.5">
-            {user.name && (
-              <span className="text-sm font-medium">{user.name}</span>
-            )}
-            <span className="text-xs text-muted-foreground truncate">
-              {user.email}
-            </span>
+          <div className="flex items-center gap-2.5">
+            <div className="relative flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full bg-primary text-primary-foreground text-sm font-semibold">
+              {user.imageUrl ? (
+                <Image
+                  alt=""
+                  src={user.imageUrl}
+                  fill
+                  sizes="36px"
+                  className="object-cover"
+                />
+              ) : (
+                initial
+              )}
+            </div>
+            <div className="flex min-w-0 flex-col gap-0.5">
+              {user.name && (
+                <span className="truncate text-sm font-medium">{user.name}</span>
+              )}
+              <span className="truncate text-xs text-muted-foreground">
+                {user.email}
+              </span>
+            </div>
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
+        <DropdownMenuItem asChild>
+          <Link href="/dashboard/profile">
+            <UserCog className="h-4 w-4 mr-2" />
+            Edit profile
+          </Link>
+        </DropdownMenuItem>
         <DropdownMenuItem onClick={() => signOut()}>
           <LogOut className="h-4 w-4 mr-2" />
           Sign out

@@ -36,8 +36,8 @@ export async function GET() {
     select: { iconUrl: true }
   });
 
-  const profileImages = await db.teacher.findMany({
-    select: { profileUrl: true }
+  const teacherImages = await db.teacher.findMany({
+    select: { profileUrl: true, coverUrl: true }
   });
 
   // Build unified key set
@@ -53,7 +53,8 @@ export async function GET() {
     ...videos.map(v => v.videoUrl),
     ...images.map(i => i.imageUrl),
     ...icons.map(i => i.iconUrl),
-    ...profileImages.map(p => p.profileUrl),
+    ...teacherImages.map(p => p.profileUrl),
+    ...teacherImages.map(p => p.coverUrl),
   ]
     .map(getKeyFromUrl)
     .filter((key): key is string => Boolean(key))

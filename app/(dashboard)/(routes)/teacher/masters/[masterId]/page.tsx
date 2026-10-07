@@ -8,6 +8,7 @@ import NameForm from "./_components/NameForm"
 import TitleForm from "./_components/TitleForm"
 import BioForm from "./_components/BioForm"
 import ProfileUrlForm from "./_components/ProfileUrlForm"
+import CoverImageForm from "./_components/CoverImageForm"
 import SocialLinksForm from "./_components/SocialLinksForm"
 import { Banner } from "@/components/Banner"
 import { Actions } from "./_components/Actions"
@@ -107,6 +108,11 @@ export default async function MasterPage({
                         />
 
                         <ProfileUrlForm
+                            initialData={master}
+                            masterId={master.id}
+                        />
+
+                        <CoverImageForm
                             initialData={master}
                             masterId={master.id}
                         />

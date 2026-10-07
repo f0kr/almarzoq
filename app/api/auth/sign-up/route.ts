@@ -1,12 +1,9 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { db } from "@/lib/db";
-import {
-  hashPassword,
-  signSessionToken,
-  sessionCookieOptions,
-  SESSION_COOKIE,
-} from "@/lib/auth";
+import { hashPassword } from "@/lib/auth";
+import { createVerificationToken } from "@/lib/tokens";
+import { sendVerificationEmail } from "@/lib/email";
 
 const signUpSchema = z.object({
   name: z.string().trim().min(1, "Name is required").max(100),
@@ -44,14 +41,11 @@ export async function POST(req: Request) {
       },
     });
 
-    const token = await signSessionToken({ userId: user.id, role: user.role });
+    const token = await createVerificationToken(user.id, "EMAIL_VERIFICATION");
+    const link = `${process.env.NEXT_PUBLIC_APP_URL}/api/auth/verify-email?token=${token}`;
+    await sendVerificationEmail(user.email, user.name, link);
 
-    const response = NextResponse.json({
-      token,
-      user: { id: user.id, email: user.email, name: user.name, role: user.role },
-    });
-    response.cookies.set(SESSION_COOKIE, token, sessionCookieOptions());
-    return response;
+    return NextResponse.json({ requiresVerification: true, email: user.email });
   } catch (error) {
     console.error("[AUTH_SIGN_UP]", error);
     return new NextResponse("Internal Server Error", { status: 500 });

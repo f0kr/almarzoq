@@ -77,7 +77,10 @@ export async function GET(req: NextRequest) {
       if (user) {
         user = await db.user.update({
           where: { id: user.id },
-          data: { googleId: claims.sub },
+          data: {
+            googleId: claims.sub,
+            emailVerified: user.emailVerified ?? new Date(),
+          },
         });
       }
     }
@@ -88,6 +91,8 @@ export async function GET(req: NextRequest) {
           email,
           name: claims.name ?? null,
           googleId: claims.sub,
+          // Google already verified this address, so no confirmation email is needed.
+          emailVerified: new Date(),
         },
       });
     }

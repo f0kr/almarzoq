@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils"
 
 
 const bannerVariants = cva(
-    "border rounded-md px-4 py-3 text-sm font-semibold flex items-center gap-2 w-full",
+    "border px-4 py-3 text-sm font-semibold flex items-center gap-2 w-full",
     {
         variants: {
             variant: {

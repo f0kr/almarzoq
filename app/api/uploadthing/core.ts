@@ -13,7 +13,19 @@ const handleAuth = async () => {
     return { userId };
 };
 
+/** Any signed-in user may upload their own avatar. */
+const handleUserAuth = async () => {
+    const { userId } = await auth();
+    if (!userId) {
+        throw new Error("Unauthorized");
+    }
+    return { userId };
+};
+
 export const ourFileRouter = {
+    userAvatar: f({ image: { maxFileSize: "4MB", maxFileCount: 1 } })
+        .middleware(() => handleUserAuth())
+        .onUploadComplete(() => {}),
     courseImage: f({ image: { maxFileSize: "4MB", maxFileCount: 1 } })
         .middleware(() => handleAuth())
         .onUploadComplete(() => {}),
@@ -21,6 +33,9 @@ export const ourFileRouter = {
         .middleware(() => handleAuth())
         .onUploadComplete(() => {}),
     profileUrl: f({ image: { maxFileSize: "8MB", maxFileCount: 1 } })
+        .middleware(() => handleAuth())
+        .onUploadComplete(() => {}),
+    masterCover: f({ image: { maxFileSize: "8MB", maxFileCount: 1 } })
         .middleware(() => handleAuth())
         .onUploadComplete(() => {}),
     courseAttachment: f({

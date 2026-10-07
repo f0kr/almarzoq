@@ -1,6 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { formatPrice } from "@/lib/format"
+import { langAttrs } from "@/lib/lang"
 import { CourseProgress } from "./CourseProgress"
 
 interface CourseCardProps {
@@ -64,7 +65,10 @@ export const CourseCard = ({
                     )}
                     <span className="line-clamp-1">{masterLabel}</span>
                   </div>
-                  <h3 className="font-serif font-semibold text-lg leading-tight line-clamp-2 mb-2.5 transition-colors group-hover:text-primary">
+                  <h3
+                    {...langAttrs(title)}
+                    className="font-serif font-semibold text-lg leading-tight line-clamp-2 mb-2.5 transition-colors group-hover:text-primary"
+                  >
                     {title}
                   </h3>
                   {progress !== null ? (

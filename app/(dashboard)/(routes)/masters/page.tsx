@@ -1,3 +1,4 @@
+import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
 import { Search } from "lucide-react"
@@ -6,6 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { db } from "@/lib/db"
 import Reveal from "@/components/Reveal"
+import { langAttrs } from "@/lib/lang"
 
 const formatBioSnippet = (bio?: string) => {
   if (!bio) return "This master is getting their story ready."
@@ -14,6 +16,20 @@ const formatBioSnippet = (bio?: string) => {
   if (!text) return "This master is getting their story ready."
 
   return text.length > 140 ? `${text.slice(0, 140).trim()}...` : text
+}
+
+export const metadata: Metadata = {
+  title: "Meet the Masters",
+  description:
+    "Meet the professional artists teaching at Almrzoq Academy. Browse instructor profiles in drawing, painting and digital art, and find the mentor whose voice resonates with you.",
+  alternates: { canonical: "/masters" },
+  openGraph: {
+    title: "Meet the Masters | Almrzoq Academy",
+    description:
+      "Meet the professional artists teaching at Almrzoq Academy. Browse instructor profiles and find the mentor whose voice resonates with you.",
+    url: "/masters",
+    type: "website",
+  },
 }
 
 export default async function MastersPage({
@@ -119,7 +135,7 @@ export default async function MastersPage({
                   <Card className="relative w-full overflow-hidden rounded-2xl border-border bg-card px-6 py-5 transition-all hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-lg">
                     <div className="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-tan to-clay" aria-hidden />
                     <span className="absolute right-5 top-1/2 -translate-y-1/2 text-primary text-xl transition-transform group-hover:translate-x-1" aria-hidden>&rarr;</span>
-                    <div className="absolute left-4 top-1/2 h-16 w-16 -translate-y-1/2 overflow-hidden rounded-full border-4 border-white shadow-lg ring-2 ring-primary/20 group-hover:ring-primary/30">
+                    <div className="absolute left-7 top-1/2 h-16 w-16 -translate-y-1/2 overflow-hidden rounded-full border-4 border-white shadow-lg ring-2 ring-primary/20 group-hover:ring-primary/30">
                       <Image
                         src={master.profileUrl || "/icons/default-avatar.png"}
                         alt={master.name || "Master profile"}
@@ -138,7 +154,7 @@ export default async function MastersPage({
                           {master.title || "Title coming soon"}
                         </span>
                       </div>
-                      <h3 className="mt-2 text-xl font-semibold text-foreground transition-colors group-hover:text-primary">
+                      <h3 {...langAttrs(master.name)} className="mt-2 text-xl font-semibold text-foreground transition-colors group-hover:text-primary">
                         {master.name}
                       </h3>
                       <div className="mt-1 flex flex-wrap gap-2 text-xs font-medium text-muted-foreground">
@@ -151,7 +167,7 @@ export default async function MastersPage({
                           {studentCount} {studentCount === 1 ? "student" : "students"}
                         </span>
                       </div>
-                      <p className="mt-1 text-xs md:text-sm leading-relaxed text-muted-foreground line-clamp-2">
+                      <p {...langAttrs(master.bio)} className="mt-1 text-xs md:text-sm leading-relaxed text-muted-foreground line-clamp-2">
                         {formatBioSnippet(master.bio!)}
                       </p>
                     </CardContent>

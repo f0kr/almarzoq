@@ -1,5 +1,6 @@
 import { db } from "@/lib/db";
 import { Category, Course } from "@prisma/client";
+import Fuse from "fuse.js";
 import { getProgress } from "./getProgress";
 
 type CourseWithProgressWithCategory = Course & {
@@ -23,12 +24,9 @@ export async function getCourses({
  free
 }: GetCourses): Promise<CourseWithProgressWithCategory[]>{
 try{
-const courses  = await db.course.findMany({
+const allCourses = await db.course.findMany({
     where: {
         isPublished: true,
-        title: {
-            contains: title,
-        },
         categoryId,
         ...(free ? 
                {
@@ -62,6 +60,23 @@ const courses  = await db.course.findMany({
         createdAt: "desc"
     }
 })
+
+    // Fuzzy search over course titles AND teacher names: typo-tolerant,
+    // case-insensitive, and script-agnostic (works for Arabic and Latin
+    // alike — Prisma's `contains` was case-sensitive, which silently broke
+    // Latin-script queries). Results come back ranked by relevance.
+    const courses = title?.trim()
+        ? new Fuse(allCourses, {
+              keys: [
+                  { name: "title", weight: 2 },
+                  { name: "teachers.name", weight: 1 },
+              ],
+              threshold: 0.35,
+              ignoreLocation: true,
+          })
+              .search(title.trim())
+              .map((result) => result.item)
+        : allCourses
 
     const coursesWithProgress: CourseWithProgressWithCategory[] = await Promise.all(
        courses.map(async course => {

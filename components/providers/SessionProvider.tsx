@@ -13,6 +13,7 @@ export type SessionUser = {
   email: string;
   name: string | null;
   role: "STUDENT" | "TEACHER";
+  imageUrl: string | null;
 };
 
 type SessionContextValue = {

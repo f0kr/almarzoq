@@ -6,8 +6,9 @@ import MuxPlayer from "@mux/mux-player-react"
 import axios from "axios"
 import { Loader2, Lock } from "lucide-react"
 import { useRouter } from "next/navigation"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import toast from "react-hot-toast"
+import { useChapterLoading } from "./ChapterLoadingProvider"
 
 interface VideoPlayerProps{
     playbackId: string
@@ -17,6 +18,8 @@ interface VideoPlayerProps{
     nextChapterId?: string
     isLocked: boolean
     completeOnEnd: boolean
+    /** Progress is per-account, so signed-out viewers have nothing to save. */
+    canTrackProgress: boolean
     title: string
 }
 
@@ -28,31 +31,50 @@ export const VideoPlayer = ({
     nextChapterId,
     isLocked,
     completeOnEnd,
+    canTrackProgress,
     title
 }: VideoPlayerProps)=>{
 
     const [isReady, setIsReady] = useState(false)
     const router = useRouter()
     const confetti = useConfettiStore()
+    const { markReady } = useChapterLoading()
+
+    // Locked chapters (or ones without a video) never fire onCanPlay, so
+    // release the page skeleton right away.
+    useEffect(() => {
+        if (isLocked || !playbackId) markReady()
+    }, [isLocked, playbackId, markReady])
+
+    const goToNextChapter = () => {
+        if(nextChapterId) {
+            router.push(`/courses/${courseId}/chapters/${nextChapterId}`)
+        }
+    }
 
     const onEnd = async () => {
+        if (!completeOnEnd) return
+
+        // Signed-out viewers can watch free chapters but have no account to
+        // record progress against — saving would 401, so just move them on.
+        if (!canTrackProgress) {
+            goToNextChapter()
+            return
+        }
+
         try{
-            if (completeOnEnd) {
-                await axios.put(`/api/courses/${courseId}/lectures/${lectureId}/chapters/${chapterId}/progress`, {
-                    isCompleted: true
-                })
+            await axios.put(`/api/courses/${courseId}/lectures/${lectureId}/chapters/${chapterId}/progress`, {
+                isCompleted: true
+            })
 
-                if(!nextChapterId) {
-                    confetti.onOpen()
-                }
-
-                toast.success("Progress updated")
-                router.refresh()
-
-                if(nextChapterId) {
-                    router.push(`/courses/${courseId}/chapters/${nextChapterId}`)
-                }
+            if(!nextChapterId) {
+                confetti.onOpen()
             }
+
+            toast.success("Progress updated")
+            router.refresh()
+
+            goToNextChapter()
         }catch {
             toast.error("Something went wrong")
         }
@@ -79,7 +101,11 @@ export const VideoPlayer = ({
                 className={cn(
                     !isReady && "hidden"
                 )}
-                onCanPlay={()=> setIsReady(true)}
+                onCanPlay={()=> {
+                    setIsReady(true)
+                    markReady()
+                }}
+                onError={()=> markReady()}
                 onEnded={onEnd}
                 autoPlay
                 playbackId={playbackId}

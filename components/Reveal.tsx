@@ -19,9 +19,13 @@ export default function Reveal({ children, delay = 0, className }: RevealProps) 
     if (!node) return
 
     const observer = new IntersectionObserver(
-      // toggle rather than fire-once so the reveal replays when the
-      // element scrolls out of view and back in
-      ([entry]) => setIsVisible(entry.isIntersecting),
+      // fire once: after the first reveal the element stays visible
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true)
+          observer.disconnect()
+        }
+      },
       { rootMargin: "0px 0px -40px 0px", threshold: 0.1 }
     )
 

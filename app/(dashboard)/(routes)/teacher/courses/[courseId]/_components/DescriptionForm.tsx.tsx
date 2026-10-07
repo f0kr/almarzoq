@@ -82,7 +82,10 @@ export default function DescriptionForm({
             </div>
             {!isEditing && (
                 <p className={cn(
-                    "text-sm mt-2",
+                    // Same treatment the public page gives it: keep the
+                    // textarea's line breaks and let each line pick its own
+                    // direction, so mixed Arabic/English reads correctly here too.
+                    "text-sm mt-2 whitespace-pre-line bidi-plaintext",
                     !initialData.description && "text-muted-foreground italic"
                 )}>{initialData.description || "No description"}</p>
             )}
@@ -95,7 +98,7 @@ export default function DescriptionForm({
                         render={({field}) => (
                             <FormItem>
                                 <FormControl>
-                                    <Textarea disabled={isSubmitting} placeholder='Course description' {...field}/>
+                                    <Textarea className='bidi-plaintext' disabled={isSubmitting} placeholder='Course description' {...field}/>
                                 </FormControl>
                                 <FormMessage/>
                             </FormItem>
