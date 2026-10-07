@@ -2,15 +2,27 @@ import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { ArrowLeft, BookOpen, GraduationCap, Lock, Play, Layers, Clock } from "lucide-react"
+import {
+  ArrowLeft,
+  BookOpen,
+  CheckCircle2,
+  ChevronRight,
+  GraduationCap,
+  Lock,
+  Play,
+  Layers,
+  Clock,
+} from "lucide-react"
 import { getCourseLanding } from "@/actions/getCourseLanding"
 import { getCourseDuration } from "@/actions/getCourseDuration"
 import { auth } from "@/lib/auth"
 import { formatPrice } from "@/lib/format"
 import { detectLang, langAttrs } from "@/lib/lang"
+import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
+import { Progress } from "@/components/ui/progress"
 
 const BASE_URL = "https://www.almrzoq.academy"
 const ENROLL_CONTACT = "https://ig.me/m/almrzoq.academy"
@@ -69,10 +81,52 @@ export default async function CourseLandingPage({
   const data = await getCourseLanding({ courseId, userId })
   if (!data) notFound()
 
-  const { course, purchase, firstChapter, chapterCount, lectureCount, freeChapterCount } = data
+  const {
+    course,
+    purchase,
+    firstChapter,
+    resumeChapter,
+    resumeNumber,
+    completedCount,
+    completedChapterIds,
+    chapterCount,
+    lectureCount,
+    freeChapterCount,
+  } = data
   const duration = await getCourseDuration(course.id)
   const isFreeCourse = !course.price || course.price === 0
   const hasAccess = Boolean(purchase) || isFreeCourse
+
+  // ---- The one thing this page has to get across: where to click to watch. ---
+  // `playChapter` is that single destination. For a student with access it's the
+  // lesson they left off at; for a visitor it's the free preview, if there is
+  // one. It drives the cover image, the button and the highlighted syllabus row
+  // alike, so all three agree on where "continue" goes.
+  const playChapter = hasAccess
+    ? resumeChapter
+    : firstChapter?.isFree
+      ? firstChapter
+      : null
+  const progressPct =
+    chapterCount > 0 ? Math.round((completedCount / chapterCount) * 100) : 0
+  const isFinished = hasAccess && chapterCount > 0 && completedCount >= chapterCount
+  const completedIds = new Set(completedChapterIds)
+
+  const ctaLabel = !hasAccess
+    ? `Enroll for ${formatPrice(course.price!)}`
+    : isFinished
+      ? "Rewatch the course"
+      : completedCount > 0
+        ? "Continue learning"
+        : isFreeCourse && !purchase
+          ? "Start free course"
+          : "Start learning"
+
+  // Naming the lesson behind the button is what removes the guesswork.
+  const ctaHint =
+    hasAccess && playChapter
+      ? `${isFinished ? "Lesson" : completedCount > 0 ? "Up next · Lesson" : "Starts with lesson"} ${resumeNumber} of ${chapterCount}: ${playChapter.title}`
+      : null
 
   // Descriptions are typed into a plain textarea, so their newlines are the
   // only paragraph markers. They're rendered as text (not injected as HTML)
@@ -157,7 +211,7 @@ export default async function CourseLandingPage({
         </div>
       </header>
 
-      <div className="mx-auto max-w-5xl px-4 py-8 md:py-10">
+      <div className="mx-auto max-w-5xl px-4 pt-8 pb-28 md:py-10">
         {/* Hero */}
         <div className="grid gap-8 md:grid-cols-[1.2fr_1fr] md:items-start">
           <div className="space-y-4">
@@ -211,47 +265,95 @@ export default async function CourseLandingPage({
             </div>
           </div>
 
-          {/* CTA card */}
-          <Card className="overflow-hidden rounded-2xl border-border bg-card shadow-sm">
-            {course.imageUrl && (
-              <div className="relative aspect-video w-full bg-secondary">
-                <Image
-                  src={course.imageUrl}
-                  alt={course.title}
-                  fill
-                  sizes="(max-width:768px) 100vw, 400px"
-                  className="object-cover"
-                  unoptimized
-                  priority
-                />
-              </div>
-            )}
-            <CardContent className="space-y-4 p-5">
-              <p className="font-serif text-2xl font-semibold text-foreground">
-                {isFreeCourse ? "Free" : formatPrice(course.price!)}
-              </p>
-
-              {hasAccess && firstChapter ? (
-                <Button asChild size="lg" className="w-full">
-                  <Link href={`/courses/${course.id}/chapters/${firstChapter.id}`}>
-                    {purchase ? "Continue learning" : "Start free course"}
-                  </Link>
-                </Button>
-              ) : (
-                <Button asChild size="lg" className="w-full">
-                  <a href={ENROLL_CONTACT} target="_blank" rel="noopener noreferrer">
-                    Enroll for {formatPrice(course.price!)}
-                  </a>
-                </Button>
+          {/* CTA card — sticky on desktop so the action never scrolls away. */}
+          <div className="md:sticky md:top-20">
+            <Card className="overflow-hidden rounded-2xl border-border bg-card shadow-sm">
+              {course.imageUrl && (
+                <div className="relative aspect-video w-full bg-secondary">
+                  <Image
+                    src={course.imageUrl}
+                    alt={course.title}
+                    fill
+                    sizes="(max-width:768px) 100vw, 400px"
+                    className="object-cover"
+                    unoptimized
+                    priority
+                  />
+                  {/* Students instinctively click the cover, so make that work. */}
+                  {playChapter && (
+                    <Link
+                      href={`/courses/${course.id}/chapters/${playChapter.id}`}
+                      aria-label={`${hasAccess ? ctaLabel : "Watch the free preview lesson"}: ${playChapter.title}`}
+                      className="group absolute inset-0 flex flex-col items-center justify-center gap-2.5 bg-ink/30 transition-colors hover:bg-ink/45 focus-visible:ring-4 focus-visible:ring-clay/70 focus-visible:outline-none"
+                    >
+                      <span className="flex h-16 w-16 items-center justify-center rounded-full bg-cream/95 shadow-lg transition-transform group-hover:scale-105">
+                        <Play className="h-6 w-6 translate-x-[2px] fill-clay text-clay" />
+                      </span>
+                      <span className="rounded-full bg-ink/75 px-3 py-1 text-xs font-semibold text-cream">
+                        {hasAccess ? ctaLabel : "Watch free preview"}
+                      </span>
+                    </Link>
+                  )}
+                </div>
               )}
+              <CardContent className="space-y-4 p-5">
+                {/* Price is only news before you own the course. Afterwards the
+                    headline belongs to how far along you are. */}
+                {purchase ? (
+                  <div className="space-y-2">
+                    <p className="flex items-center gap-1.5 text-sm font-semibold text-sage">
+                      <CheckCircle2 className="h-4 w-4" />
+                      You&apos;re enrolled
+                    </p>
+                    {chapterCount > 0 && (
+                      <>
+                        <Progress className="h-2" value={progressPct} variant={isFinished ? "success" : "default"} />
+                        <p className="text-xs font-medium text-muted-foreground">
+                          {completedCount} of {chapterCount} lessons complete · {progressPct}%
+                        </p>
+                      </>
+                    )}
+                  </div>
+                ) : (
+                  <p className="font-serif text-2xl font-semibold text-foreground">
+                    {isFreeCourse ? "Free" : formatPrice(course.price!)}
+                  </p>
+                )}
 
-              {!hasAccess && firstChapter && freeChapterCount > 0 && (
-                <p className="text-center text-xs text-muted-foreground">
-                  Or start with a free preview lesson below.
-                </p>
-              )}
-            </CardContent>
-          </Card>
+                {hasAccess && playChapter ? (
+                  <div className="space-y-2">
+                    <Button asChild size="lg" variant="soft" className="h-12 w-full text-base">
+                      <Link href={`/courses/${course.id}/chapters/${playChapter.id}`}>
+                        <Play className="h-4 w-4 fill-current" />
+                        {ctaLabel}
+                        <ChevronRight className="h-4 w-4" />
+                      </Link>
+                    </Button>
+                    {ctaHint && (
+                      <p
+                        {...langAttrs(playChapter.title)}
+                        className="bidi-plaintext text-center text-xs text-muted-foreground"
+                      >
+                        {ctaHint}
+                      </p>
+                    )}
+                  </div>
+                ) : (
+                  <Button asChild size="lg" variant="soft" className="h-12 w-full text-base">
+                    <a href={ENROLL_CONTACT} target="_blank" rel="noopener noreferrer">
+                      Enroll for {formatPrice(course.price!)}
+                    </a>
+                  </Button>
+                )}
+
+                {!hasAccess && playChapter && (
+                  <p className="text-center text-xs text-muted-foreground">
+                    Or watch a free preview lesson first — no payment needed.
+                  </p>
+                )}
+              </CardContent>
+            </Card>
+          </div>
         </div>
 
         {/* Description — server-rendered so search engines can read it. */}
@@ -283,18 +385,50 @@ export default async function CourseLandingPage({
                 <ul className="divide-y divide-border">
                   {lecture.chapters.map((chapter) => {
                     const canView = chapter.isFree || hasAccess
+                    const isDone = completedIds.has(chapter.id)
+                    // The same lesson the big button opens, flagged here too —
+                    // the syllabus is the other place students go looking.
+                    const isNext = playChapter?.id === chapter.id
                     const content = (
-                      <div className="flex items-center gap-3 px-4 py-3">
-                        {canView ? (
-                          <Play className="h-4 w-4 shrink-0 text-primary" />
+                      <div
+                        className={cn(
+                          "flex items-center gap-3 px-4 py-3",
+                          isNext && "bg-clay-tint",
+                        )}
+                      >
+                        {isDone ? (
+                          <CheckCircle2 className="h-4 w-4 shrink-0 text-sage" />
+                        ) : canView ? (
+                          <Play
+                            className={cn("h-4 w-4 shrink-0 text-primary", isNext && "fill-current")}
+                          />
                         ) : (
                           <Lock className="h-4 w-4 shrink-0 text-muted-foreground" />
                         )}
-                        <span {...langAttrs(chapter.title)} className="flex-1 text-sm text-foreground">
+                        <span
+                          {...langAttrs(chapter.title)}
+                          className={cn(
+                            "flex-1 text-sm text-foreground",
+                            isNext && "font-semibold",
+                            isDone && !isNext && "text-muted-foreground",
+                          )}
+                        >
                           {chapter.title}
                         </span>
-                        {chapter.isFree && !hasAccess && (
+                        {isNext && (
+                          <Badge variant="clay" className="shrink-0 text-[10px]">
+                            {hasAccess
+                              ? completedCount > 0
+                                ? "Continue here"
+                                : "Start here"
+                              : "Free preview"}
+                          </Badge>
+                        )}
+                        {chapter.isFree && !hasAccess && !isNext && (
                           <Badge variant="sage" className="text-[10px]">Free</Badge>
+                        )}
+                        {canView && (
+                          <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground" />
                         )}
                       </div>
                     )
@@ -355,6 +489,30 @@ export default async function CourseLandingPage({
               ))}
             </div>
           </section>
+        )}
+      </div>
+
+      {/* Mobile has no sticky sidebar, so the action rides along at the bottom. */}
+      <div className="fixed inset-x-0 bottom-0 z-50 border-t border-border bg-card/95 p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur md:hidden">
+        {hasAccess && playChapter ? (
+          <Button asChild size="lg" variant="soft" className="h-12 w-full text-base">
+            <Link href={`/courses/${course.id}/chapters/${playChapter.id}`}>
+              <Play className="h-4 w-4 fill-current" />
+              {ctaLabel}
+              <ChevronRight className="h-4 w-4" />
+            </Link>
+          </Button>
+        ) : (
+          <div className="flex items-center gap-3">
+            <p className="shrink-0 font-serif text-lg font-semibold text-foreground">
+              {isFreeCourse ? "Free" : formatPrice(course.price!)}
+            </p>
+            <Button asChild size="lg" variant="soft" className="h-12 flex-1 text-base">
+              <a href={ENROLL_CONTACT} target="_blank" rel="noopener noreferrer">
+                Enroll now
+              </a>
+            </Button>
+          </div>
         )}
       </div>
     </div>

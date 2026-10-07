@@ -56,10 +56,35 @@ export async function getCourseLanding({
   const freeChapterCount = orderedChapters.filter((c) => c.isFree).length;
   const firstChapter = orderedChapters[0] ?? null;
 
+  // Where "Continue learning" should actually land: the first chapter the
+  // student hasn't finished yet. Without this the CTA always reopened lesson 1,
+  // which is why it read as a dead end to anyone mid-course.
+  const completedChapterIds = userId
+    ? await db.userProgress.findMany({
+        where: {
+          userId,
+          isCompleted: true,
+          chapterId: { in: orderedChapters.map((c) => c.id) },
+        },
+        select: { chapterId: true },
+      })
+    : [];
+
+  const completedIds = new Set(completedChapterIds.map((p) => p.chapterId));
+  const resumeIndex = orderedChapters.findIndex((c) => !completedIds.has(c.id));
+  // Every chapter done -> nothing to resume, so point back at the start.
+  const resumeChapter =
+    resumeIndex === -1 ? firstChapter : orderedChapters[resumeIndex];
+
   return {
     course,
     purchase,
     firstChapter,
+    resumeChapter,
+    /** 1-based position of `resumeChapter` in the flat chapter list. */
+    resumeNumber: (resumeIndex === -1 ? 0 : resumeIndex) + 1,
+    completedCount: completedIds.size,
+    completedChapterIds: [...completedIds],
     chapterCount,
     freeChapterCount,
     lectureCount: course.lectures.length,

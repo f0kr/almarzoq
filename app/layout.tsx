@@ -30,6 +30,10 @@ export const viewport: Viewport = {
   viewportFit: "cover",
   // --cream from globals.css; meta tags can't reference CSS vars
   themeColor: "#fcfaf7",
+  // Atelier is light-only. Without this, a phone set to dark gets the page
+  // auto-inverted by Chrome / Samsung Internet / in-app WebViews. Mirrors
+  // `color-scheme` in globals.css — WebViews check the meta tag, not the CSS.
+  colorScheme: "only light",
 };
 
 const SITE_NAME = "Almrzoq Academy";
