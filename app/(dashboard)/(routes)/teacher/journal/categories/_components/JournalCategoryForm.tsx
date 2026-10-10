@@ -3,6 +3,8 @@
 import * as z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import axios from "axios"
+
+import { apiErrorMessage } from "@/lib/journal/apiError"
 import { useForm } from "react-hook-form"
 import {
   Form,
@@ -51,11 +53,7 @@ export default function JournalCategoryForm() {
     } catch (error) {
       // The API answers 409 with a readable sentence; show it rather than
       // the usual catch-all.
-      const message =
-        axios.isAxiosError(error) && typeof error.response?.data === "string"
-          ? error.response.data
-          : "Something went wrong."
-      toast.error(message)
+      toast.error(apiErrorMessage(error, "Something went wrong."))
       console.log(error)
     }
   }

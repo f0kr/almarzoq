@@ -6,6 +6,8 @@ import { Input } from "@/components/ui/input"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { PopoverClose } from "@radix-ui/react-popover"
 import axios from "axios"
+
+import { apiErrorMessage } from "@/lib/journal/apiError"
 import { Pencil } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
@@ -50,11 +52,7 @@ export default function JournalCategoryEdit({
       router.refresh()
       setOpen(false)
     } catch (error) {
-      const message =
-        axios.isAxiosError(error) && typeof error.response?.data === "string"
-          ? error.response.data
-          : "Something went wrong."
-      toast.error(message)
+      toast.error(apiErrorMessage(error, "Something went wrong."))
       console.log(error)
     } finally {
       setIsLoading(false)
