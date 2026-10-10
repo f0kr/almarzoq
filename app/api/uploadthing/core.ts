@@ -26,6 +26,24 @@ export const ourFileRouter = {
     userAvatar: f({ image: { maxFileSize: "4MB", maxFileCount: 1 } })
         .middleware(() => handleUserAuth())
         .onUploadComplete(() => {}),
+    // Journal writing is open to any signed-in visitor, so these two sit on
+    // handleUserAuth — not handleAuth, which is admin-only.
+    // `awaitServerData: false` because the client already has the url and key
+    // from its own upload response — nothing here needs the server round-trip.
+    // Without it the browser blocks on the callback, so one unreachable
+    // callback (a firewall, a dev stream hiccup) silently wedges every upload.
+    articleCover: f(
+        { image: { maxFileSize: "8MB", maxFileCount: 1 } },
+        { awaitServerData: false }
+    )
+        .middleware(() => handleUserAuth())
+        .onUploadComplete(() => {}),
+    articleImage: f(
+        { image: { maxFileSize: "8MB", maxFileCount: 1 } },
+        { awaitServerData: false }
+    )
+        .middleware(() => handleUserAuth())
+        .onUploadComplete(() => {}),
     courseImage: f({ image: { maxFileSize: "4MB", maxFileCount: 1 } })
         .middleware(() => handleAuth())
         .onUploadComplete(() => {}),

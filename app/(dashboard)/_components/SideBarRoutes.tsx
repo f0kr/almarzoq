@@ -1,7 +1,7 @@
 'use client';
 
 import SideItem from './SideItem';
-import {Layout, Compass, List, BarChart, Group, PersonStanding, InfoIcon, GroupIcon, } from 'lucide-react'
+import {Layout, Compass, List, BarChart, Group, PersonStanding, InfoIcon, GroupIcon, Tags, Newspaper, } from 'lucide-react'
 import { usePathname } from 'next/navigation';
 import { FaChalkboardTeacher } from 'react-icons/fa';
 
@@ -23,6 +23,12 @@ const guestRoutes = [
         icon: FaChalkboardTeacher,
         label: 'Masters',
         href: '/masters',
+    },
+
+    {
+        icon: Newspaper,
+        label: 'Journal',
+        href: '/journal',
     },
 
     {
@@ -62,6 +68,16 @@ const teacherRoutes = [
         icon: GroupIcon,
         label: 'Groups',
         href: '/teacher/groups',
+    },
+    {
+        icon: Newspaper,
+        label: 'Journal',
+        href: '/teacher/journal',
+    },
+    {
+        icon: Tags,
+        label: 'Journal categories',
+        href: '/teacher/journal/categories',
     }
 ]
 

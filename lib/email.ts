@@ -38,9 +38,9 @@ async function send(to: string, subject: string, html: string) {
   }
 }
 
-function layout(title: string, bodyHtml: string) {
+function layout(title: string, bodyHtml: string, dir: "ltr" | "rtl" = "ltr") {
   return `
-<div style="font-family:-apple-system,Segoe UI,sans-serif;background:#fcfaf7;padding:32px 16px;">
+<div dir="${dir}" style="font-family:-apple-system,Segoe UI,sans-serif;background:#fcfaf7;padding:32px 16px;text-align:${dir === "rtl" ? "right" : "left"};">
   <div style="max-width:480px;margin:0 auto;background:#faf5f0;border-radius:16px;padding:32px;border:1px solid #ede8e4;">
     <h1 style="font-size:20px;color:#272727;margin:0 0 16px;">${title}</h1>
     ${bodyHtml}
@@ -83,4 +83,88 @@ export async function sendPasswordResetEmail(
      <p style="margin-top:20px;font-size:12px;color:#4a4a4c;">This link expires in 1 hour. If you didn't request this, you can ignore this email — your password won't change.</p>`
   );
   await send(to, "Reset your password — Almrzoq Academy", html);
+}
+
+// --- Journal -------------------------------------------------------------
+// Authors write in Arabic, so the notices they get back are Arabic too.
+
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://www.almrzoq.academy";
+
+const arabicDate = new Intl.DateTimeFormat("ar", {
+  dateStyle: "long",
+  timeStyle: "short",
+});
+
+/** Sent when an admin returns an article for changes. */
+export async function sendArticleChangesRequestedEmail(opts: {
+  to: string;
+  articleTitle: string;
+  articleId: string;
+  reasons: string[];
+  note?: string | null;
+}) {
+  const reasonList = opts.reasons.length
+    ? `<ul style="color:#4a4a4c;font-size:14px;line-height:2;padding-inline-start:20px;">${opts.reasons
+        .map((reason) => `<li>${reason}</li>`)
+        .join("")}</ul>`
+    : "";
+
+  const note = opts.note
+    ? `<p style="color:#272727;font-size:14px;line-height:1.9;white-space:pre-line;">${opts.note}</p>`
+    : "";
+
+  await send(
+    opts.to,
+    "مقالك يحتاج إلى بعض التعديلات",
+    layout(
+      "مقالك يحتاج إلى بعض التعديلات",
+      `<p style="color:#4a4a4c;font-size:14px;line-height:1.9;">راجع فريق التحرير مقالك «${opts.articleTitle}» وطلب التعديلات الآتية قبل نشره:</p>
+       ${reasonList}
+       ${note}
+       ${button(`${APP_URL}/journal/submit/${opts.articleId}`, "تعديل المقال")}`,
+      "rtl"
+    )
+  );
+}
+
+/** Sent when an article is approved — immediately, or for a future date. */
+export async function sendArticleApprovedEmail(opts: {
+  to: string;
+  articleTitle: string;
+  slug: string;
+  publishesAt: Date;
+  scheduled: boolean;
+}) {
+  const title = opts.scheduled ? "تمت الموافقة على مقالك" : "تم نشر مقالك";
+  const body = opts.scheduled
+    ? `<p style="color:#4a4a4c;font-size:14px;line-height:1.9;">تمت الموافقة على مقالك «${opts.articleTitle}»، وسيُنشر تلقائياً بتاريخ ${arabicDate.format(opts.publishesAt)}.</p>`
+    : `<p style="color:#4a4a4c;font-size:14px;line-height:1.9;">تم نشر مقالك «${opts.articleTitle}» في مجلة الأكاديمية. شكراً لمساهمتك.</p>`;
+
+  await send(
+    opts.to,
+    title,
+    layout(
+      title,
+      `${body}${opts.scheduled ? "" : button(`${APP_URL}/journal/${opts.slug}`, "عرض المقال")}`,
+      "rtl"
+    )
+  );
+}
+
+/** Sent by the cron when a scheduled article actually goes live. */
+export async function sendArticlePublishedEmail(opts: {
+  to: string;
+  articleTitle: string;
+  slug: string;
+}) {
+  await send(
+    opts.to,
+    "مقالك منشور الآن",
+    layout(
+      "مقالك منشور الآن",
+      `<p style="color:#4a4a4c;font-size:14px;line-height:1.9;">مقالك «${opts.articleTitle}» أصبح متاحاً للقرّاء في مجلة الأكاديمية.</p>
+       ${button(`${APP_URL}/journal/${opts.slug}`, "عرض المقال")}`,
+      "rtl"
+    )
+  );
 }
