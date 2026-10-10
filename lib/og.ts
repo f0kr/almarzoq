@@ -91,6 +91,58 @@ export function bindArabicRuns(text: string) {
 }
 
 /**
+ * `bindArabicRuns` for text whose *paragraph* direction is RTL.
+ *
+ * The difference is how neutrals at the edges resolve. `bindArabicRuns` assumes
+ * an LTR base — correct for this catalog's bilingual course titles, where the
+ * "-" in "Drawing basics-كورس" belongs to the Latin side. A journal title is a
+ * whole Arabic paragraph, so a trailing number or full stop belongs to the
+ * Arabic run: "عنوان مقالة 2" must paint the 2 on the left, and under the LTR
+ * rule it lands on the right instead.
+ *
+ * Treating the line as a single RTL run gets both right, including an embedded
+ * Latin word, which keeps its own internal order while moving to the left.
+ */
+export function bindRtlLine(text: string) {
+  if (!hasArabic(text)) return text
+
+  const bound = text.replace(/ /g, NBSP)
+
+  // Pieces satori keeps together (Arabic + hard spaces) vs. the non-Arabic
+  // pieces it breaks on and lays out left-to-right.
+  const pieces: { text: string; breaks: boolean }[] = []
+  for (const char of bound) {
+    const breaks = !hasArabic(char) && char !== NBSP
+    const last = pieces[pieces.length - 1]
+    if (last?.breaks === breaks) last.text += char
+    else pieces.push({ text: char, breaks })
+  }
+
+  // Lift the gaps off the piece edges and remember them per boundary. Leaving
+  // them attached is what `layoutRun` does, and it is right for a separator
+  // *between* two Arabic runs — but at the edge of a line the space migrates to
+  // the outside when the order flips, and the words end up touching.
+  const gaps: boolean[] = []
+  for (let i = 0; i < pieces.length - 1; i += 1) {
+    gaps.push(pieces[i].text.endsWith(NBSP) || pieces[i + 1].text.startsWith(NBSP))
+  }
+
+  const cores = pieces.map((piece) =>
+    piece.text.replace(new RegExp(`^${NBSP}+`), "").replace(new RegExp(`${NBSP}+$`), "")
+  )
+
+  // Adjacency is symmetric, so reversing both arrays puts every gap back
+  // between the same two neighbours.
+  cores.reverse()
+  gaps.reverse()
+
+  return cores.reduce(
+    (out, core, i) => (i === 0 ? core : out + (gaps[i - 1] ? NBSP : "") + core),
+    ""
+  )
+}
+
+/**
  * Turn one Arabic run into the source order satori needs to paint it RTL.
  *
  * satori breaks a run wherever a non-Arabic character appears and then places
