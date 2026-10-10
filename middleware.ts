@@ -16,10 +16,30 @@ const publicRoutes = [
   "/dashboard",
   "/about-us",
   "/masters(.*)",
+  // The journal is public reading. /journal/submit and /journal/mine do their
+  // own auth() check and redirect with a redirect_url, which is a better
+  // sign-in experience than being bounced by middleware.
+  "/journal(.*)",
+  // Readers register a view without being signed in.
+  "/api/journal/view",
+  // Short links printed on story cards. They only ever redirect into /journal,
+  // which is public anyway — gating them would bounce a reader who scanned a
+  // QR code to a sign-in page.
+  "/j/(.*)",
   "/opengraph-image.jpg",
   // Generated share cards. Scrapers are unauthenticated, so a gated card would
   // render as a broken preview in every chat client.
   "/api/og(.*)",
+  // UploadThing's upload-complete callback arrives from their ingest servers
+  // with no cookie, so this gate would 401 it and the client would hang
+  // forever waiting on server data. The endpoint is not actually open: every
+  // file route in app/api/uploadthing/core.ts runs auth() in its own
+  // middleware, and callbacks are HMAC-verified by createRouteHandler.
+  "/api/uploadthing(.*)",
+  // Cron endpoints authenticate with CRON_SECRET, not a session. Without this
+  // the Bearer token below gets fed to jwtVerify, fails, and the scheduler
+  // silently receives 401 on every run.
+  "/api/cron(.*)",
   "/api/mobile/home",
 ];
 

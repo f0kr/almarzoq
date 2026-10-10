@@ -243,3 +243,142 @@
 .bidi-plaintext blockquote {
   unicode-bidi: plaintext;
 }
+
+/* ---------------------------------------------------------------------------
+   Journal article prose.
+
+   One stylesheet, two consumers: the Tiptap writing surface
+   (components/journal/ArticleEditor.tsx) and the published article. Sharing it
+   is what makes the editor an actual preview instead of an approximation.
+
+   Every inset is a logical property (padding-inline-start, border-inline-start)
+   so the same rules lay out correctly whether the article runs RTL — the
+   default here — or LTR. `unicode-bidi: plaintext` lets a stray English
+   sentence inside Arabic prose take its own direction, the same trick
+   .bidi-plaintext uses above.
+   --------------------------------------------------------------------------- */
+.prose-article {
+  color: var(--ink);
+  font-size: 1.0625rem;
+  line-height: 1.95;
+}
+
+.prose-article p,
+.prose-article li,
+.prose-article blockquote,
+.prose-article h2,
+.prose-article h3,
+.prose-article h4 {
+  unicode-bidi: plaintext;
+}
+
+.prose-article > * + * {
+  margin-block-start: 1.15em;
+}
+
+.prose-article h2,
+.prose-article h3,
+.prose-article h4 {
+  font-family: var(--font-playfair), serif;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--ink);
+  margin-block-start: 1.8em;
+}
+
+.prose-article h2 { font-size: 1.5rem; }
+.prose-article h3 { font-size: 1.25rem; }
+.prose-article h4 { font-size: 1.1rem; }
+
+.prose-article a {
+  color: var(--clay);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.prose-article strong { font-weight: 700; }
+
+.prose-article ul,
+.prose-article ol {
+  padding-inline-start: 1.5em;
+}
+
+.prose-article ul { list-style: disc; }
+.prose-article ol { list-style: decimal; }
+
+.prose-article li::marker { color: var(--clay); }
+
+.prose-article blockquote {
+  border-inline-start: 3px solid var(--clay);
+  padding-inline-start: 1em;
+  color: var(--grey);
+  font-style: italic;
+}
+
+.prose-article img {
+  border-radius: 14px;
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.prose-article figure { margin-block: 1.6em; }
+
+.prose-article figcaption {
+  margin-block-start: 0.6em;
+  font-size: 0.8125rem;
+  color: var(--mute, var(--grey));
+  text-align: center;
+}
+
+.prose-article hr {
+  border: 0;
+  border-top: 1px solid var(--beige);
+  margin-block: 2em;
+}
+
+.prose-article code {
+  background: var(--paper);
+  border-radius: 6px;
+  padding: 0.1em 0.35em;
+  font-size: 0.9em;
+}
+
+.prose-article pre {
+  background: var(--paper);
+  border-radius: 12px;
+  padding: 1em;
+  overflow-x: auto;
+  direction: ltr;
+  text-align: left;
+}
+
+/* Tiptap's Placeholder extension marks the first empty node; without a rule
+   the writer faces a blank box with no prompt. */
+.prose-article p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: inline-start;
+  height: 0;
+  pointer-events: none;
+  color: var(--mute, var(--grey));
+}
+
+/* A long URL or an unbroken token in user-written prose must not widen the
+   page on a phone. `break-word` only breaks when there is no other option, so
+   ordinary Arabic and Latin words still wrap at their spaces. */
+.prose-article {
+  overflow-wrap: break-word;
+}
+
+.prose-article img,
+.prose-article figure {
+  max-width: 100%;
+}
+
+/* Code and preformatted blocks scroll on their own rather than stretching the
+   article; `pre` already does, this covers a wide inline table if one appears. */
+.prose-article table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+}

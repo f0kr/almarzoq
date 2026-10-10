@@ -62,3 +62,5 @@ clerk-users.json
 trace.out
 *.log
 *.rpm
+
+certificates
