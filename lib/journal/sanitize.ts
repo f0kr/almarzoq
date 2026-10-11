@@ -3,9 +3,15 @@
  * untrusted input on a stored-XSS path. Everything saved to `Article.contentHtml`
  * goes through `sanitizeArticleHtml` first, server-side — never only in the
  * browser, where an attacker simply skips the editor and posts to the API.
+ *
+ * Deliberately parser-based (htmlparser2) rather than DOM-based. The first
+ * version used isomorphic-dompurify, which drags in jsdom; jsdom's dependency
+ * chain does a CommonJS require() of an ESM-only package, which Vercel's Node
+ * refuses, so the route failed to load in production with nothing thrown inside
+ * the handler. A full DOM implementation was always overkill for an allow-list.
  */
 
-import DOMPurify from "isomorphic-dompurify"
+import sanitizeHtml from "sanitize-html"
 
 /** What the Tiptap toolbar can actually produce, and nothing more. */
 const ALLOWED_TAGS = [
@@ -18,56 +24,40 @@ const ALLOWED_TAGS = [
   "img", "figure", "figcaption",
 ]
 
-const ALLOWED_ATTR = ["href", "title", "target", "rel", "src", "alt", "width", "height", "style", "dir"]
-
-/** Inline styles are narrowed to this one declaration — see the hook below. */
-const TEXT_ALIGN = /^text-align:\s*(left|right|center|justify)$/i
-
-let hooksRegistered = false
-
-function registerHooks() {
-  if (hooksRegistered) return
-  hooksRegistered = true
-
-  DOMPurify.addHook("afterSanitizeAttributes", (node) => {
-    const el = node as unknown as Element
-    if (typeof el.getAttribute !== "function") return
-
-    // Outbound links open away from the journal and carry no referrer or
-    // ranking signal — this is user-submitted content.
-    if (el.tagName === "A") {
-      el.setAttribute("target", "_blank")
-      el.setAttribute("rel", "noopener noreferrer nofollow ugc")
-    }
-
-    // Images must be real uploads. A data: URI here would mean a multi-megabyte
-    // base64 blob inlined into a database column.
-    if (el.tagName === "IMG") {
-      const src = el.getAttribute("src") ?? ""
-      if (!/^https?:\/\//i.test(src)) el.removeAttribute("src")
-      if (!el.getAttribute("alt")) el.setAttribute("alt", "")
-    }
-
-    // `style` exists only so TextAlign works. Anything else is dropped rather
-    // than trusted to DOMPurify's CSS pass.
-    const style = el.getAttribute("style")
-    if (style !== null) {
-      const kept = style
-        .split(";")
-        .map((rule) => rule.trim())
-        .filter((rule) => TEXT_ALIGN.test(rule))
-      if (kept.length) el.setAttribute("style", `${kept.join("; ")};`)
-      else el.removeAttribute("style")
-    }
-  })
-}
+/** `style` exists only so TextAlign works — see allowedStyles below. */
+const TEXT_ALIGN = /^(left|right|center|justify)$/
 
 export function sanitizeArticleHtml(dirty: string): string {
-  registerHooks()
-  return DOMPurify.sanitize(dirty ?? "", {
-    ALLOWED_TAGS,
-    ALLOWED_ATTR,
-    ALLOW_DATA_ATTR: false,
+  return sanitizeHtml(dirty ?? "", {
+    allowedTags: ALLOWED_TAGS,
+    allowedAttributes: {
+      a: ["href", "title", "target", "rel"],
+      img: ["src", "alt", "width", "height"],
+      "*": ["style", "dir"],
+    },
+    // http(s) only. This is what blocks javascript: hrefs, and data: URIs —
+    // the latter would inline a multi-megabyte base64 blob into a database
+    // column. Applied to href/src/cite by default.
+    allowedSchemes: ["http", "https"],
+    allowProtocolRelative: false,
+    // Narrowed to the one declaration the toolbar emits, rather than trusting
+    // a general CSS sanitizer.
+    allowedStyles: { "*": { "text-align": [TEXT_ALIGN] } },
+    transformTags: {
+      // Outbound links open away from the journal and carry no referrer or
+      // ranking signal — this is user-submitted content.
+      a: (tagName, attribs) => ({
+        tagName,
+        attribs: { ...attribs, target: "_blank", rel: "noopener noreferrer nofollow ugc" },
+      }),
+      img: (tagName, attribs) => ({
+        tagName,
+        attribs: { ...attribs, alt: attribs.alt ?? "" },
+      }),
+    },
+    // Drop these tags *with* their text. Without this the body of a <script>
+    // survives as visible prose.
+    nonTextTags: ["script", "style", "textarea", "option", "noscript", "iframe"],
   })
 }
 
