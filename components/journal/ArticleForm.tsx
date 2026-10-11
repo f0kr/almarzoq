@@ -1,6 +1,8 @@
 "use client"
 
 import axios from "axios"
+
+import { apiErrorMessage } from "@/lib/journal/apiError"
 import { ImagePlus, Loader2, Plus, Send, Trash2, X } from "lucide-react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
@@ -119,11 +121,7 @@ export function ArticleForm({ initial, categories, teachers }: ArticleFormProps)
     } catch (error) {
       // The API answers in Arabic with the specific problem — show that, not a
       // generic failure.
-      const message =
-        axios.isAxiosError(error) && typeof error.response?.data === "string"
-          ? error.response.data
-          : "Couldn't save. Try again."
-      toast.error(message)
+      toast.error(apiErrorMessage(error, "Couldn't save. Try again."))
       console.log(error)
     } finally {
       setBusy(null)

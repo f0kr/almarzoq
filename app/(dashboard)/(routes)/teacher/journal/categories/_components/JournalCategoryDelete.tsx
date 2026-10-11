@@ -3,6 +3,8 @@
 import { ConfirmModal } from "@/components/modals/ConfirmModal"
 import { Button } from "@/components/ui/button"
 import axios from "axios"
+
+import { apiErrorMessage } from "@/lib/journal/apiError"
 import { Trash } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
@@ -25,11 +27,7 @@ export const JournalCategoryDelete = ({ categoryId }: JournalCategoryDeleteProps
     } catch (error) {
       // A 409 here means articles still reference it — that sentence is more
       // useful to the admin than "something went wrong".
-      const message =
-        axios.isAxiosError(error) && typeof error.response?.data === "string"
-          ? error.response.data
-          : "Something went wrong"
-      toast.error(message)
+      toast.error(apiErrorMessage(error, "Something went wrong"))
       console.log(error)
     } finally {
       setIsLoading(false)
