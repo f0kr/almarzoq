@@ -1,5 +1,6 @@
 import Fuse from "fuse.js"
 import { db } from "@/lib/db"
+import { liveArticleWhere } from "@/lib/journal/published"
 
 export type ArticleCard = {
   id: string
@@ -57,8 +58,9 @@ export async function getArticles({
 
     const articles = await db.article.findMany({
       where: {
-        status: "PUBLISHED",
-        // Belt and braces with the cron: a row can never surface early.
+        // Liveness is decided by the clock, not by the cron — see
+        // lib/journal/published.ts.
+        ...liveArticleWhere(),
         publishedAt: { ...publishedAt, lte: publishedAt.lte ?? new Date() },
         ...(categoryId ? { categoryId } : {}),
         ...(editorId ? { authorId: editorId } : {}),
@@ -109,7 +111,7 @@ export async function getArticles({
 export async function getJournalEditors() {
   try {
     const editors = await db.editorProfile.findMany({
-      where: { articles: { some: { status: "PUBLISHED" } } },
+      where: { articles: { some: liveArticleWhere() } },
       orderBy: { displayName: "asc" },
       select: { id: true, displayName: true },
     })

@@ -2,6 +2,7 @@ import { createHash } from "crypto"
 import { NextResponse } from "next/server"
 import { Prisma } from "@prisma/client"
 import { db } from "@/lib/db"
+import { liveArticleWhere } from "@/lib/journal/published"
 
 /**
  * One view per visitor per article per day.
@@ -31,7 +32,7 @@ export async function POST(req: Request) {
     // Only a live article can accrue views — otherwise a draft's id could be
     // used to inflate a counter before anyone can read it.
     const article = await db.article.findFirst({
-      where: { id: articleId, status: "PUBLISHED" },
+      where: { id: articleId, ...liveArticleWhere() },
       select: { id: true },
     })
     if (!article) return NextResponse.json({ counted: false })

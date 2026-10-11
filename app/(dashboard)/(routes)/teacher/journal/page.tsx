@@ -4,6 +4,7 @@ import type { ArticleStatus } from "@prisma/client"
 import { auth } from "@/lib/auth"
 import { db } from "@/lib/db"
 import { isTeacher } from "@/lib/teacher"
+import { displayStatus } from "@/lib/journal/published"
 import {
   ArticleReviewCard,
   type ReviewArticle,
@@ -52,7 +53,9 @@ export default async function TeacherJournalPage() {
     excerpt: article.excerpt,
     coverUrl: article.coverUrl,
     contentHtml: article.contentHtml,
-    status: article.status,
+    // Grouped by what readers see: once its time has passed, a scheduled
+    // article belongs under Published even before the cron flips it.
+    status: displayStatus(article),
     readingMinutes: article.readingMinutes,
     submittedAt: article.submittedAt?.toISOString() ?? null,
     publishedAt: article.publishedAt?.toISOString() ?? null,

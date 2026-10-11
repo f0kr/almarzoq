@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import { db } from "@/lib/db"
+import { liveArticleWhere } from "@/lib/journal/published"
 import { SHORT_CODE_LENGTH } from "@/lib/journal/shortLink"
 
 /**
@@ -26,7 +27,7 @@ export async function GET(
   }
 
   const matches = await db.article.findMany({
-    where: { id: { startsWith: clean }, status: "PUBLISHED", publishedAt: { lte: new Date() } },
+    where: { id: { startsWith: clean }, ...liveArticleWhere() },
     select: { slug: true },
     take: 2,
   })

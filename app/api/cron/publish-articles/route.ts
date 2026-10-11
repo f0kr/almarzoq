@@ -3,7 +3,18 @@ import { db } from "@/lib/db"
 import { sendArticlePublishedEmail } from "@/lib/email"
 
 /**
- * Publishes articles whose scheduled time has arrived.
+ * Reconciles scheduled articles, and tells their authors they are live.
+ *
+ * This is NOT what makes an article public. Readers get it from
+ * `liveArticleWhere()` the moment `publishedAt` passes, so an article appears
+ * at its exact scheduled minute even though Vercel's Hobby plan allows only one
+ * cron run per day. All this does is flip the stored status so the dashboards
+ * and the data agree, and send the "your article is live" email.
+ *
+ * Consequence of the daily schedule: that email can arrive up to a day after
+ * the article went live. The approval email already told the author the date,
+ * so nobody is left uninformed — but it is why the email is sent from here
+ * rather than being the thing readers depend on.
  *
  * Authenticated by CRON_SECRET, not by a session: Vercel Cron sends
  * `Authorization: Bearer $CRON_SECRET` automatically when that env var is set.
@@ -44,6 +55,7 @@ export async function GET(req: Request) {
 
     // publishedAt already holds the intended time and is what the public pages
     // display, so it is deliberately left alone — only the status moves.
+    // Readers have been seeing these since their time passed.
     const { count } = await db.article.updateMany({
       where: { id: { in: due.map((article) => article.id) } },
       data: { status: "PUBLISHED" },

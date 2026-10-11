@@ -2,6 +2,7 @@ import { readFile } from "node:fs/promises"
 import { join } from "node:path"
 import { ImageResponse } from "next/og"
 import { db } from "@/lib/db"
+import { liveArticleWhere } from "@/lib/journal/published"
 import { hasArabic } from "@/lib/lang"
 import QRCode from "qrcode"
 import { bindRtlLine, truncate, wrapTitle } from "@/lib/og"
@@ -72,8 +73,7 @@ export async function GET(
   const article = await db.article.findFirst({
     where: {
       slug: decodeURIComponent(slug),
-      status: "PUBLISHED",
-      publishedAt: { lte: new Date() },
+      ...liveArticleWhere(),
     },
     select: {
       id: true,

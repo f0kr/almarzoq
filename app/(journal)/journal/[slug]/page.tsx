@@ -10,6 +10,7 @@ import { ViewPing } from "@/components/journal/ViewPing"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { db } from "@/lib/db"
+import { liveArticleWhere } from "@/lib/journal/published"
 import { detectLang, langAttrs } from "@/lib/lang"
 
 const BASE_URL = "https://www.almrzoq.academy"
@@ -19,7 +20,7 @@ const dateFormat = new Intl.DateTimeFormat("ar", { dateStyle: "long" })
 /** Only a live article is readable; a scheduled one must 404 until its date. */
 async function getPublishedArticle(slug: string) {
   return db.article.findFirst({
-    where: { slug: decodeURIComponent(slug), status: "PUBLISHED", publishedAt: { lte: new Date() } },
+    where: { slug: decodeURIComponent(slug), ...liveArticleWhere() },
     include: {
       author: true,
       category: true,

@@ -10,6 +10,7 @@ import { auth } from "@/lib/auth"
 import { db } from "@/lib/db"
 import { langAttrs } from "@/lib/lang"
 import { REVIEW_REASON_BY_CODE } from "@/lib/journal/reviewReasons"
+import { displayStatus } from "@/lib/journal/published"
 import type { ArticleStatus } from "@prisma/client"
 
 export const metadata: Metadata = {
@@ -71,7 +72,10 @@ export default async function MyArticlesPage() {
       ) : (
         <ul className="mt-8 space-y-4">
           {articles.map((article) => {
-            const status = STATUS_LABEL[article.status]
+            // A scheduled article whose time has passed is already readable,
+            // so label it by what readers see, not by the stored status.
+            const shown = displayStatus(article)
+            const status = STATUS_LABEL[shown]
             const review = article.reviews[0]
             const canEdit =
               article.status === "DRAFT" || article.status === "CHANGES_REQUESTED"
@@ -118,12 +122,12 @@ export default async function MyArticlesPage() {
                     </h2>
 
                     <p className="mt-1 text-xs text-muted-foreground">
-                      {article.status === "SCHEDULED" && article.publishedAt
+                      {shown === "SCHEDULED" && article.publishedAt
                         ? `Goes live ${dateFormat.format(article.publishedAt)}`
                         : article.publishedAt
                           ? `Published ${dateFormat.format(article.publishedAt)}`
                           : `Last edited ${dateFormat.format(article.updatedAt)}`}
-                      {article.status === "PUBLISHED" &&
+                      {shown === "PUBLISHED" &&
                         ` · ${article.viewCount} ${article.viewCount === 1 ? "view" : "views"}`}
                     </p>
 
@@ -135,7 +139,7 @@ export default async function MyArticlesPage() {
                           </Link>
                         </Button>
                       )}
-                      {article.status === "PUBLISHED" && (
+                      {shown === "PUBLISHED" && (
                         <Button asChild size="sm" variant="default">
                           <Link href={`/journal/${article.slug}`}>View</Link>
                         </Button>
