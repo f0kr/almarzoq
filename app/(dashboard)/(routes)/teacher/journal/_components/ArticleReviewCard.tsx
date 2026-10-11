@@ -1,6 +1,8 @@
 "use client"
 
 import axios from "axios"
+
+import { apiErrorMessage } from "@/lib/journal/apiError"
 import { CalendarClock, Check, Eye, Loader2, Undo2 } from "lucide-react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
@@ -118,11 +120,7 @@ export function ArticleReviewCard({
       setOpen(false)
       router.refresh()
     } catch (error) {
-      const message =
-        axios.isAxiosError(error) && typeof error.response?.data === "string"
-          ? error.response.data
-          : "Something went wrong"
-      toast.error(message)
+      toast.error(apiErrorMessage(error, "Something went wrong"))
       console.log(error)
     } finally {
       setBusy(null)
@@ -137,11 +135,7 @@ export function ArticleReviewCard({
       setOpen(false)
       router.refresh()
     } catch (error) {
-      const message =
-        axios.isAxiosError(error) && typeof error.response?.data === "string"
-          ? error.response.data
-          : "Something went wrong"
-      toast.error(message)
+      toast.error(apiErrorMessage(error, "Something went wrong"))
     } finally {
       setBusy(null)
     }
